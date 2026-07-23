@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import { COPY } from "@/content/copy";
+
 function Clouds() {
   return (
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid slice">
@@ -46,7 +49,7 @@ export function CTA() {
         <Clouds />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
           <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-white mb-6">
-            Stop losing calls.
+            {COPY.cta.headline}
           </h2>
           <div className="flex flex-col gap-0.5 mb-7">
             <Chevron />
@@ -56,12 +59,12 @@ export function CTA() {
             <Chevron />
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="#" className="bg-[#111] text-white text-[13px] font-medium px-5 py-2.5 rounded-[6px] hover:bg-[#000] transition-colors">
-              Book a demo
-            </a>
-            <a href="#" className="bg-white text-[#111] text-[13px] font-medium px-5 py-2.5 rounded-[6px] hover:bg-white/95 transition-colors">
-              Talk to the team
-            </a>
+            <Button size="lg" render={<a href="#" />}>
+              {COPY.cta.ctaPrimary}
+            </Button>
+            <Button variant="secondary" size="lg" className="bg-white text-[#111] hover:bg-white/95" render={<a href="#" />}>
+              {COPY.cta.ctaSecondary}
+            </Button>
           </div>
         </div>
       </div>

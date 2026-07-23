@@ -1,3 +1,5 @@
+import { COPY } from "@/content/copy";
+
 function CheckIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -6,27 +8,20 @@ function CheckIcon() {
   );
 }
 
-const bullets = [
-  "Credit card numbers",
-  "Social Security numbers",
-  "Phone numbers",
-  "Other PII patterns",
-];
-
 export function Security() {
   return (
     <section className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div>
-          <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">Security</div>
+          <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.security.label}</div>
           <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111] mb-4">
-            Sensitive details never reach our database.
+            {COPY.security.headline}
           </h2>
           <p className="text-[14px] text-[#666] leading-[1.65] mb-7 max-w-[440px]">
-            Every transcript is scanned before it's stored. Credit card numbers, SSNs, and phone numbers are detected and redacted.
+            {COPY.security.subhead}
           </p>
           <div className="flex flex-wrap gap-2">
-            {bullets.map((b, i) => (
+            {COPY.security.items.map((b, i) => (
               <div key={i} className="inline-flex items-center gap-1.5 border border-[#eee] rounded-full px-3 py-1.5">
                 <CheckIcon />
                 <span className="text-[12.5px] text-[#333]">{b}</span>

@@ -1,3 +1,5 @@
+import { COPY } from "@/content/copy";
+
 function PhoneIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -28,35 +30,24 @@ export function HowItWorks() {
   return (
     <section id="how" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
       <div className="mb-14">
-        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">How it works</div>
+        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.howItWorks.label}</div>
         <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111] max-w-[680px]">
-          Three steps from call to booking.
+          {COPY.howItWorks.headline}
         </h2>
       </div>
 
       <div className="space-y-0">
-        <Step
-          num="01"
-          icon={<PhoneIcon />}
-          title="Answer"
-          desc="Every call is answered in under a second, day or night. Vox Front speaks naturally, asks the right questions, and never puts a caller on hold."
-          visual={<AnswerVisual />}
-        />
-        <Step
-          num="02"
-          icon={<CalendarIcon />}
-          title="Book"
-          desc="Vox Front checks your live availability and books, reschedules, or cancels appointments directly in Google Calendar."
-          visual={<BookVisual />}
-          reverse
-        />
-        <Step
-          num="03"
-          icon={<ChartIcon />}
-          title="Report"
-          desc="Every call is logged with a transcript, summary, and outcome. Nothing slips through, and you always know what to follow up on."
-          visual={<DashboardVisual />}
-        />
+        {COPY.howItWorks.steps.map((step, i) => (
+          <Step
+            key={step.num}
+            num={step.num}
+            icon={i === 0 ? <PhoneIcon /> : i === 1 ? <CalendarIcon /> : <ChartIcon />}
+            title={step.title}
+            desc={step.desc}
+            visual={i === 0 ? <AnswerVisual /> : i === 1 ? <BookVisual /> : <DashboardVisual />}
+            reverse={i % 2 !== 0}
+          />
+        ))}
       </div>
     </section>
   );

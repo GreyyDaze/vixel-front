@@ -1,3 +1,5 @@
+import { COPY } from "@/content/copy";
+
 const situations = [
   {
     title: "Answer calls when your team is busy",
@@ -33,12 +35,12 @@ export function RealSituations() {
   return (
     <section id="situations" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
       <div className="mb-12 max-w-[640px]">
-        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">Use cases</div>
+        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.realSituations.label}</div>
         <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111] mb-4">
-          What Vox Front handles for you.
+          {COPY.realSituations.headline}
         </h2>
         <p className="text-[14px] text-[#666] leading-[1.65]">
-          From busy weekdays to late-night calls, these are the situations businesses hand off to Vox Front.
+          {COPY.realSituations.subhead}
         </p>
       </div>
 

@@ -1,4 +1,5 @@
 import { Logo } from "./Logo";
+import { COPY } from "@/content/copy";
 
 export function Footer() {
   return (
@@ -8,50 +9,47 @@ export function Footer() {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-3">
               <Logo className="h-5 w-5" color="#111" />
-              <span className="text-[14px] font-medium text-[#111]">Vox Front</span>
+              <span className="text-[14px] font-medium text-[#111]">{COPY.header.brand}</span>
             </div>
             <p className="text-[13px] text-[#666] leading-[1.6] max-w-[280px] mb-4">
-              The AI receptionist that answers every call, books every appointment, and never misses a customer.
+              {COPY.footer.description}
             </p>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-              <span className="text-[12px] text-[#666]">All systems operational</span>
+              <span className="text-[12px] text-[#666]">{COPY.footer.status}</span>
             </div>
           </div>
 
           <div>
-            <h4 className="text-[12px] font-medium text-[#111] mb-4">Product</h4>
+            <h4 className="text-[12px] font-medium text-[#111] mb-4">{COPY.footer.product.heading}</h4>
             <ul className="space-y-2.5 text-[13px] text-[#666]">
-              <li><a href="#" className="hover:text-[#111]">How it works</a></li>
-              <li><a href="#" className="hover:text-[#111]">Dashboard</a></li>
-              <li><a href="#" className="hover:text-[#111]">Pricing</a></li>
-              <li><a href="#" className="hover:text-[#111]">Integrations</a></li>
+              {COPY.footer.product.items.map((item, i) => (
+                <li key={i}><a href="#" className="hover:text-[#111]">{item}</a></li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-[12px] font-medium text-[#111] mb-4">Company</h4>
+            <h4 className="text-[12px] font-medium text-[#111] mb-4">{COPY.footer.company.heading}</h4>
             <ul className="space-y-2.5 text-[13px] text-[#666]">
-              <li><a href="#" className="hover:text-[#111]">About</a></li>
-              <li><a href="#" className="hover:text-[#111]">Blog</a></li>
-              <li><a href="#" className="hover:text-[#111]">Careers</a></li>
-              <li><a href="#" className="hover:text-[#111]">Contact</a></li>
+              {COPY.footer.company.items.map((item, i) => (
+                <li key={i}><a href="#" className="hover:text-[#111]">{item}</a></li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-[12px] font-medium text-[#111] mb-4">Resources</h4>
+            <h4 className="text-[12px] font-medium text-[#111] mb-4">{COPY.footer.resources.heading}</h4>
             <ul className="space-y-2.5 text-[13px] text-[#666]">
-              <li><a href="#" className="hover:text-[#111]">Help center</a></li>
-              <li><a href="#" className="hover:text-[#111]">Security</a></li>
-              <li><a href="#" className="hover:text-[#111]">Privacy</a></li>
-              <li><a href="#" className="hover:text-[#111]">Terms</a></li>
+              {COPY.footer.resources.items.map((item, i) => (
+                <li key={i}><a href="#" className="hover:text-[#111]">{item}</a></li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div className="border-t border-[#eee] pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="text-[12px] text-[#999]">© 2026 Vox Front. All rights reserved.</div>
+          <div className="text-[12px] text-[#999]">{COPY.footer.copyright}</div>
           <div className="flex items-center gap-3">
             <a href="#" className="text-[#999] hover:text-[#111]">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

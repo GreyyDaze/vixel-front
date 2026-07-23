@@ -1,8 +1,12 @@
+"use client";
+
 // Vox Front hero: voice & conversation pattern at top + bottom edges
 // Mockup: Desktop dashboard + iPhone + live call card with full animation sequence
 
 import { useEffect, useState } from "react";
 import { LogoMark } from "./LogoMark";
+import { Button } from "@/components/ui/button";
+import { COPY } from "@/content/copy";
 
 function AnimatedVoiceField() {
   // Soft, barely-there bars. Goal: support the dashboard, not compete with it.
@@ -111,19 +115,19 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 items-start">
           <div>
             <h1 className="text-[44px] lg:text-[58px] leading-[1.04] tracking-[-0.025em] font-medium text-[#111] mb-6">
-              Every call answered. Every appointment booked.
+              {COPY.hero.headline}
             </h1>
             <p className="text-[15px] leading-[1.65] text-[#555] max-w-[540px]">
-              Vox Front is the AI receptionist for local businesses. It answers calls, books appointments into Google Calendar, sends confirmations, and follows up — around the clock.
+              {COPY.hero.subhead}
             </p>
           </div>
           <div className="flex flex-col gap-2.5 lg:items-end lg:pt-3">
-            <a href="#cta" className="bg-[#111] text-white text-[13px] font-medium px-4 py-2.5 rounded-[6px] hover:bg-[#000] transition-colors w-full lg:w-[200px] text-center">
-              Book a demo
-            </a>
-            <a href="#how" className="bg-white border border-[#e5e5e5] text-[#111] text-[13px] font-medium px-4 py-2.5 rounded-[6px] hover:border-[#111] transition-colors w-full lg:w-[200px] text-center">
-              See how it works
-            </a>
+            <Button size="lg" className="w-full lg:w-[200px]" render={<a href="#cta" />}>
+              {COPY.hero.ctaPrimary}
+            </Button>
+            <Button variant="outline" size="lg" className="w-full lg:w-[200px]" render={<a href="#how" />}>
+              {COPY.hero.ctaSecondary}
+            </Button>
           </div>
         </div>
       </div>
