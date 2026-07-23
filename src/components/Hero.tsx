@@ -1,3 +1,5 @@
+"use client";
+
 // Vox Front hero: voice & conversation pattern at top + bottom edges
 // Mockup: Desktop dashboard + iPhone + live call card with full animation sequence
 
