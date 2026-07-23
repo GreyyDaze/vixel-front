@@ -1,6 +1,17 @@
+@keyframes bgWave {
+  0%, 100% { transform: scaleY(0.88); opacity: 0.4; }
+  50% { transform: scaleY(1.06); opacity: 0.7; }
+}
 @keyframes voiceAmbient {
   0% { transform: scaleY(0.92); opacity: 0.7; }
   100% { transform: scaleY(1.04); opacity: 1; }
+}
+.bg-wave-bar-top {
+  transform-origin: center top;
+}
+
+.bg-wave-bar {
+  transform-origin: center;
 }
 
 @keyframes slideIn {

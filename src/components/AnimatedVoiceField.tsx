@@ -7,7 +7,8 @@ function TopBars({ bars, fill, offset = 0 }: { bars: Bar[]; fill: string; offset
     <g transform="translate(0, 0)">
       {bars.map((b, i) => (
         <rect key={`t-${i}`} x={b.x} y={0} width={b.w} height={b.h} rx="2" fill={fill}
-          style={{ transformOrigin: "center top", animation: `voiceAmbient ${b.dur}s ease-in-out ${b.delay + offset}s infinite alternate` }} />
+          className="bg-wave-bar-top"
+          style={{ animation: `voiceAmbient ${b.dur}s ease-in-out ${b.delay + offset}s infinite alternate` }} />
       ))}
     </g>
   );
@@ -18,7 +19,8 @@ function BottomBars({ bars, fill, offset = 0 }: { bars: Bar[]; fill: string; off
     <g transform="translate(0, 900)">
       {bars.map((b, i) => (
         <rect key={`b-${i}`} x={b.x} y={-b.h} width={b.w} height={b.h} rx="2" fill={fill}
-          style={{ transformOrigin: `center ${b.h}px`, animation: `voiceAmbient ${b.dur}s ease-in-out ${b.delay + offset}s infinite alternate` }} />
+          className="bg-wave-bar"
+          style={{ animation: `bgWave ${b.dur}s ease-in-out ${b.delay + offset}s infinite` }} />
       ))}
     </g>
   );
