@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/badge";
+
 export function Dashboard() {
   return (
     <section id="dashboard" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
@@ -91,10 +93,10 @@ export function Dashboard() {
               </div>
               <div>
                 {[
-                  { name: "Maria Santos", time: "2:14 PM", status: "Booked", color: "#10b981" },
-                  { name: "James Turner", time: "11:08 AM", status: "Booked", color: "#10b981" },
-                  { name: "Linda Park", time: "9:42 AM", status: "Transferred", color: "#f59e0b" },
-                  { name: "Robert Chen", time: "Yesterday", status: "Question", color: "#111" },
+                  { name: "Maria Santos", time: "2:14 PM", status: "Booked", variant: "default" as const, badgeClass: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                  { name: "James Turner", time: "11:08 AM", status: "Booked", variant: "default" as const, badgeClass: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                  { name: "Linda Park", time: "9:42 AM", status: "Transferred", variant: "secondary" as const, badgeClass: "bg-amber-50 text-amber-600 border-amber-100" },
+                  { name: "Robert Chen", time: "Yesterday", status: "Question", variant: "outline" as const, badgeClass: "bg-neutral-50 text-neutral-800 border-neutral-200" },
                 ].map((c, i) => (
                   <div key={i} className="flex items-center justify-between py-2.5 border-b border-[#f5f5f5] last:border-0">
                     <div className="flex items-center gap-2.5">
@@ -106,9 +108,9 @@ export function Dashboard() {
                         <div className="text-[10px] text-[#999]">{c.time}</div>
                       </div>
                     </div>
-                    <div className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ color: c.color, backgroundColor: `${c.color}10` }}>
+                    <Badge variant={c.variant} className={`text-[10px] font-medium ${c.badgeClass}`}>
                       {c.status}
-                    </div>
+                    </Badge>
                   </div>
                 ))}
               </div>

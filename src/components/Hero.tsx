@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from "react";
 import { LogoMark } from "./LogoMark";
+import { Button } from "@/components/ui/button";
 
 function AnimatedVoiceField() {
   // Soft, barely-there bars. Goal: support the dashboard, not compete with it.
@@ -120,12 +121,12 @@ export function Hero() {
             </p>
           </div>
           <div className="flex flex-col gap-2.5 lg:items-end lg:pt-3">
-            <a href="#cta" className="bg-[#111] text-white text-[13px] font-medium px-4 py-2.5 rounded-[6px] hover:bg-[#000] transition-colors w-full lg:w-[200px] text-center">
+            <Button size="lg" className="w-full lg:w-[200px]" render={<a href="#cta" />}>
               Book a demo
-            </a>
-            <a href="#how" className="bg-white border border-[#e5e5e5] text-[#111] text-[13px] font-medium px-4 py-2.5 rounded-[6px] hover:border-[#111] transition-colors w-full lg:w-[200px] text-center">
+            </Button>
+            <Button variant="outline" size="lg" className="w-full lg:w-[200px]" render={<a href="#how" />}>
               See how it works
-            </a>
+            </Button>
           </div>
         </div>
       </div>

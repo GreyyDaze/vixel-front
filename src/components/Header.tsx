@@ -1,4 +1,5 @@
 import { Logo } from "./Logo";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
@@ -15,9 +16,9 @@ export function Header() {
       </nav>
       <div className="flex items-center gap-4">
         <a href="#" className="text-[13px] text-[#111] hover:text-[#000] transition-colors hidden sm:inline">Sign in</a>
-        <a href="#cta" className="bg-[#111] text-white text-[13px] font-medium px-3.5 py-2 rounded-[6px] hover:bg-[#000] transition-colors">
+        <Button size="sm" render={<a href="#cta" />}>
           Book a demo
-        </a>
+        </Button>
       </div>
     </header>
   );

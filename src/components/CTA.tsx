@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 function Clouds() {
   return (
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid slice">
@@ -56,12 +58,12 @@ export function CTA() {
             <Chevron />
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="#" className="bg-[#111] text-white text-[13px] font-medium px-5 py-2.5 rounded-[6px] hover:bg-[#000] transition-colors">
+            <Button size="lg" render={<a href="#" />}>
               Book a demo
-            </a>
-            <a href="#" className="bg-white text-[#111] text-[13px] font-medium px-5 py-2.5 rounded-[6px] hover:bg-white/95 transition-colors">
+            </Button>
+            <Button variant="secondary" size="lg" className="bg-white text-[#111] hover:bg-white/95" render={<a href="#" />}>
               Talk to the team
-            </a>
+            </Button>
           </div>
         </div>
       </div>
