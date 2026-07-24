@@ -162,7 +162,14 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10.5px] font-medium text-[#111]">Call volume</span>
               <div className="flex items-center gap-2 text-[9px] text-[#999]">
-                <div className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-[#111]"></span>Answered</div>
+                <div className="flex items-center gap-2 text-[10px] text-[#666]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="inline-block w-3 h-[2px] bg-white rounded-full"></span>Answered
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="inline-block w-3 h-[2px] bg-[#333] rounded-full"></span>Booked
+                  </div>
+                </div>
               </div>
             </div>
             <div className="h-20">

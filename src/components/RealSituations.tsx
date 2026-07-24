@@ -68,8 +68,7 @@ function BusyCallPanel() {
         </div>
 
         {/* Status */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="h-1.5 w-1.5 rounded-full bg-[#10B981]"></div>
+        <div className="mb-4">
           <span className="text-[10px] text-[#111]">Receptionist busy — Vox Front answering</span>
         </div>
 
@@ -118,9 +117,9 @@ function AfterHoursPanel() {
         <div className="space-y-3">
           {/* After hours call */}
           <div className="flex items-center gap-3">
-            <div className="h-7 w-7 rounded-full bg-[#F5F5F5] flex items-center justify-center">
-              <span className="text-[9px] font-bold text-[#666]">J</span>
-            </div>
+              <div className="h-7 w-7 rounded-full bg-[#111] flex items-center justify-center">
+                <span className="text-[9px] font-bold text-white">J</span>
+              </div>
             <div className="flex-1">
               <div className="text-[11px] font-medium text-[#111]">James T.</div>
               <div className="text-[9px] text-[#002FD2]">After hours · Booked</div>
@@ -133,9 +132,9 @@ function AfterHoursPanel() {
             { name: "Maria S.", time: "2:14 PM" },
             { name: "Linda P.", time: "11:08 AM" },
           ].map((c, i) => (
-            <div key={i} className="flex items-center gap-3 opacity-50">
-              <div className="h-7 w-7 rounded-full bg-[#F5F5F5] flex items-center justify-center">
-                <span className="text-[9px] font-bold text-[#666]">{c.name[0]}</span>
+            <div key={i} className="flex items-center gap-3">
+              <div className="h-7 w-7 rounded-full bg-[#111] flex items-center justify-center">
+                <span className="text-[9px] font-bold text-white">{c.name[0]}</span>
               </div>
               <div className="flex-1">
                 <div className="text-[11px] text-[#111]">{c.name}</div>
@@ -198,15 +197,14 @@ function UrgentPanel() {
             <span className="text-[12px] font-medium text-[#111]">Live call</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-[#EF4444]"></div>
             <span className="text-[10px] text-[#EF4444]">Urgent</span>
           </div>
         </div>
 
         {/* Caller message */}
         <div className="flex items-start gap-2 mb-4">
-          <div className="h-6 w-6 rounded-full bg-[#F5F5F5] flex items-center justify-center shrink-0">
-            <span className="text-[9px] font-bold text-[#666]">L</span>
+          <div className="h-6 w-6 rounded-full bg-[#111] flex items-center justify-center shrink-0">
+            <span className="text-[9px] font-bold text-white">L</span>
           </div>
           <p className="text-[11px] text-[#111] leading-[1.5] pt-0.5">"My tooth is cracked — I need help now."</p>
         </div>
@@ -275,7 +273,6 @@ function MultiplePanel() {
             { name: "Linda P.", type: "Transfer", time: "0:15", status: "Routing" },
           ].map((c, i) => (
             <div key={i} className="flex items-center gap-3">
-              <div className={`h-2 w-2 rounded-full ${c.status === 'Routing' ? 'bg-[#F59E0B]' : 'bg-[#10B981]'}`}></div>
               <div className="flex-1">
                 <span className="text-[11px] font-medium text-[#111]">{c.name}</span>
                 <span className="text-[10px] text-[#999] ml-2">{c.type}</span>
@@ -291,7 +288,9 @@ function MultiplePanel() {
         {/* Footer */}
         <div className="mt-4 pt-3 border-t border-[#F0F0F0] flex items-center justify-between">
           <span className="text-[10px] text-[#999]">Total today: 12</span>
-          <span className="text-[10px] text-[#10B981]">All answered</span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] text-[#10B981]">All answered</span>
+          </div>
         </div>
       </div>
     </div>
