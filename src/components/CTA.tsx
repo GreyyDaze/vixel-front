@@ -11,7 +11,8 @@ export function CTA() {
           backgroundImage: "url('/hero-atmosphere.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.85,
+          backgroundBlendMode: "multiply",
+          opacity: 0.8,
         }}
       />
 

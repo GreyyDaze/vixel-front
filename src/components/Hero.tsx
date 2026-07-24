@@ -29,7 +29,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Atmosphere section: product demo floating on image */}
+      {/* Atmosphere section: product demo on image */}
       <div
         className="w-full py-12 lg:py-16"
         style={{
@@ -37,18 +37,12 @@ export function Hero() {
           backgroundImage: "url('/hero-atmosphere.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center top",
+          backgroundBlendMode: "multiply",
         }}
       >
         <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
-          <div
-            className="relative w-full rounded-[12px] overflow-hidden"
-            style={{
-              boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06), 0 12px 28px -8px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(0,0,0,0.08)",
-            }}
-          >
-            <div className="relative w-full aspect-[16/8.5] overflow-hidden">
-              <HeroStage />
-            </div>
+          <div className="relative w-full aspect-[16/8.5] overflow-hidden rounded-[12px]">
+            <HeroStage />
           </div>
         </div>
       </div>
