@@ -121,10 +121,9 @@ export const COPY = {
 
   // ============ CTA ============
   cta: {
-    headline: "Every call answered. Every appointment kept.",
-    subhead: "End your day knowing every caller reached you. Nothing slipped through.",
+    headline: "You handle the work. We handle the phone.",
+    subhead: "End every day knowing nothing slipped through.",
     ctaPrimary: "Book a demo",
-    ctaSecondary: "Talk to the team",
   },
 
   // ============ FOOTER ============
