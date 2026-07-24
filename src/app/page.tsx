@@ -1,4 +1,4 @@
-import "./index.css";
+import "src/app/index.css";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
@@ -12,8 +12,20 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen w-full" style={{ backgroundColor: "#FDFDFC" }}>
-      <Header />
-      <Hero />
+      {/* Atmosphere block: nav + hero content + product demo */}
+      <div
+        className="relative w-full"
+        style={{
+          backgroundColor: "#c8d4e0",
+          backgroundImage: "url('/hero-atmosphere.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+        }}
+      >
+        <Header transparent />
+        <Hero />
+      </div>
+
       <HowItWorks />
       <RealSituations />
       <Dashboard />
