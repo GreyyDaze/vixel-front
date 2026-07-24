@@ -9,7 +9,7 @@ type Phase = "idle" | "step1" | "step2" | "step3";
 const PHASE_DURATION: Record<Phase, number> = { idle: 1500, step1: 14000, step2: 5000, step3: 5000 };
 const PHASE_ORDER: Phase[] = ["idle", "step1", "step2", "step3"];
 
-const BLUE_GRADIENT = "radial-gradient(circle at 50% 20%, #4070FF 0%, #002FD2 50%, #001651 100%)";
+const BLUE_GRADIENT = "radial-gradient(circle at 50% 20%, #7B9BFF 0%, #4B6FE8 50%, #2A4FC7 100%)";
 
 export function HowItWorks() {
   const [phase, setPhase] = useState<Phase>("idle");
