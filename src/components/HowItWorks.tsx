@@ -1,150 +1,274 @@
+"use client";
+
 import { COPY } from "@/content/copy";
+import { useEffect, useState } from "react";
+import { Phone, PhoneCall, Calendar, Check, Users } from "lucide-react";
 
-function PhoneIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-}
+type Phase = "idle" | "step1" | "step2" | "step3";
+type SubPhase = "ringing" | "answered";
 
-function CalendarIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" />
-      <path d="M16 2v4M8 2v4M3 10h18" />
-    </svg>
-  );
-}
-
-function ChartIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 3v18h18" />
-      <path d="M7 14l4-4 4 4 5-5" />
-    </svg>
-  );
-}
+const PHASE_DURATION: Record<Phase, number> = { idle: 1500, step1: 14000, step2: 5000, step3: 5000 };
+const PHASE_ORDER: Phase[] = ["idle", "step1", "step2", "step3"];
 
 export function HowItWorks() {
+  const [phase, setPhase] = useState<Phase>("idle");
+
+  useEffect(() => {
+    let timer: number | undefined;
+    const advance = () => {
+      const idx = PHASE_ORDER.indexOf(phase);
+      const next = PHASE_ORDER[(idx + 1) % PHASE_ORDER.length];
+      setPhase(next);
+    };
+    timer = window.setTimeout(advance, PHASE_DURATION[phase]);
+    return () => { if (timer) clearTimeout(timer); };
+  }, [phase]);
+
   return (
-    <section id="how" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
-      <div className="mb-14">
-        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.howItWorks.label}</div>
-        <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111] max-w-[680px]">
+    <section id="how" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
+      <div className="mb-16 max-w-[640px]">
+        <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111]">
           {COPY.howItWorks.headline}
         </h2>
       </div>
 
-      <div className="space-y-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {COPY.howItWorks.steps.map((step, i) => (
-          <Step
-            key={step.num}
-            num={step.num}
-            icon={i === 0 ? <PhoneIcon /> : i === 1 ? <CalendarIcon /> : <ChartIcon />}
-            title={step.title}
-            desc={step.desc}
-            visual={i === 0 ? <AnswerVisual /> : i === 1 ? <BookVisual /> : <DashboardVisual />}
-            reverse={i % 2 !== 0}
-          />
+          <div key={step.num} className="flex flex-col">
+            <div className={`flex-1 rounded-[8px] mb-0 min-h-[360px] relative overflow-hidden transition-all duration-700`} style={{
+              backgroundColor: "#FFFFFF",
+              border: "1px solid #E8E8E8",
+              boxShadow: (i === 0 && phase === "step1") || (i === 1 && phase === "step2") || (i === 2 && phase === "step3")
+                ? "0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px #EDE7D8"
+                : "0 1px 2px rgba(0,0,0,0.04)",
+            }}>
+              {/* Top blur gradient */}
+              <div className="absolute top-0 left-0 right-0 h-12 pointer-events-none" style={{
+                background: "linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%)",
+                backdropFilter: "blur(3px)",
+              }} />
+
+              <div className="flex items-center justify-center h-full p-6">
+                {i === 0 && <AnswerVisual active={phase === "step1"} />}
+                {i === 1 && <BookVisual active={phase === "step2"} />}
+                {i === 2 && <ReportVisual active={phase === "step3"} />}
+              </div>
+            </div>
+            
+            {/* Text container - moved up with negative margin */}
+            <div className="relative -mt-4 mx-4 mb-2 bg-white rounded-[6px] px-4 py-3" style={{
+              boxShadow: "0 -2px 8px rgba(255,255,255,0.8)",
+            }}>
+              <div className="absolute top-0 left-0 right-0 h-4 pointer-events-none" style={{
+                background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%)",
+                backdropFilter: "blur(2px)",
+              }} />
+              <div className="relative z-10">
+                <h3 className="text-[20px] font-medium text-[#111] mb-2 tracking-[-0.01em]">{step.title}</h3>
+                <p className="text-[14px] text-[#666] leading-[1.6]">{step.desc}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </section>
   );
 }
 
-function Step({ num, icon, title, desc, visual, reverse = false }: { num: string; icon: React.ReactNode; title: string; desc: string; visual: React.ReactNode; reverse?: boolean }) {
+/* ═════════════════════════════════════════════════════════════
+   ANSWER: Ringing → Answered transition
+   ══════════════════════════════════════════════════════════════ */
+function AnswerVisual({ active }: { active: boolean }) {
+  const [sub, setSub] = useState<SubPhase>("ringing");
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      setSub("ringing");
+      setSeconds(0);
+      return;
+    }
+
+    setSub("ringing");
+    const t1 = window.setTimeout(() => setSub("answered"), 4000);
+    const t2 = window.setInterval(() => setSeconds(s => s + 1), 1000);
+    return () => { clearTimeout(t1); clearInterval(t2); };
+  }, [active]);
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center py-14 border-t border-[#eee]">
-      <div className={reverse ? "lg:order-2" : ""}>
+    <div className="w-full max-w-[300px]">
+      {/* Main card — white bg, grey border, warm inset when active */}
+      <div className="bg-white rounded-[8px] p-5 transition-all duration-700" style={{
+        border: "1px solid #D0D0D0",
+        boxShadow: sub === "answered"
+          ? "0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px #EDE7D8"
+          : "0 1px 2px rgba(0,0,0,0.04)",
+      }}>
+        {/* Icon */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="h-8 w-8 rounded-[8px] border border-[#eee] flex items-center justify-center text-[#111]">
-            {icon}
+          <div className="h-10 w-10 rounded-[6px] flex items-center justify-center transition-all duration-700" style={{
+            background: sub === "ringing"
+              ? "radial-gradient(circle at 50% 20%, #7B9BFF 0%, #4B6FE8 50%, #2A4FC7 100%)"
+              : "radial-gradient(circle at 50% 20%, #10B981 0%, #059669 50%, #047857 100%)",
+            animation: sub === "ringing" ? "ringPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
+          }}>
+            {sub === "ringing" ? (
+              <Phone size={18} strokeWidth={2} color="white" />
+            ) : (
+              <PhoneCall size={18} strokeWidth={2} color="white" />
+            )}
           </div>
-          <span className="text-[11px] text-[#999] uppercase tracking-wider">Step {num}</span>
-        </div>
-        <h3 className="text-[26px] tracking-[-0.02em] font-medium text-[#111] mb-3">{title}</h3>
-        <p className="text-[14px] text-[#666] leading-[1.65] max-w-[420px]">{desc}</p>
-      </div>
-      <div className={reverse ? "lg:order-1" : ""}>
-        {visual}
-      </div>
-    </div>
-  );
-}
-
-function AnswerVisual() {
-  return (
-    <div className="bg-white border border-[#eee] rounded-[10px] p-5">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
-          <span className="text-[11px] text-[#666]">Incoming call</span>
-        </div>
-        <span className="text-[11px] text-[#999] font-mono">9:42 PM</span>
-      </div>
-      <div className="space-y-3 text-[12.5px] leading-[1.5]">
-        <p className="text-[#111]">
-          <span className="text-[10px] text-[#999] uppercase tracking-wider mr-2">Caller</span>
-          "Do you have any Saturday appointments next week?"
-        </p>
-        <p className="text-[#111]">
-          <span className="text-[10px] text-[#111] uppercase tracking-wider mr-2 font-medium">Vox</span>
-          "Yes — Saturday the 22nd at 10 AM or 11:30 AM. Which works?"
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function BookVisual() {
-  return (
-    <div className="bg-white border border-[#eee] rounded-[10px] p-5">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded bg-gradient-to-br from-[#4285F4] via-[#34A853] to-[#FBBC04]"></div>
-          <span className="text-[12px] font-medium text-[#111]">Google Calendar</span>
-        </div>
-        <span className="text-[11px] text-[#999]">Tue, Mar 18</span>
-      </div>
-      <div className="space-y-1.5">
-        {["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM"].map((t, i) => (
-          <div key={i} className="h-7 bg-[#fafafa] rounded text-[10px] text-[#999] flex items-center px-2.5">{t}</div>
-        ))}
-        <div className="h-12 bg-[#111] rounded text-white flex flex-col justify-center px-3 relative">
-          <div className="text-[10px] font-medium">2:30 PM — Cleaning</div>
-          <div className="text-[9px] opacity-70">Sarah Johnson • 60 min</div>
-        </div>
-        {["3:30 PM", "4:00 PM", "5:00 PM"].map((t, i) => (
-          <div key={i} className="h-7 bg-[#fafafa] rounded text-[10px] text-[#999] flex items-center px-2.5">{t}</div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function DashboardVisual() {
-  return (
-    <div className="bg-white border border-[#eee] rounded-[10px] p-5">
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-[12px] font-medium text-[#111]">Today's calls</span>
-        <span className="text-[10px] text-emerald-600 font-medium">12 answered</span>
-      </div>
-      <div className="space-y-2">
-        {[
-          { time: "10:24 AM", name: "Booked • Cleaning", dur: "2:14" },
-          { time: "11:08 AM", name: "Booked • Checkup", dur: "1:48" },
-          { time: "1:45 PM", name: "Rescheduled", dur: "1:22" },
-          { time: "3:12 PM", name: "New booking", dur: "2:56" },
-        ].map((c, i) => (
-          <div key={i} className="flex items-center justify-between py-2 border-b border-[#f5f5f5] last:border-0">
-            <div>
-              <div className="text-[12px] text-[#111]">{c.name}</div>
-              <div className="text-[10px] text-[#999]">{c.time}</div>
+          <div>
+            <div className="text-[13px] font-semibold text-[#111]">
+              {sub === "ringing" ? "Incoming call" : "Answered"}
             </div>
-            <div className="text-[10px] text-[#999] font-mono">{c.dur}</div>
+            <div className="text-[11px] text-[#888]">
+              {sub === "ringing" ? "Sarah Patel · Ringing" : "Vox Front · 0:" + String(seconds).padStart(2, "0")}
+            </div>
           </div>
-        ))}
+        </div>
+
+        {/* Voice waveform - only when answered */}
+        <div className="flex items-end justify-center gap-[2px] h-8 transition-opacity duration-500" style={{ opacity: sub === "answered" ? 1 : 0 }}>
+          {[...Array(12)].map((_, i) => (
+            <div
+              key={i}
+              className="w-[2px] bg-[#002FD2] rounded-full"
+              style={{
+                height: `${6 + Math.sin(i * 0.9) * 4}px`,
+                animation: sub === "answered" ? `voiceBar 0.7s ease-in-out ${i * 0.04}s infinite alternate` : "none",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BOOK: Calendar with booking
+   ══════════════════════════════════════════════════════════════ */
+function BookVisual({ active }: { active: boolean }) {
+  return (
+    <div className="w-full max-w-[280px]">
+      <div className="bg-white rounded-[8px] p-5 transition-all duration-700" style={{
+        border: "1px solid #D0D0D0",
+        boxShadow: active
+          ? "0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px #EDE7D8"
+          : "0 1px 2px rgba(0,0,0,0.04)",
+      }}>
+        {/* Header */}
+        <div className="flex items-center gap-2.5 mb-4">
+          <Calendar size={14} strokeWidth={2} color={active ? "#002FD2" : "#111"} />
+          <span className="text-[13px] font-semibold text-[#111]">Google Calendar</span>
+          <span className="text-[10px] text-[#B0B0B0] ml-auto">Tue, Mar 18</span>
+        </div>
+
+        {/* Time slots */}
+        <div className="space-y-1.5">
+          {["9:00", "10:00", "11:00", "12:00", "1:00"].map((t) => (
+            <div key={t} className="h-6 flex items-center px-2.5 border border-[#F0EDE5] rounded-[4px]">
+              <span className="text-[10px] text-[#C0C0C0] w-10 font-mono">{t}</span>
+            </div>
+          ))}
+
+          {/* Highlighted booking */}
+          <div className="flex items-start h-10">
+            <span className="text-[10px] text-[#C0C0C0] w-10 font-mono mt-0.5">2:00</span>
+            <div className="flex-1 bg-[#002FD2] px-2.5 py-1.5" style={{ borderRadius: 6 }}>
+              <div className="text-[11px] font-medium text-white leading-tight">Cleaning — Sarah Patel</div>
+              <div className="text-[10px] text-white/70 mt-0.5">2:30 PM · 60 min</div>
+            </div>
+          </div>
+
+          {["3:00", "3:30", "4:00", "5:00"].map((t) => (
+            <div key={t} className="h-6 flex items-center px-2.5 border border-[#F0EDE5] rounded-[4px]">
+              <span className="text-[10px] text-[#C0C0C0] w-10 font-mono">{t}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Confirmation */}
+        <div className="mt-4 pt-3 border-t border-[#F0EDE5] flex items-center gap-2 transition-opacity duration-700" style={{ opacity: active ? 1 : 0 }}>
+          <Check size={12} strokeWidth={2} color="#10B981" />
+          <span className="text-[11px] font-medium text-[#111]">Booked automatically</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REPORT: Dashboard list
+   ══════════════════════════════════════════════════════════════ */
+function ReportVisual({ active }: { active: boolean }) {
+  return (
+    <div className="w-full max-w-[320px]">
+      <div className="bg-white rounded-[8px] p-5 transition-all duration-700" style={{
+        border: "1px solid #D0D0D0",
+        boxShadow: active
+          ? "0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px #EDE7D8"
+          : "0 1px 2px rgba(0,0,0,0.04)",
+      }}>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <Users size={14} strokeWidth={2} color={active ? "#002FD2" : "#111"} />
+            <span className="text-[13px] font-semibold text-[#111]">Recent calls</span>
+          </div>
+          <span className="text-[10px] text-[#B0B0B0]">Today</span>
+        </div>
+
+        {/* Existing calls */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0 border border-[#F0EDE5]" style={{ borderRadius: 100 }}>M</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] text-[#888]">Maria Santos</span>
+                <span className="text-[10px] text-[#B0B0B0] font-mono">10:24 AM</span>
+              </div>
+              <div className="text-[11px] text-[#888] mt-0.5">Cleaning · Booked</div>
+            </div>
+          </div>
+
+          <div className="border-t border-[#F0EDE5]" />
+
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0 border border-[#F0EDE5]" style={{ borderRadius: 100 }}>J</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] text-[#888]">James Turner</span>
+                <span className="text-[10px] text-[#B0B0B0] font-mono">11:08 AM</span>
+              </div>
+              <div className="text-[11px] text-[#888] mt-0.5">Checkup · Booked</div>
+            </div>
+          </div>
+
+          <div className="border-t border-[#F0EDE5]" />
+
+          {/* New entry */}
+          <div className="flex items-center gap-3 transition-all duration-700" style={{
+            opacity: active ? 1 : 0.4,
+            transform: active ? "translateY(0)" : "translateY(-4px)",
+          }}>
+            <div className="h-7 w-7 bg-[#111] text-white flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>S</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] font-medium text-[#111]">Sarah Patel</span>
+                <span className="text-[10px] text-[#002FD2] font-mono">Just now</span>
+              </div>
+              <div className="text-[11px] text-[#002FD2] mt-0.5">Cleaning · Booked</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Summary */}
+        <div className="mt-4 pt-3 border-t border-[#F0EDE5] flex items-center justify-between">
+          <span className="text-[10px] text-[#B0B0B0]">12 calls today</span>
+          <span className="text-[10px] font-medium text-[#002FD2]">All answered</span>
+        </div>
       </div>
     </div>
   );

@@ -14,10 +14,7 @@ export function Footer() {
             <p className="text-[13px] text-[#666] leading-[1.6] max-w-[280px] mb-4">
               {COPY.footer.description}
             </p>
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-              <span className="text-[12px] text-[#666]">{COPY.footer.status}</span>
-            </div>
+            <span className="text-[12px] text-[#666]">{COPY.footer.status}</span>
           </div>
 
           <div>

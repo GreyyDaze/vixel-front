@@ -57,7 +57,6 @@ export const COPY = {
       "Answer calls when your team is busy",
       "Handle calls after business hours",
       "Book, reschedule, and confirm appointments",
-      "Send a reminder 24 hours before",
       "Transfer urgent calls to the right person",
       "Answer common questions automatically",
       "Handle multiple calls at the same time",
@@ -122,9 +121,9 @@ export const COPY = {
 
   // ============ CTA ============
   cta: {
-    headline: "Stop losing calls.",
+    headline: "You handle the work. We handle the phone.",
+    subhead: "End every day knowing nothing slipped through.",
     ctaPrimary: "Book a demo",
-    ctaSecondary: "Talk to the team",
   },
 
   // ============ FOOTER ============
