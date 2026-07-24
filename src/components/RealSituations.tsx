@@ -14,7 +14,6 @@ export function RealSituations() {
   return (
     <section id="situations" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
       <div className="mb-14 max-w-[640px]">
-        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.realSituations.label}</div>
         <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111] mb-4">
           {COPY.realSituations.headline}
         </h2>

@@ -4,7 +4,6 @@ export function HowItWorks() {
   return (
     <section id="how" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
       <div className="mb-16 max-w-[640px]">
-        <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.howItWorks.label}</div>
         <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111]">
           {COPY.howItWorks.headline}
         </h2>
@@ -25,7 +24,6 @@ export function HowItWorks() {
 
             {/* Text below */}
             <div className="px-1">
-              <div className="text-[11px] text-[#999] uppercase tracking-wider mb-2">Step {step.num}</div>
               <h3 className="text-[20px] font-medium text-[#111] mb-2 tracking-[-0.01em] group-hover:text-[#6B7FFF] transition-colors duration-300">{step.title}</h3>
               <p className="text-[14px] text-[#666] leading-[1.6]">{step.desc}</p>
             </div>

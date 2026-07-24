@@ -5,7 +5,6 @@ export function Dashboard() {
     <section id="dashboard" className="w-full" style={{ background: "#0a0a0a" }}>
       <div className="max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
         <div className="mb-12 max-w-[640px]">
-          <div className="text-[11px] text-[#666] uppercase tracking-wider mb-3">{COPY.dashboard.label}</div>
           <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-white mb-4">
             {COPY.dashboard.headline}
           </h2>
