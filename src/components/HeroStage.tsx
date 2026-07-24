@@ -100,7 +100,7 @@ export function HeroStage() {
 // ============================================================
 function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookingsCount: number }) {
   return (
-    <div className="relative w-full h-full bg-white rounded-[12px] border border-[#eee] shadow-2xl overflow-hidden">
+    <div className="relative w-full h-full bg-white rounded-[12px] border border-[#eee] overflow-hidden">
       <div className="h-full grid grid-cols-[180px_1fr]">
         <div className="border-r border-[#eee] p-3 bg-white">
           <div className="flex items-center gap-2 px-2 py-2 mb-3">

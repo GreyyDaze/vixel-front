@@ -38,6 +38,7 @@ export function Hero() {
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundBlendMode: "multiply",
+          opacity: 0.75,
         }}
       >
         <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
