@@ -121,7 +121,8 @@ export const COPY = {
 
   // ============ CTA ============
   cta: {
-    headline: "Stop losing calls.",
+    headline: "Every call answered. Every appointment kept.",
+    subhead: "End your day knowing every caller reached you. Nothing slipped through.",
     ctaPrimary: "Book a demo",
     ctaSecondary: "Talk to the team",
   },
