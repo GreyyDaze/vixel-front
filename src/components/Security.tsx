@@ -38,13 +38,13 @@ export function Security() {
 function RedactionDemo() {
   return (
     <div
-      className="rounded-[12px] overflow-hidden border border-[#e8e5f0] transition-all duration-300 hover:border-[#c8c2e8] hover:scale-[1.01]"
+      className="rounded-[12px] overflow-hidden border border-[#e0dff0]"
       style={{
         boxShadow: "0 1px 3px rgba(107, 127, 255, 0.03), 0 4px 12px -4px rgba(107, 127, 255, 0.05)",
-        background: "radial-gradient(ellipse at 50% 30%, rgba(240, 238, 248, 0.9) 0%, rgba(248, 247, 251, 0.6) 60%, #f8f7fb 100%)",
+        background: "radial-gradient(ellipse at 50% 30%, rgba(238, 240, 255, 0.9) 0%, rgba(240, 238, 248, 0.6) 60%, #f8f7fb 100%)",
       }}
     >
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[#e8e5f0] bg-white/60">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[#e0dff0] bg-white/60">
         <div className="flex items-center gap-2">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#6B7FFF" strokeWidth="1.5">
             <rect x="3" y="7" width="10" height="7" rx="1" />

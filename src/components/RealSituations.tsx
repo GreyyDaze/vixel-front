@@ -1,5 +1,7 @@
 import { COPY } from "@/content/copy";
 
+const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E")`;
+
 const situations = [
   { title: "Answer calls when your team is busy", visual: <BusyCall /> },
   { title: "Handle calls after business hours", visual: <AfterHours /> },
@@ -26,17 +28,17 @@ export function RealSituations() {
         {situations.map((s, i) => (
           <div
             key={i}
-            className={`rounded-[12px] overflow-hidden flex flex-col group transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${i === 0 ? "md:col-span-2 lg:col-span-2" : ""}`}
+            className={`rounded-[12px] overflow-hidden flex flex-col border border-[#e0dff0] ${i === 0 ? "md:col-span-2 lg:col-span-2" : ""}`}
             style={{
-              backgroundColor: "#f0eef8",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E")`,
+              background: `linear-gradient(135deg, #eef0ff 0%, #f0eef8 50%, #f8f7fb 100%)`,
+              backgroundImage: NOISE_BG,
             }}
           >
             <div className="flex-1 min-h-[200px] flex items-center justify-center p-6">
               {s.visual}
             </div>
             <div className="px-5 pb-5 pt-0">
-              <h3 className="text-[14px] font-medium text-[#111] leading-[1.4] group-hover:text-[#6B7FFF] transition-colors duration-300">{s.title}</h3>
+              <h3 className="text-[14px] font-medium text-[#111] leading-[1.4]">{s.title}</h3>
             </div>
           </div>
         ))}
@@ -65,7 +67,7 @@ function Transcript({ items }: { items: { speaker: string; time?: string; text: 
 
 function BusyCall() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e8e5f0] p-4 w-full max-w-[320px] transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
       <Transcript items={[
         { speaker: "Caller", time: "0:12", text: "Hi, I'd like to book a dental cleaning." },
         { speaker: "Vox", time: "0:14", text: "Of course. Mornings or afternoons?", isAI: true },
@@ -77,7 +79,7 @@ function BusyCall() {
 
 function AfterHours() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e8e5f0] p-4 w-full max-w-[320px] transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
       <div className="flex items-center gap-2 mb-3">
         <span className="text-[10px] text-[#6B7FFF] font-medium">After hours</span>
         <span className="text-[10px] text-[#999] font-mono ml-auto">9:42 PM</span>
@@ -121,7 +123,7 @@ function Reminder() {
   return (
     <div className="w-full max-w-[260px] space-y-2">
       <div className="text-[10px] text-[#999] uppercase tracking-wider">SMS • 24h before</div>
-      <div className="bg-white border border-[#e8e5f0] rounded-[10px] p-3 transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+      <div className="bg-white border border-[#e0dff0] rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
         <div className="text-[9px] text-[#6B7FFF] mb-1 font-medium">Vox Front</div>
         <p className="text-[11px] text-[#111] leading-[1.4]">
           Hi Sarah — reminder: dental cleaning tomorrow at 2:30 PM with Dr. Chen. Reply C to confirm.
@@ -137,7 +139,7 @@ function Reminder() {
 
 function Urgent() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e8e5f0] p-4 w-full max-w-[320px] transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
       <div className="flex items-center gap-2 mb-3">
         <span className="text-[10px] text-[#FF6B7F] font-medium">Urgent</span>
       </div>
@@ -151,7 +153,7 @@ function Urgent() {
 
 function Questions() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e8e5f0] p-4 w-full max-w-[320px] transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
       <Transcript items={[
         { speaker: "Caller", time: "0:03", text: "What are your hours and do you take insurance?" },
         { speaker: "Vox", time: "0:04", text: "Mon–Fri 8–6, Sat 9–2. We take Delta, MetLife, Cigna, Aetna.", isAI: true },
@@ -169,7 +171,7 @@ function Multiple() {
         { name: "James T.", status: "Question" },
         { name: "Linda P.", status: "Transfer" },
       ].map((c, i) => (
-        <div key={i} className="bg-white border border-[#e8e5f0] rounded-[8px] p-2.5 flex items-center justify-between transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+        <div key={i} className="bg-white border border-[#e0dff0] rounded-[8px] p-2.5 flex items-center justify-between" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] font-medium text-[#111]">{c.name}</span>
           </div>
