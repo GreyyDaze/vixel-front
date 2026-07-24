@@ -57,7 +57,6 @@ export const COPY = {
       "Answer calls when your team is busy",
       "Handle calls after business hours",
       "Book, reschedule, and confirm appointments",
-      "Send a reminder 24 hours before",
       "Transfer urgent calls to the right person",
       "Answer common questions automatically",
       "Handle multiple calls at the same time",
