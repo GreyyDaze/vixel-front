@@ -1,14 +1,13 @@
 "use client";
 
-import { AnimatedVoiceField } from "./AnimatedVoiceField";
 import { HeroStage } from "./HeroStage";
 import { Button } from "@/components/ui/button";
 import { COPY } from "@/content/copy";
 
 export function Hero() {
   return (
-    <section className="w-full pb-20 lg:pb-24">
-      {/* Asymmetric layout: headline left, CTAs right — matching Agentwork */}
+    <section className="w-full">
+      {/* White section: headline, subhead, CTAs — matches Agentwork's clean top */}
       <div className="max-w-[1320px] mx-auto px-8 lg:px-16 pt-8 lg:pt-14 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 items-start">
           <div>
@@ -30,17 +29,24 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Product demo — full-width on atmosphere, no border, floating */}
-      <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
-        <div
-          className="relative w-full rounded-[12px] overflow-hidden"
-          style={{
-            boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06), 0 12px 28px -8px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(0,0,0,0.08)",
-          }}
-        >
-          <div className="relative w-full aspect-[16/8.5] overflow-hidden">
-            <AnimatedVoiceField />
-            <div className="absolute inset-0 flex items-center justify-center">
+      {/* Atmosphere section: product demo floating on image */}
+      <div
+        className="w-full py-12 lg:py-16"
+        style={{
+          backgroundColor: "#c8d4e0",
+          backgroundImage: "url('/hero-atmosphere.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+        }}
+      >
+        <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
+          <div
+            className="relative w-full rounded-[12px] overflow-hidden"
+            style={{
+              boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06), 0 12px 28px -8px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div className="relative w-full aspect-[16/8.5] overflow-hidden">
               <HeroStage />
             </div>
           </div>

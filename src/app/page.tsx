@@ -12,20 +12,9 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen w-full" style={{ backgroundColor: "#FDFDFC" }}>
-      {/* Atmosphere block: nav + hero content + product demo */}
-      <div
-        className="relative w-full"
-        style={{
-          backgroundColor: "#c8d4e0",
-          backgroundImage: "url('/hero-atmosphere.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-        }}
-      >
-        <Header transparent />
-        <Hero />
-      </div>
-
+      {/* Split nav: Header on white, separate from atmosphere */}
+      <Header />
+      <Hero />
       <HowItWorks />
       <RealSituations />
       <Dashboard />

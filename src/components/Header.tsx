@@ -2,11 +2,11 @@ import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { COPY } from "@/content/copy";
 
-export function Header({ transparent = false }: { transparent?: boolean }) {
+export function Header() {
   return (
-    <header className={`w-full px-8 lg:px-16 py-5 flex items-center justify-between max-w-[1320px] mx-auto relative z-20 ${transparent ? "bg-transparent" : ""}`}>
+    <header className="w-full px-8 lg:px-16 py-5 flex items-center justify-between max-w-[1320px] mx-auto">
       <a href="#" className="flex items-center gap-2">
-        <Logo className="h-5 w-5" color={transparent ? "#111" : "#002FD2"} />
+        <Logo className="h-5 w-5" color="#002FD2" />
         <span className="text-[14px] font-medium tracking-tight text-[#111]">{COPY.header.brand}</span>
       </a>
       <nav className="hidden md:flex items-center gap-7">
