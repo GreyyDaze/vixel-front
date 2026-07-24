@@ -1,5 +1,5 @@
 import { COPY } from "@/content/copy";
-import { Phone, Calendar, Clock, AlertTriangle, MessageSquare, Users, ArrowRight } from "lucide-react";
+import { Phone, Calendar, Clock, MessageSquare, Users, ArrowRight } from "lucide-react";
 
 const situations = [
   { title: "Answer calls when your team is busy", visual: <BusyCallPanel /> },
