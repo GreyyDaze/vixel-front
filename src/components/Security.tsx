@@ -10,7 +10,7 @@ function CheckIcon() {
 
 export function Security() {
   return (
-    <section className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
+    <section className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div>
           <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.security.label}</div>
@@ -38,8 +38,14 @@ export function Security() {
 
 function RedactionDemo() {
   return (
-    <div className="bg-white border border-[#eee] rounded-[12px] overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[#eee]">
+    <div
+      className="rounded-[12px] overflow-hidden border border-[#f0f0f0]"
+      style={{
+        boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06), 0 12px 28px -8px rgba(0,0,0,0.04)",
+        background: "radial-gradient(ellipse at 50% 30%, rgba(245, 242, 237, 0.9) 0%, rgba(250, 249, 247, 0.6) 60%, #fafafa 100%)",
+      }}
+    >
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[#eee] bg-white/60">
         <div className="flex items-center gap-2">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#111" strokeWidth="1.5">
             <rect x="3" y="7" width="10" height="7" rx="1" />
@@ -53,16 +59,16 @@ function RedactionDemo() {
         </div>
       </div>
 
-      <div className="p-5 space-y-4">
+      <div className="p-5 space-y-4 bg-white/40">
         <div>
           <p className="text-[10px] text-[#999] uppercase tracking-wider mb-2">Original transcript</p>
-          <p className="text-[12px] text-[#111] leading-[1.6] font-mono bg-[#fafafa] rounded-md p-3">
+          <p className="text-[12px] text-[#111] leading-[1.6] font-mono bg-white rounded-md p-3 border border-[#f0f0f0]">
             "My card number is <span className="bg-amber-50 text-amber-800 px-1 rounded">4532-1234-5678-9012</span> and my SSN is <span className="bg-amber-50 text-amber-800 px-1 rounded">123-45-6789</span>. Call me at <span className="bg-amber-50 text-amber-800 px-1 rounded">(415) 555-0142</span>."
           </p>
         </div>
         <div>
           <p className="text-[10px] text-[#999] uppercase tracking-wider mb-2">After redaction</p>
-          <p className="text-[12px] text-[#111] leading-[1.6] font-mono bg-[#fafafa] rounded-md p-3">
+          <p className="text-[12px] text-[#111] leading-[1.6] font-mono bg-white rounded-md p-3 border border-[#f0f0f0]">
             "My card number is <span className="bg-[#111] text-white px-1 rounded font-semibold">████-████-████-9012</span> and my SSN is <span className="bg-[#111] text-white px-1 rounded font-semibold">███-██-████</span>. Call me at <span className="bg-[#111] text-white px-1 rounded font-semibold">(███) ███-████</span>."
           </p>
         </div>

@@ -28,35 +28,60 @@ function ChartIcon() {
 
 export function HowItWorks() {
   return (
-    <section id="how" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-20">
-      <div className="mb-14">
+    <section id="how" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
+      <div className="mb-16">
         <div className="text-[11px] text-[#999] uppercase tracking-wider mb-3">{COPY.howItWorks.label}</div>
         <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111] max-w-[680px]">
           {COPY.howItWorks.headline}
         </h2>
       </div>
 
-      <div className="space-y-0">
-        {COPY.howItWorks.steps.map((step, i) => (
-          <Step
-            key={step.num}
-            num={step.num}
-            icon={i === 0 ? <PhoneIcon /> : i === 1 ? <CalendarIcon /> : <ChartIcon />}
-            title={step.title}
-            desc={step.desc}
-            visual={i === 0 ? <AnswerVisual /> : i === 1 ? <BookVisual /> : <DashboardVisual />}
-            reverse={i % 2 !== 0}
-          />
-        ))}
+      {/* Steps 01 and 02 — same direction, breaking the alternation */}
+      {COPY.howItWorks.steps.slice(0, 2).map((step, i) => (
+        <Step
+          key={step.num}
+          num={step.num}
+          icon={i === 0 ? <PhoneIcon /> : <CalendarIcon />}
+          title={step.title}
+          desc={step.desc}
+          visual={i === 0 ? <AnswerVisual /> : <BookVisual />}
+          backdrop={i === 0
+            ? "radial-gradient(ellipse at 60% 40%, rgba(245, 240, 232, 0.6) 0%, rgba(250, 248, 244, 0.3) 60%, transparent 100%)"
+            : "radial-gradient(ellipse at 60% 40%, rgba(228, 238, 232, 0.6) 0%, rgba(240, 248, 242, 0.3) 60%, transparent 100%)"
+          }
+        />
+      ))}
+
+      {/* Step 03 — different composition: text above, visual below full-width */}
+      <div className="pt-14 border-t border-[#eee]">
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-8 w-8 rounded-[8px] border border-[#eee] flex items-center justify-center text-[#111]">
+              <ChartIcon />
+            </div>
+            <span className="text-[11px] text-[#999] uppercase tracking-wider">Step 03</span>
+          </div>
+          <h3 className="text-[26px] tracking-[-0.02em] font-medium text-[#111] mb-3">{COPY.howItWorks.steps[2].title}</h3>
+          <p className="text-[14px] text-[#666] leading-[1.65] max-w-[480px]">{COPY.howItWorks.steps[2].desc}</p>
+        </div>
+        <div
+          className="rounded-[12px] overflow-hidden border border-[#f0f0f0] p-6"
+          style={{
+            boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06), 0 12px 28px -8px rgba(0,0,0,0.04)",
+            background: "radial-gradient(ellipse at 50% 40%, rgba(232, 234, 238, 0.6) 0%, rgba(242, 244, 248, 0.3) 60%, transparent 100%)",
+          }}
+        >
+          <DashboardVisualFull />
+        </div>
       </div>
     </section>
   );
 }
 
-function Step({ num, icon, title, desc, visual, reverse = false }: { num: string; icon: React.ReactNode; title: string; desc: string; visual: React.ReactNode; reverse?: boolean }) {
+function Step({ num, icon, title, desc, visual, backdrop }: { num: string; icon: React.ReactNode; title: string; desc: string; visual: React.ReactNode; backdrop: string }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center py-14 border-t border-[#eee]">
-      <div className={reverse ? "lg:order-2" : ""}>
+      <div>
         <div className="flex items-center gap-3 mb-4">
           <div className="h-8 w-8 rounded-[8px] border border-[#eee] flex items-center justify-center text-[#111]">
             {icon}
@@ -66,7 +91,14 @@ function Step({ num, icon, title, desc, visual, reverse = false }: { num: string
         <h3 className="text-[26px] tracking-[-0.02em] font-medium text-[#111] mb-3">{title}</h3>
         <p className="text-[14px] text-[#666] leading-[1.65] max-w-[420px]">{desc}</p>
       </div>
-      <div className={reverse ? "lg:order-1" : ""}>
+      <div
+        className="rounded-[12px] overflow-hidden border border-[#f0f0f0] p-6 flex items-center justify-center"
+        style={{
+          boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06), 0 12px 28px -8px rgba(0,0,0,0.04)",
+          background: backdrop,
+          minHeight: "280px",
+        }}
+      >
         {visual}
       </div>
     </div>
@@ -75,7 +107,7 @@ function Step({ num, icon, title, desc, visual, reverse = false }: { num: string
 
 function AnswerVisual() {
   return (
-    <div className="bg-white border border-[#eee] rounded-[10px] p-5">
+    <div className="bg-white border border-[#f0f0f0] rounded-[10px] p-5 w-full max-w-[340px]" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06)" }}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
@@ -99,7 +131,7 @@ function AnswerVisual() {
 
 function BookVisual() {
   return (
-    <div className="bg-white border border-[#eee] rounded-[10px] p-5">
+    <div className="bg-white border border-[#f0f0f0] rounded-[10px] p-5 w-full max-w-[340px]" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06)" }}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className="h-4 w-4 rounded bg-gradient-to-br from-[#4285F4] via-[#34A853] to-[#FBBC04]"></div>
@@ -109,23 +141,23 @@ function BookVisual() {
       </div>
       <div className="space-y-1.5">
         {["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM"].map((t, i) => (
-          <div key={i} className="h-7 bg-[#fafafa] rounded text-[10px] text-[#999] flex items-center px-2.5">{t}</div>
+          <div key={i} className="h-7 bg-[#fafafa] rounded text-[10px] text-[#999] flex items-center px-2.5 border border-[#f5f5f5]">{t}</div>
         ))}
         <div className="h-12 bg-[#111] rounded text-white flex flex-col justify-center px-3 relative">
           <div className="text-[10px] font-medium">2:30 PM — Cleaning</div>
           <div className="text-[9px] opacity-70">Sarah Johnson • 60 min</div>
         </div>
         {["3:30 PM", "4:00 PM", "5:00 PM"].map((t, i) => (
-          <div key={i} className="h-7 bg-[#fafafa] rounded text-[10px] text-[#999] flex items-center px-2.5">{t}</div>
+          <div key={i} className="h-7 bg-[#fafafa] rounded text-[10px] text-[#999] flex items-center px-2.5 border border-[#f5f5f5]">{t}</div>
         ))}
       </div>
     </div>
   );
 }
 
-function DashboardVisual() {
+function DashboardVisualFull() {
   return (
-    <div className="bg-white border border-[#eee] rounded-[10px] p-5">
+    <div className="bg-white border border-[#f0f0f0] rounded-[10px] p-5 w-full" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.06)" }}>
       <div className="flex items-center justify-between mb-4">
         <span className="text-[12px] font-medium text-[#111]">Today's calls</span>
         <span className="text-[10px] text-emerald-600 font-medium">12 answered</span>
@@ -137,7 +169,7 @@ function DashboardVisual() {
           { time: "1:45 PM", name: "Rescheduled", dur: "1:22" },
           { time: "3:12 PM", name: "New booking", dur: "2:56" },
         ].map((c, i) => (
-          <div key={i} className="flex items-center justify-between py-2 border-b border-[#f5f5f5] last:border-0">
+          <div key={i} className="flex items-center justify-between py-2.5 border-b border-[#f5f5f5] last:border-0">
             <div>
               <div className="text-[12px] text-[#111]">{c.name}</div>
               <div className="text-[10px] text-[#999]">{c.time}</div>
