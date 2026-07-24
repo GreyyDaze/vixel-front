@@ -1,5 +1,5 @@
 import { COPY } from "@/content/copy";
-import { Phone, Calendar, Clock, MessageSquare, Users, ArrowRight } from "lucide-react";
+import { Phone, Calendar, Clock, MessageSquare, Users, ArrowRight, Search } from "lucide-react";
 
 const situations = [
   { title: "Answer calls when your team is busy", visual: <BusyCallPanel /> },
@@ -37,10 +37,10 @@ export function RealSituations() {
                 backgroundColor: '#F2F2F2',
               }}
             >
-              <div className="flex-1 min-h-[220px] flex items-center justify-center p-6 lg:p-8">
+              <div className="flex-1 min-h-[240px] flex items-center justify-center p-6 lg:p-8">
                 {s.visual}
               </div>
-              <div className="px-5 pb-5 pt-0">
+              <div className="px-5 pb-6 pt-0">
                 <h3 className="text-[14px] font-medium text-[#111] leading-[1.4]">{s.title}</h3>
               </div>
             </div>
@@ -51,49 +51,73 @@ export function RealSituations() {
   );
 }
 
-/* ─── BUSY CALL PANEL ── */
+/* ══════════════════════════════════════════════════════════════
+   SHARED DESIGN SYSTEM
+   ══════════════════════════════════════════════════════════════
+   Typography:
+     - 13px/600 → section titles
+     - 12px/400 → body text
+     - 11px/500 → labels
+     - 10px/400 → metadata (timestamps, sources)
+
+   Spacing: consistent 3/4/6/8 scale
+   Radius: 8px outer, 6px inner, 100% avatars
+   Shadow: 0 1px 2px rgba(0,0,0,0.04)
+*/
+
+const SHADOW = "0 1px 2px rgba(0,0,0,0.04)";
+const OUTER_RADIUS = "rounded-[8px]";
+const INNER_RADIUS = "rounded-[6px]";
+
+/* ══════════════════════════════════════════════════════════════
+   1. BUSY CALL — Dashboard showing AI handling while team busy
+   ══════════════════════════════════════════════════════════════ */
 function BusyCallPanel() {
   return (
     <div className="w-full max-w-[380px]">
-      <div className="bg-white rounded-[6px] p-4">
-        {/* Header */}
+      <div className={`bg-white ${OUTER_RADIUS} p-4`} style={{ boxShadow: SHADOW }}>
+        {/* App chrome */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded-[3px] bg-[#111] flex items-center justify-center">
-              <Phone size={11} strokeWidth={2} color="white" />
+          <div className="flex items-center gap-2.5">
+            <div className="h-7 w-7 bg-[#111] flex items-center justify-center" style={{ borderRadius: 6 }}>
+              <Phone size={13} strokeWidth={2} color="white" />
             </div>
-            <span className="text-[12px] font-medium text-[#111]">Clearview Dental</span>
-          </div>
-          <span className="text-[10px] text-[#999]">Live</span>
-        </div>
-
-        {/* Status */}
-        <div className="mb-4">
-          <span className="text-[10px] text-[#111]">Receptionist busy — Vox Front answering</span>
-        </div>
-
-        {/* Content - two column */}
-        <div className="flex gap-4">
-          {/* Transcript */}
-          <div className="flex-1">
-            <div className="text-[9px] text-[#999] uppercase tracking-wider mb-2">Current call</div>
-            <div className="space-y-2">
-              <div className="flex items-start gap-1.5">
-                <span className="text-[9px] text-[#999] font-medium w-8 shrink-0 mt-0.5">Caller</span>
-                <p className="text-[11px] text-[#111] leading-[1.4]">"Need a cleaning next Tuesday"</p>
-              </div>
-              <div className="flex items-start gap-1.5">
-                <span className="text-[9px] text-[#002FD2] font-medium w-8 shrink-0 mt-0.5">Vox</span>
-                <p className="text-[11px] text-[#111] leading-[1.4]">"2:30 or 4:00 PM?"</p>
-              </div>
+            <div>
+              <div className="text-[13px] font-semibold text-[#111]">Clearview Dental</div>
+              <div className="text-[11px] text-[#888]">2 calls in queue</div>
             </div>
           </div>
+          <span className="text-[10px] text-[#888]">2:34 PM</span>
+        </div>
 
-          {/* Action */}
-          <div className="w-[120px] shrink-0">
-            <div className="text-[9px] text-[#999] uppercase tracking-wider mb-2">Action</div>
-            <div className="text-[10px] text-[#111]">Booking in progress</div>
-            <div className="text-[9px] text-[#999] mt-0.5">Checking availability...</div>
+        {/* Active call - no label, just the data */}
+        <div className={`bg-[#FAFAFA] ${INNER_RADIUS} p-3.5 mb-3`}>
+          <div className="flex items-start gap-2.5 mb-3">
+            <div className="h-7 w-7 bg-[#111] text-white flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>S</div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[12px] font-medium text-[#111] mb-0.5">Sarah Patel</div>
+              <div className="text-[10px] text-[#888]">Dental cleaning · 0:42</div>
+            </div>
+            <span className="text-[10px] font-medium text-[#002FD2] bg-[#EEF0FF] px-2 py-0.5 shrink-0" style={{ borderRadius: 4 }}>Handling</span>
+          </div>
+          <div className="border-t border-[#F0F0F0] pt-3">
+            <div className="flex items-start gap-1.5">
+              <span className="text-[10px] font-semibold text-[#888] w-6 shrink-0 mt-0.5">S</span>
+              <p className="text-[11px] text-[#333] leading-[1.45]">"Need a cleaning next Tuesday afternoon"</p>
+            </div>
+            <div className="flex items-start gap-1.5 mt-2">
+              <span className="text-[10px] font-semibold text-[#002FD2] w-6 shrink-0 mt-0.5">V</span>
+              <p className="text-[11px] text-[#333] leading-[1.45]">"Tuesday 2:30 or 4:00 PM?"</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Next in queue - supporting info, lighter */}
+        <div className="flex items-center gap-2.5">
+          <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>R</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[12px] text-[#888]">Robert Chen</div>
+            <div className="text-[10px] text-[#B0B0B0]">Reschedule · Waiting</div>
           </div>
         </div>
       </div>
@@ -101,80 +125,101 @@ function BusyCallPanel() {
   );
 }
 
-/* ─── AFTER HOURS PANEL ─── */
+/* ══════════════════════════════════════════════════════════════
+   2. AFTER HOURS — Call log with late timestamp
+   ══════════════════════════════════════════════════════════════ */
 function AfterHoursPanel() {
   return (
     <div className="w-full max-w-[280px]">
-      <div className="bg-white rounded-[6px] p-4">
+      <div className={`bg-white ${OUTER_RADIUS} p-4`} style={{ boxShadow: SHADOW }}>
         {/* Header */}
-        <div className="flex items-center gap-2 mb-4">
-          <Clock size={13} strokeWidth={1.5} color="#111" />
-          <span className="text-[12px] font-medium text-[#111]">Call log</span>
-          <span className="text-[9px] text-[#999] ml-auto">Today</span>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <Clock size={14} strokeWidth={2} color="#111" />
+            <span className="text-[13px] font-semibold text-[#111]">Today's calls</span>
+          </div>
+          <span className="text-[10px] text-[#B0B0B0]">9 calls</span>
         </div>
 
-        {/* Calls */}
+        {/* Calls - hierarchy via weight and color, not boxes */}
         <div className="space-y-3">
-          {/* After hours call */}
-          <div className="flex items-center gap-3">
-              <div className="h-7 w-7 rounded-full bg-[#111] flex items-center justify-center">
-                <span className="text-[9px] font-bold text-white">J</span>
+          {/* Primary: after-hours call */}
+          <div className="flex items-start gap-2.5">
+            <div className="h-7 w-7 bg-[#111] text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5" style={{ borderRadius: 100 }}>J</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] font-medium text-[#111]">James Turner</span>
+                <span className="text-[10px] text-[#B0B0B0] font-mono">9:42 PM</span>
               </div>
-            <div className="flex-1">
-              <div className="text-[11px] font-medium text-[#111]">James T.</div>
-              <div className="text-[9px] text-[#002FD2]">After hours · Booked</div>
+              <div className="text-[11px] text-[#002FD2] mt-0.5">After hours · Booked 10:00 AM Sat</div>
             </div>
-            <span className="text-[9px] text-[#999] font-mono">9:42 PM</span>
           </div>
 
-          {/* Other calls */}
-          {[
-            { name: "Maria S.", time: "2:14 PM" },
-            { name: "Linda P.", time: "11:08 AM" },
-          ].map((c, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <div className="h-7 w-7 rounded-full bg-[#111] flex items-center justify-center">
-                <span className="text-[9px] font-bold text-white">{c.name[0]}</span>
+          <div className="border-t border-[#F0F0F0]" />
+
+          {/* Secondary: regular calls, lighter */}
+          <div className="flex items-start gap-2.5">
+            <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5" style={{ borderRadius: 100 }}>M</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] text-[#888]">Maria Santos</span>
+                <span className="text-[10px] text-[#B0B0B0] font-mono">2:14 PM</span>
               </div>
-              <div className="flex-1">
-                <div className="text-[11px] text-[#111]">{c.name}</div>
-              </div>
-              <span className="text-[9px] text-[#999] font-mono">{c.time}</span>
+              <div className="text-[11px] text-[#888] mt-0.5">Cleaning · Confirmed</div>
             </div>
-          ))}
+          </div>
+
+          <div className="flex items-start gap-2.5">
+            <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5" style={{ borderRadius: 100 }}>L</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] text-[#888]">Linda Park</span>
+                <span className="text-[10px] text-[#B0B0B0] font-mono">11:08 AM</span>
+              </div>
+              <div className="text-[11px] text-[#888] mt-0.5">Question · Resolved</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-/* ── BOOKING PANEL ─── */
+/* ══════════════════════════════════════════════════════════════
+   3. BOOKING — Google Calendar with new booking
+   ══════════════════════════════════════════════════════════════ */
 function BookingPanel() {
   return (
     <div className="w-full max-w-[280px]">
-      <div className="bg-white rounded-[6px] p-4">
-        {/* Header */}
-        <div className="flex items-center gap-2 mb-4">
-          <Calendar size={13} strokeWidth={1.5} color="#111" />
-          <span className="text-[12px] font-medium text-[#111]">Google Calendar</span>
-          <span className="text-[9px] text-[#999] ml-auto">Tue, Mar 18</span>
+      <div className={`bg-white ${OUTER_RADIUS} p-4`} style={{ boxShadow: SHADOW }}>
+        {/* Calendar chrome */}
+        <div className="flex items-center gap-2.5 mb-4">
+          <Calendar size={14} strokeWidth={2} color="#111" />
+          <span className="text-[13px] font-semibold text-[#111]">Google Calendar</span>
+          <span className="text-[10px] text-[#B0B0B0] ml-auto">Tue, Mar 18</span>
         </div>
 
-        {/* Time slots */}
-        <div className="space-y-1.5">
+        {/* Day view */}
+        <div className="space-y-0">
           {["9:00", "10:00", "11:00", "12:00", "1:00"].map((t) => (
-            <div key={t} className="h-6 flex items-center px-2.5">
-              <span className="text-[9px] text-[#999]">{t}</span>
+            <div key={t} className="flex items-center h-7">
+              <span className="text-[10px] text-[#C0C0C0] w-10 font-mono">{t}</span>
             </div>
           ))}
-          {/* New booking */}
-          <div className="h-8 bg-[#002FD2] rounded-[3px] flex items-center px-2.5">
-            <span className="text-[10px] font-medium text-white">2:30 — Cleaning</span>
-            <span className="text-[9px] text-white/70 ml-auto">Sarah P.</span>
+          {/* Booking */}
+          <div className="flex items-start h-10">
+            <span className="text-[10px] text-[#C0C0C0] w-10 font-mono mt-0.5">2:00</span>
+            <div className="flex-1 bg-[#002FD2] px-2.5 py-1.5" style={{ borderRadius: 6 }}>
+              <div className="text-[11px] font-medium text-white leading-tight">Cleaning — Sarah Patel</div>
+              <div className="text-[10px] text-white/70 mt-0.5">2:30 PM · 60 min</div>
+            </div>
+          </div>
+          <div className="flex items-start h-10">
+            <span className="text-[10px] text-[#C0C0C0] w-10 font-mono mt-0.5">3:00</span>
           </div>
           {["3:30", "4:00", "5:00"].map((t) => (
-            <div key={t} className="h-6 flex items-center px-2.5">
-              <span className="text-[9px] text-[#999]">{t}</span>
+            <div key={t} className="flex items-center h-7">
+              <span className="text-[10px] text-[#C0C0C0] w-10 font-mono">{t}</span>
             </div>
           ))}
         </div>
@@ -183,114 +228,155 @@ function BookingPanel() {
   );
 }
 
-/* ─── URGENT PANEL ─── */
+/* ══════════════════════════════════════════════════════════════
+   4. URGENT — Agent handling a live call (agent view, not dashboard)
+   ═════════════════════════════════════════════════════════════ */
 function UrgentPanel() {
   return (
     <div className="w-full max-w-[380px]">
-      <div className="bg-white rounded-[6px] p-4">
-        {/* Header */}
+      <div className={`bg-white ${OUTER_RADIUS} p-4`} style={{ boxShadow: SHADOW }}>
+        {/* Agent header */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded-[3px] bg-[#111] flex items-center justify-center">
-              <Phone size={11} strokeWidth={2} color="white" />
+          <div className="flex items-center gap-2.5">
+            <div className="h-7 w-7 bg-[#111] flex items-center justify-center" style={{ borderRadius: 6 }}>
+              <Phone size={13} strokeWidth={2} color="white" />
             </div>
-            <span className="text-[12px] font-medium text-[#111]">Live call</span>
+            <div>
+              <div className="text-[13px] font-semibold text-[#111]">Vox Front</div>
+              <div className="text-[11px] text-[#888]">Agent active</div>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-[#EF4444]">Urgent</span>
+          <span className="text-[10px] font-medium text-[#EF4444]">0:05</span>
+        </div>
+
+        {/* Caller */}
+        <div className="flex items-start gap-2.5 mb-4">
+          <div className="h-7 w-7 bg-[#111] text-white flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>L</div>
+          <div>
+            <div className="text-[12px] font-medium text-[#111]">Linda Park</div>
+            <div className="text-[10px] text-[#888]">+1 (408) 555-0167</div>
           </div>
         </div>
 
-        {/* Caller message */}
-        <div className="flex items-start gap-2 mb-4">
-          <div className="h-6 w-6 rounded-full bg-[#111] flex items-center justify-center shrink-0">
-            <span className="text-[9px] font-bold text-white">L</span>
-          </div>
-          <p className="text-[11px] text-[#111] leading-[1.5] pt-0.5">"My tooth is cracked — I need help now."</p>
-        </div>
+        {/* Urgent chip */}
+        <div className="text-[10px] font-semibold text-[#EF4444] uppercase tracking-wider mb-3">Emergency</div>
 
-        {/* Transfer */}
+        {/* What Vox heard */}
+        <p className="text-[12px] text-[#333] leading-[1.5] mb-4">"My tooth is cracked — I need to see someone immediately."</p>
+
+        {/* Transfer action */}
         <div className="flex items-center gap-3">
-          <ArrowRight size={14} strokeWidth={1.5} color="#002FD2" />
+          <ArrowRight size={14} strokeWidth={2} color="#002FD2" />
           <div className="flex-1">
-            <div className="text-[11px] text-[#111]">Transferring to Dr. Chen</div>
-            <div className="text-[9px] text-[#999]">Emergency line · Ringing...</div>
+            <div className="text-[12px] font-medium text-[#111]">Connecting to Dr. Chen</div>
+            <div className="text-[10px] text-[#888] mt-0.5">Emergency line · Ringing</div>
           </div>
-          <div className="h-5 w-5 rounded-full border-2 border-[#002FD2] border-t-transparent animate-spin"></div>
+          <div className="h-5 w-5 border-2 border-[#002FD2] border-t-transparent animate-spin" style={{ borderRadius: 100 }} />
         </div>
       </div>
     </div>
   );
 }
 
-/* ─── QUESTIONS PANEL ─── */
+/* ══════════════════════════════════════════════════════════════
+   5. QUESTIONS — AI knowledge base answering (agent view)
+   ══════════════════════════════════════════════════════════════ */
 function QuestionsPanel() {
   return (
     <div className="w-full max-w-[280px]">
-      <div className="bg-white rounded-[6px] p-4">
+      <div className={`bg-white ${OUTER_RADIUS} p-4`} style={{ boxShadow: SHADOW }}>
         {/* Header */}
-        <div className="flex items-center gap-2 mb-4">
-          <MessageSquare size={13} strokeWidth={1.5} color="#111" />
-          <span className="text-[12px] font-medium text-[#111]">Knowledge base</span>
-          <span className="text-[9px] text-[#10B981] ml-auto">Auto-answered</span>
+        <div className="flex items-center gap-2.5 mb-4">
+          <MessageSquare size={14} strokeWidth={2} color="#111" />
+          <span className="text-[13px] font-semibold text-[#111]">Knowledge base</span>
         </div>
 
-        {/* Q&A */}
-        <div className="space-y-3">
+        {/* Q&A - no labels, just natural flow */}
+        <div className="space-y-3.5">
           <div>
-            <div className="text-[9px] text-[#999] uppercase tracking-wider mb-1">Asked</div>
-            <p className="text-[11px] text-[#111] leading-[1.5]">"Hours and insurance?"</p>
+            <p className="text-[12px] text-[#333] leading-[1.5] mb-2">"What are your hours and do you take insurance?"</p>
           </div>
-          <div>
-            <div className="text-[9px] text-[#002FD2] uppercase tracking-wider mb-1">Answered</div>
-            <p className="text-[11px] text-[#666] leading-[1.5]">Mon–Fri 8–6, Sat 9–2. Delta, MetLife, Cigna, Aetna.</p>
+          <div className="border-t border-[#F0F0F0] pt-3.5">
+            <p className="text-[12px] text-[#111] leading-[1.5] mb-1.5">Mon–Fri 8 AM–6 PM, Saturday 9–2.</p>
+            <p className="text-[12px] text-[#111] leading-[1.5]">We accept Delta, MetLife, Cigna, and Aetna.</p>
           </div>
+        </div>
+
+        {/* Source metadata - subtle, at bottom */}
+        <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#F0F0F0]">
+          <Search size={10} strokeWidth={2} color="#C0C0C0" />
+          <span className="text-[10px] text-[#C0C0C0]">3 sources · Updated 2 days ago</span>
         </div>
       </div>
     </div>
   );
 }
 
-/* ─── MULTIPLE PANEL ─── */
+/* ══════════════════════════════════════════════════════════════
+   6. MULTIPLE — Dashboard showing concurrent calls
+   ══════════════════════════════════════════════════════════════ */
 function MultiplePanel() {
   return (
     <div className="w-full max-w-[520px]">
-      <div className="bg-white rounded-[6px] p-4">
+      <div className={`bg-white ${OUTER_RADIUS} p-4`} style={{ boxShadow: SHADOW }}>
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Users size={13} strokeWidth={1.5} color="#111" />
-            <span className="text-[12px] font-medium text-[#111]">Active calls</span>
+          <div className="flex items-center gap-2.5">
+            <Users size={14} strokeWidth={2} color="#111" />
+            <span className="text-[13px] font-semibold text-[#111]">Active calls</span>
           </div>
-          <span className="text-[10px] text-[#002FD2]">3 concurrent</span>
+          <span className="text-[11px] font-medium text-[#002FD2]">3 concurrent</span>
         </div>
 
         {/* Calls */}
-        <div className="space-y-2">
-          {[
-            { name: "Maria S.", type: "Booking", time: "1:24", status: "Answering" },
-            { name: "James T.", type: "Question", time: "0:42", status: "Answering" },
-            { name: "Linda P.", type: "Transfer", time: "0:15", status: "Routing" },
-          ].map((c, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <div className="flex-1">
-                <span className="text-[11px] font-medium text-[#111]">{c.name}</span>
-                <span className="text-[10px] text-[#999] ml-2">{c.type}</span>
+        <div className="space-y-3">
+          {/* Primary call */}
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7 bg-[#111] text-white flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>M</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[12px] font-medium text-[#111]">Maria Santos</span>
+                <span className="text-[10px] text-[#888]">Booking</span>
               </div>
-              <span className="text-[10px] text-[#999] font-mono">{c.time}</span>
-              <span className={`text-[9px] px-2 py-0.5 rounded-[3px] ${c.status === 'Routing' ? 'bg-[#F59E0B]/10 text-[#F59E0B]' : 'bg-[#10B981]/10 text-[#10B981]'}`}>
-                {c.status}
-              </span>
             </div>
-          ))}
+            <span className="text-[10px] font-mono text-[#B0B0B0]">1:24</span>
+            <span className="text-[10px] font-medium text-[#002FD2] bg-[#EEF0FF] px-2 py-0.5" style={{ borderRadius: 4 }}>Answering</span>
+          </div>
+
+          <div className="border-t border-[#F0F0F0]" />
+
+          {/* Secondary calls */}
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>J</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[12px] text-[#888]">James Turner</span>
+                <span className="text-[10px] text-[#B0B0B0]">Question</span>
+              </div>
+            </div>
+            <span className="text-[10px] font-mono text-[#B0B0B0]">0:42</span>
+            <span className="text-[10px] font-medium text-[#002FD2] bg-[#EEF0FF] px-2 py-0.5" style={{ borderRadius: 4 }}>Answering</span>
+          </div>
+
+          <div className="border-t border-[#F0F0F0]" />
+
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7 bg-[#F5F5F5] text-[#888] flex items-center justify-center text-[10px] font-bold shrink-0" style={{ borderRadius: 100 }}>L</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[12px] text-[#888]">Linda Park</span>
+                <span className="text-[10px] text-[#B0B0B0]">Transfer</span>
+              </div>
+            </div>
+            <span className="text-[10px] font-mono text-[#B0B0B0]">0:15</span>
+            <span className="text-[10px] font-medium text-[#F59E0B] bg-[#FFFBEB] px-2 py-0.5" style={{ borderRadius: 4 }}>Routing</span>
+          </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-4 pt-3 border-t border-[#F0F0F0] flex items-center justify-between">
-          <span className="text-[10px] text-[#999]">Total today: 12</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-[#10B981]">All answered</span>
-          </div>
+        {/* Footer - subtle summary */}
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#F0F0F0]">
+          <span className="text-[10px] text-[#B0B0B0]">12 calls answered today</span>
+          <span className="text-[10px] font-medium text-[#002FD2]">0 missed</span>
         </div>
       </div>
     </div>
