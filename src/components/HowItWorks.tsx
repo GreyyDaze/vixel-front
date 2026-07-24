@@ -54,34 +54,80 @@ export function HowItWorks() {
 }
 
 function AnswerMinimal({ active }: { active: boolean }) {
-  return (
-    <div className="w-full max-w-[220px] space-y-3">
-      {/* Phone ringing indicator — minimal */}
-      <div className="bg-white rounded-[10px] p-3 flex items-center justify-between" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        <div className="flex items-center gap-2">
-          <div className={`h-1.5 w-1.5 rounded-full ${active ? "bg-[#6B7FFF]" : "bg-[#e0e0e0]"}`} style={active ? { animation: "pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite" } : {}}></div>
-          <span className="text-[11px] font-medium" style={{ color: active ? "#111" : "#999" }}>
-            {active ? "Incoming call" : "Waiting..."}
-          </span>
-        </div>
-      </div>
+  const [subPhase, setSubPhase] = useState<"ringing" | "stop" | "speaking" | "idle">("idle");
 
-      {/* Voice signal — simple bars */}
-      <div className="bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        <div className="flex items-center justify-center gap-[3px] h-8 mb-2">
-          {[...Array(12)].map((_, i) => (
+  useEffect(() => {
+    if (!active) {
+      setSubPhase("idle");
+      return;
+    }
+    setSubPhase("ringing");
+    const t1 = window.setTimeout(() => setSubPhase("stop"), 1500);
+    const t2 = window.setTimeout(() => setSubPhase("speaking"), 2200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [active]);
+
+  return (
+    <div className="w-full max-w-[220px]">
+      {/* Phone + signal card */}
+      <div className="bg-white rounded-[10px] p-4" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+        {/* Phone ringing / picked up */}
+        <div className="flex items-center gap-3 mb-4">
+          {/* Phone icon */}
+          <div
+            className="h-9 w-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-500"
+            style={{
+              backgroundColor: subPhase === "ringing" ? "#f0eef8" : subPhase === "speaking" ? "#6B7FFF" : "#f5f5f7",
+              animation: subPhase === "ringing" ? "ringPulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={subPhase === "speaking" ? "white" : "#111"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          </div>
+
+          {/* Status text */}
+          <div className="min-w-0">
+            <div className="text-[11px] font-medium transition-all duration-500" style={{
+              color: subPhase === "speaking" ? "#6B7FFF" : subPhase === "ringing" ? "#111" : "#999",
+            }}>
+              {subPhase === "ringing" && "Ring ring..."}
+              {subPhase === "stop" && "Picking up..."}
+              {subPhase === "speaking" && "On call"}
+              {subPhase === "idle" && "Waiting for call"}
+            </div>
+            <div className="text-[9px] font-mono transition-all duration-500" style={{ color: "#999" }}>
+              {subPhase === "speaking" ? "0:03" : subPhase === "ringing" || subPhase === "stop" ? "0:00" : "—"}
+            </div>
+          </div>
+        </div>
+
+        {/* Voice signal bars — only visible during speaking */}
+        <div className="flex items-end justify-center gap-[3px] h-10 mb-2 transition-opacity duration-500" style={{
+          opacity: subPhase === "speaking" ? 1 : 0.15,
+        }}>
+          {[...Array(16)].map((_, i) => (
             <div
               key={i}
-              className={`w-[2px] rounded-full transition-all duration-300 ${active ? "bg-[#6B7FFF]" : "bg-[#e0e0e0]"}`}
+              className="w-[2.5px] rounded-full transition-all duration-300"
               style={{
-                height: active ? `${8 + Math.sin(i * 0.8) * 6}px` : "4px",
-                animation: active ? `voiceBar 0.8s ease-in-out ${i * 0.05}s infinite alternate` : "none",
+                backgroundColor: subPhase === "speaking" ? "#6B7FFF" : "#e0e0e0",
+                height: subPhase === "speaking" ? `${10 + Math.sin(i * 0.9) * 8}px` : "4px",
+                animation: subPhase === "speaking" ? `voiceBar 0.7s ease-in-out ${i * 0.04}s infinite alternate` : "none",
               }}
             />
           ))}
         </div>
-        <div className="text-[10px] text-[#999] font-mono text-center">
-          {active ? "0:03" : "0:00"}
+
+        {/* Duration timer */}
+        <div className="text-center transition-all duration-500" style={{
+          opacity: subPhase === "speaking" ? 1 : 0.3,
+        }}>
+          <span className="text-[12px] font-mono font-medium" style={{
+            color: subPhase === "speaking" ? "#6B7FFF" : "#999",
+          }}>
+            {subPhase === "speaking" ? "0:03" : "0:00"}
+          </span>
         </div>
       </div>
     </div>
