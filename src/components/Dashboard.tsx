@@ -84,10 +84,14 @@ export function Dashboard() {
               <div className="border border-[#1f1f1f] rounded-[8px] p-4 mb-3 bg-[#161616]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[12px] font-medium text-white">Call volume</span>
-                  <div className="flex items-center gap-3 text-[10px] text-[#666]">
-                    <div className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-white"></span>Answered</div>
-                    <div className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-[#333]"></span>Booked</div>
+                <div className="flex items-center gap-4 text-[10px] text-[#666]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="inline-block w-3 h-[2px] bg-white rounded-full"></span>Answered
                   </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="inline-block w-3 h-[2px] bg-[#333] rounded-full"></span>Booked
+                  </div>
+                </div>
                 </div>
                 <div className="h-28">
                   <ChartDark />

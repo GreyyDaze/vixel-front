@@ -317,7 +317,6 @@ function CallAnimation({ phase, seconds }: { phase: string; seconds: number }) {
     <div className="bg-white rounded-[12px] shadow-2xl border border-[#eee] overflow-hidden">
       <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-[#f0f0f0]">
         <div className="flex items-center gap-2">
-          <div className={`h-1.5 w-1.5 rounded-full bg-[#002FD2] ${showConfirmed ? "" : "animate-pulse"}`}></div>
           <span className="text-[11px] font-semibold text-[#111]">
             {showConfirmed ? "Call completed" : "Live call"}
           </span>

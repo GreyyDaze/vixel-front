@@ -1,6 +1,5 @@
 import { COPY } from "@/content/copy";
-
-const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E")`;
+import { Calendar, Clock, Phone } from "lucide-react";
 
 const situations = [
   { title: "Answer calls when your team is busy", visual: <BusyCall /> },
@@ -28,10 +27,9 @@ export function RealSituations() {
         {situations.map((s, i) => (
           <div
             key={i}
-            className={`rounded-[12px] overflow-hidden flex flex-col border border-[#e0dff0] ${i === 0 ? "md:col-span-2 lg:col-span-2" : ""}`}
+            className={`rounded-[16px] overflow-hidden flex flex-col ${i === 0 ? "md:col-span-2 lg:col-span-2" : ""}`}
             style={{
-              background: `linear-gradient(135deg, #eef0ff 0%, #f0eef8 50%, #f8f7fb 100%)`,
-              backgroundImage: NOISE_BG,
+              backgroundColor: "#f5f5f7",
             }}
           >
             <div className="flex-1 min-h-[200px] flex items-center justify-center p-6">
@@ -67,7 +65,7 @@ function Transcript({ items }: { items: { speaker: string; time?: string; text: 
 
 function BusyCall() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <Transcript items={[
         { speaker: "Caller", time: "0:12", text: "Hi, I'd like to book a dental cleaning." },
         { speaker: "Vox", time: "0:14", text: "Of course. Mornings or afternoons?", isAI: true },
@@ -79,8 +77,9 @@ function BusyCall() {
 
 function AfterHours() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <div className="flex items-center gap-2 mb-3">
+        <Clock size={12} strokeWidth={1.5} color="#999" />
         <span className="text-[10px] text-[#6B7FFF] font-medium">After hours</span>
         <span className="text-[10px] text-[#999] font-mono ml-auto">9:42 PM</span>
       </div>
@@ -94,23 +93,23 @@ function AfterHours() {
 
 function Booking() {
   return (
-    <div className="w-full max-w-[240px] bg-white border border-[#e8e5f0] rounded-[10px] p-3 transition-all duration-300 hover:border-[#c8c2e8]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="w-full max-w-[240px] bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <div className="flex items-center gap-1.5 mb-2">
-        <div className="h-3.5 w-3.5 rounded bg-gradient-to-br from-[#6B7FFF] to-[#9B8FFF]"></div>
+        <Calendar size={13} strokeWidth={1.5} color="#111" />
         <span className="text-[10px] font-medium text-[#111]">Calendar</span>
       </div>
       <div className="space-y-1">
           {["9:00", "10:00", "11:00"].map((t) => (
-            <div key={t} className="h-5 bg-[#f8f7fb] rounded border border-[#e8e5f0] flex items-center px-1.5">
+            <div key={t} className="h-5 bg-[#F5F5F7] rounded-[6px] flex items-center px-1.5">
               <span className="text-[8px] text-[#999]">{t}</span>
             </div>
           ))}
-        <div className="h-9 bg-[#6B7FFF] rounded text-white flex flex-col justify-center px-2">
+        <div className="h-9 bg-[#6B7FFF] rounded-[6px] text-white flex flex-col justify-center px-2">
           <div className="text-[8px] font-medium">2:30 PM</div>
           <div className="text-[7px] opacity-90">Confirmed</div>
         </div>
           {["3:30", "4:00"].map((t) => (
-            <div key={t} className="h-5 bg-[#f8f7fb] rounded border border-[#e8e5f0] flex items-center px-1.5">
+            <div key={t} className="h-5 bg-[#F5F5F7] rounded-[6px] flex items-center px-1.5">
               <span className="text-[8px] text-[#999]">{t}</span>
             </div>
           ))}
@@ -122,14 +121,17 @@ function Booking() {
 function Reminder() {
   return (
     <div className="w-full max-w-[260px] space-y-2">
-      <div className="text-[10px] text-[#999] uppercase tracking-wider">SMS • 24h before</div>
-      <div className="bg-white border border-[#e0dff0] rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+      <div className="flex items-center gap-1.5 text-[10px] text-[#999]">
+        <Clock size={12} strokeWidth={1.5} color="#999" />
+        <span className="uppercase tracking-wider">SMS — 24h before</span>
+      </div>
+      <div className="bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
         <div className="text-[9px] text-[#6B7FFF] mb-1 font-medium">Vox Front</div>
         <p className="text-[11px] text-[#111] leading-[1.4]">
           Hi Sarah — reminder: dental cleaning tomorrow at 2:30 PM with Dr. Chen. Reply C to confirm.
         </p>
       </div>
-      <div className="bg-[#6B7FFF] text-white rounded-[10px] p-3 ml-8">
+      <div className="bg-[#111] text-white rounded-[10px] p-3 ml-8">
         <div className="text-[9px] opacity-70 mb-1">You</div>
         <p className="text-[11px]">C</p>
       </div>
@@ -139,9 +141,9 @@ function Reminder() {
 
 function Urgent() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-[10px] text-[#FF6B7F] font-medium">Urgent</span>
+        <span className="text-[10px] text-[#111] font-medium">Urgent transfer</span>
       </div>
       <Transcript items={[
         { speaker: "Caller", time: "0:05", text: "My tooth is cracked — I need help now." },
@@ -153,7 +155,7 @@ function Urgent() {
 
 function Questions() {
   return (
-    <div className="bg-white rounded-[10px] border border-[#e0dff0] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <Transcript items={[
         { speaker: "Caller", time: "0:03", text: "What are your hours and do you take insurance?" },
         { speaker: "Vox", time: "0:04", text: "Mon–Fri 8–6, Sat 9–2. We take Delta, MetLife, Cigna, Aetna.", isAI: true },
@@ -165,13 +167,16 @@ function Questions() {
 function Multiple() {
   return (
     <div className="w-full max-w-[240px] space-y-1.5">
-      <div className="text-[10px] text-[#999] uppercase tracking-wider mb-2">3 active calls</div>
+      <div className="flex items-center gap-1.5 text-[10px] text-[#999] mb-2">
+        <Phone size={12} strokeWidth={1.5} color="#999" />
+        <span className="uppercase tracking-wider">3 active calls</span>
+      </div>
       {[
         { name: "Maria S.", status: "Booking" },
         { name: "James T.", status: "Question" },
         { name: "Linda P.", status: "Transfer" },
       ].map((c, i) => (
-        <div key={i} className="bg-white border border-[#e0dff0] rounded-[8px] p-2.5 flex items-center justify-between" style={{ boxShadow: "0 1px 2px rgba(107, 127, 255, 0.04)" }}>
+        <div key={i} className="bg-white rounded-[8px] p-2.5 flex items-center justify-between" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] font-medium text-[#111]">{c.name}</span>
           </div>

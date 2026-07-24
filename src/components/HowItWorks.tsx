@@ -2,9 +2,12 @@
 
 import { COPY } from "@/content/copy";
 import { useEffect, useState } from "react";
+import { Phone, PhoneCall, Calendar, Clock, User } from "lucide-react";
 
 type Phase = "idle" | "step1" | "step2" | "step3";
-const PHASE_DURATION: Record<Phase, number> = { idle: 1200, step1: 4000, step2: 4000, step3: 4000 };
+type SubPhase = "idle" | "ringing" | "stop" | "speaking" | "time" | "counting" | "freeze";
+
+const PHASE_DURATION: Record<Phase, number> = { idle: 1500, step1: 12000, step2: 5000, step3: 5000 };
 const PHASE_ORDER: Phase[] = ["idle", "step1", "step2", "step3"];
 
 export function HowItWorks() {
@@ -32,16 +35,11 @@ export function HowItWorks() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {COPY.howItWorks.steps.map((step, i) => (
           <div key={step.num} className="flex flex-col">
-            {/* Card background — light gray like reference */}
-            <div className="flex-1 rounded-[16px] p-8 mb-5 min-h-[300px] flex items-center justify-center" style={{
-              backgroundColor: "#f5f5f7",
-            }}>
-              {i === 0 && <AnswerMinimal active={phase === "step1"} />}
-              {i === 1 && <BookMinimal active={phase === "step2"} />}
-              {i === 2 && <ReportMinimal active={phase === "step3"} />}
+            <div className="flex-1 rounded-[16px] p-8 mb-5 min-h-[360px] flex items-center justify-center" style={{ backgroundColor: "#f5f5f7" }}>
+              {i === 0 && <AnswerCard active={phase === "step1"} />}
+              {i === 1 && <BookCard active={phase === "step2"} />}
+              {i === 2 && <ReportCard active={phase === "step3"} />}
             </div>
-
-            {/* Text below */}
             <div className="px-1">
               <h3 className="text-[20px] font-medium text-[#111] mb-2 tracking-[-0.01em]">{step.title}</h3>
               <p className="text-[14px] text-[#666] leading-[1.6]">{step.desc}</p>
@@ -53,146 +51,219 @@ export function HowItWorks() {
   );
 }
 
-function AnswerMinimal({ active }: { active: boolean }) {
-  const [subPhase, setSubPhase] = useState<"ringing" | "stop" | "speaking" | "idle">("idle");
+/* ─── CARD 1: ANSWER ─── */
+function AnswerCard({ active }: { active: boolean }) {
+  const [sub, setSub] = useState<SubPhase>("idle");
+  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     if (!active) {
-      setSubPhase("idle");
+      setSub("idle");
+      setSeconds(0);
       return;
     }
-    setSubPhase("ringing");
-    const t1 = window.setTimeout(() => setSubPhase("stop"), 1500);
-    const t2 = window.setTimeout(() => setSubPhase("speaking"), 2200);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+
+    const timers: number[] = [];
+    const schedule = (fn: () => void, ms: number) => { timers.push(window.setTimeout(fn, ms)); };
+
+    setSub("ringing");
+    schedule(() => setSub("stop"), 2500);
+    schedule(() => setSub("speaking"), 3500);
+    schedule(() => setSub("time"), 6500);
+    schedule(() => { setSub("counting"); setSeconds(0); }, 8500);
+
+    // Counter ticks during "counting" phase
+    const counterStart = 8500;
+    for (let s = 1; s <= 3; s++) {
+      schedule(() => setSeconds(s), counterStart + s * 1000);
+    }
+
+    schedule(() => setSub("freeze"), 12000);
+
+    return () => { timers.forEach(clearTimeout); };
   }, [active]);
 
+  const isSpeaking = sub === "speaking" || sub === "time" || sub === "counting" || sub === "freeze";
+  const isCounting = sub === "counting" || sub === "freeze";
+  const showTime = sub === "time" || isCounting;
+
   return (
-    <div className="w-full max-w-[220px]">
-      {/* Phone + signal card */}
-      <div className="bg-white rounded-[10px] p-4" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        {/* Phone ringing / picked up */}
-        <div className="flex items-center gap-3 mb-4">
-          {/* Phone icon */}
-          <div
-            className="h-9 w-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-500"
-            style={{
-              backgroundColor: subPhase === "ringing" ? "#f0eef8" : subPhase === "speaking" ? "#6B7FFF" : "#f5f5f7",
-              animation: subPhase === "ringing" ? "ringPulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={subPhase === "speaking" ? "white" : "#111"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
+    <div className="w-full max-w-[240px]">
+      {/* Main card */}
+      <div className="bg-white rounded-[12px] p-5" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+
+        {/* Phone status row */}
+        <div className="flex items-center gap-3 mb-5">
+          <div className="relative">
+            <div
+              className="h-10 w-10 rounded-[10px] flex items-center justify-center shrink-0 transition-all duration-700"
+              style={{
+                backgroundColor: sub === "ringing" ? "#EEF0FF" : isSpeaking ? "#6B7FFF" : "#F0F0F0",
+                animation: sub === "ringing" ? "ringPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
+              }}
+            >
+              {sub === "ringing" ? (
+                <Phone size={18} strokeWidth={1.5} color="#111" />
+              ) : isSpeaking ? (
+                <PhoneCall size={18} strokeWidth={1.5} color="white" />
+              ) : (
+                <Phone size={18} strokeWidth={1.5} color="#999" />
+              )}
+            </div>
           </div>
 
-          {/* Status text */}
           <div className="min-w-0">
-            <div className="text-[11px] font-medium transition-all duration-500" style={{
-              color: subPhase === "speaking" ? "#6B7FFF" : subPhase === "ringing" ? "#111" : "#999",
+            <div className="text-[11px] font-medium transition-all duration-700" style={{
+              color: isSpeaking ? "#6B7FFF" : sub === "ringing" ? "#111" : "#999",
             }}>
-              {subPhase === "ringing" && "Ring ring..."}
-              {subPhase === "stop" && "Picking up..."}
-              {subPhase === "speaking" && "On call"}
-              {subPhase === "idle" && "Waiting for call"}
+              {sub === "ringing" && "Ring ring…"}
+              {sub === "stop" && "Call connected"}
+              {sub === "speaking" && "Speaking…"}
+              {sub === "time" && "Appointment set"}
+              {isCounting && "Call in progress"}
+              {sub === "idle" && "Waiting for call"}
             </div>
-            <div className="text-[9px] font-mono transition-all duration-500" style={{ color: "#999" }}>
-              {subPhase === "speaking" ? "0:03" : subPhase === "ringing" || subPhase === "stop" ? "0:00" : "—"}
+            <div className="text-[10px] font-mono transition-all duration-700" style={{ color: isCounting ? "#6B7FFF" : "#999" }}>
+              {isCounting ? `0:${String(seconds).padStart(2, "0")}` : sub === "idle" ? "—" : "0:00"}
             </div>
           </div>
         </div>
 
-        {/* Voice signal bars — only visible during speaking */}
-        <div className="flex items-end justify-center gap-[3px] h-10 mb-2 transition-opacity duration-500" style={{
-          opacity: subPhase === "speaking" ? 1 : 0.15,
-        }}>
-          {[...Array(16)].map((_, i) => (
+        {/* Voice waveform bars */}
+        <div className="flex items-end justify-center gap-[3px] h-12 mb-5 transition-opacity duration-700" style={{ opacity: isSpeaking ? 1 : 0.12 }}>
+          {[...Array(18)].map((_, i) => (
             <div
               key={i}
-              className="w-[2.5px] rounded-full transition-all duration-300"
+              className="w-[2.5px] rounded-full transition-all duration-500"
               style={{
-                backgroundColor: subPhase === "speaking" ? "#6B7FFF" : "#e0e0e0",
-                height: subPhase === "speaking" ? `${10 + Math.sin(i * 0.9) * 8}px` : "4px",
-                animation: subPhase === "speaking" ? `voiceBar 0.7s ease-in-out ${i * 0.04}s infinite alternate` : "none",
+                backgroundColor: isSpeaking ? "#6B7FFF" : "#E0E0E0",
+                height: isSpeaking ? `${12 + Math.sin(i * 0.85) * 10}px` : "4px",
+                animation: isSpeaking ? `voiceBar 0.8s ease-in-out ${i * 0.035}s infinite alternate` : "none",
               }}
             />
           ))}
         </div>
 
-        {/* Duration timer */}
-        <div className="text-center transition-all duration-500" style={{
-          opacity: subPhase === "speaking" ? 1 : 0.3,
+        {/* Time mentioned */}
+        <div className="bg-[#F5F5F7] rounded-[8px] p-3 mb-4 transition-all duration-700" style={{
+          opacity: showTime ? 1 : 0.2,
+          transform: showTime ? "translateY(0)" : "translateY(4px)",
         }}>
-          <span className="text-[12px] font-mono font-medium" style={{
-            color: subPhase === "speaking" ? "#6B7FFF" : "#999",
-          }}>
-            {subPhase === "speaking" ? "0:03" : "0:00"}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BookMinimal({ active }: { active: boolean }) {
-  return (
-    <div className="w-full max-w-[200px]">
-      {/* Calendar — minimal */}
-      <div className="bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        <div className="flex items-center gap-1.5 mb-3">
-          <div className="h-3 w-3 rounded bg-[#111]"></div>
-          <span className="text-[10px] font-medium text-[#111]">Calendar</span>
-        </div>
-
-        <div className="space-y-1">
-          {["9:00", "10:00", "11:00"].map((t) => (
-            <div key={t} className="h-5 bg-[#f5f5f7] rounded flex items-center px-2">
-              <span className="text-[8px] text-[#999]">{t}</span>
-            </div>
-          ))}
-          <div className="h-7 rounded flex items-center px-2 transition-all duration-700" style={{
-            backgroundColor: active ? "#6B7FFF" : "#e0e0e0",
-          }}>
-            <span className="text-[9px] font-medium" style={{ color: active ? "white" : "#999" }}>2:30 PM</span>
+          <div className="flex items-center gap-2">
+            <Calendar size={13} strokeWidth={1.5} color={showTime ? "#6B7FFF" : "#CCC"} />
+            <span className="text-[11px] font-medium transition-colors duration-700" style={{ color: showTime ? "#111" : "#CCC" }}>
+              Tuesday, March 18
+            </span>
           </div>
-          {["3:30", "4:00"].map((t) => (
-            <div key={t} className="h-5 bg-[#f5f5f7] rounded flex items-center px-2">
-              <span className="text-[8px] text-[#999]">{t}</span>
-            </div>
-          ))}
+          <div className="flex items-center gap-2 mt-1.5">
+            <Clock size={13} strokeWidth={1.5} color={showTime ? "#6B7FFF" : "#CCC"} />
+            <span className="text-[11px] font-medium transition-colors duration-700" style={{ color: showTime ? "#111" : "#CCC" }}>
+              2:30 PM — Dental cleaning
+            </span>
+          </div>
+        </div>
+
+        {/* Caller info */}
+        <div className="flex items-center gap-2.5 transition-all duration-700" style={{ opacity: sub === "idle" ? 0.3 : 1 }}>
+          <div className="h-7 w-7 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
+            <User size={13} strokeWidth={1.5} color="#666" />
+          </div>
+          <div>
+            <div className="text-[11px] font-medium text-[#111]">Sarah Patel</div>
+            <div className="text-[9px] text-[#999]">+1 (415) 555-0142</div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function ReportMinimal({ active }: { active: boolean }) {
+/* ─── CARD 2: BOOK ─── */
+function BookCard({ active }: { active: boolean }) {
   return (
     <div className="w-full max-w-[220px]">
-      {/* Dashboard list — minimal */}
-      <div className="bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[10px] font-medium text-[#111]">Recent calls</span>
+      <div className="bg-white rounded-[12px] p-5" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="h-8 w-8 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
+            <Calendar size={16} strokeWidth={1.5} color={active ? "#6B7FFF" : "#999"} />
+          </div>
+          <div>
+            <div className="text-[11px] font-medium text-[#111]">Google Calendar</div>
+            <div className="text-[9px] text-[#999]">Tue, Mar 18</div>
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          {["9:00 AM", "10:00 AM", "11:00 AM"].map((t) => (
+            <div key={t} className="h-6 bg-[#F5F5F7] rounded-[6px] flex items-center px-2.5">
+              <span className="text-[8px] text-[#999]">{t}</span>
+            </div>
+          ))}
+          <div className="h-8 rounded-[6px] flex items-center px-2.5 transition-all duration-700" style={{
+            backgroundColor: active ? "#6B7FFF" : "#E8E8E8",
+          }}>
+            <span className="text-[9px] font-medium" style={{ color: active ? "white" : "#999" }}>2:30 PM — Cleaning</span>
+          </div>
+          {["3:30 PM", "4:00 PM", "5:00 PM"].map((t) => (
+            <div key={t} className="h-6 bg-[#F5F5F7] rounded-[6px] flex items-center px-2.5">
+              <span className="text-[8px] text-[#999]">{t}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 flex items-center gap-2 transition-all duration-700" style={{
+          opacity: active ? 1 : 0,
+          transform: active ? "translateY(0)" : "translateY(4px)",
+        }}>
+          <Clock size={12} strokeWidth={1.5} color="#6B7FFF" />
+          <span className="text-[10px] font-medium text-[#6B7FFF]">Booked automatically</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── CARD 3: REPORT ── */
+function ReportCard({ active }: { active: boolean }) {
+  return (
+    <div className="w-full max-w-[220px]">
+      <div className="bg-white rounded-[12px] p-5" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="h-8 w-8 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
+            <User size={16} strokeWidth={1.5} color={active ? "#6B7FFF" : "#999"} />
+          </div>
+          <div>
+            <div className="text-[11px] font-medium text-[#111]">Recent calls</div>
+            <div className="text-[9px] text-[#999]">Today</div>
+          </div>
         </div>
 
         <div className="space-y-1.5">
           {[
-            { name: "Maria S.", status: "Booked" },
-            { name: "James T.", status: "Booked" },
-            { name: "Linda P.", status: "Question" },
-            { name: "Sarah P.", status: "Booked", isNew: true },
+            { name: "Maria S.", status: "Booked", time: "10:24 AM" },
+            { name: "James T.", status: "Booked", time: "11:08 AM" },
+            { name: "Linda P.", status: "Question", time: "1:45 PM" },
+            { name: "Sarah P.", status: "Booked", time: "2:34 PM", isNew: true },
           ].map((call, i) => (
-            <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#f0f0f0] last:border-0 transition-all duration-500" style={{
-              opacity: call.isNew ? (active ? 1 : 0.4) : 1,
+            <div key={i} className="flex items-center justify-between py-2 border-b border-[#F0F0F0] last:border-0 transition-all duration-700" style={{
+              opacity: call.isNew ? (active ? 1 : 0.25) : 1,
+              transform: call.isNew ? (active ? "translateY(0)" : "translateY(-4px)") : "translateY(0)",
+              backgroundColor: call.isNew && active ? "#F8F7FB" : "transparent",
+              borderRadius: "6px",
+              paddingLeft: "6px",
+              paddingRight: "6px",
             }}>
-              <div className="flex items-center gap-1.5">
-                <div className="h-4 w-4 rounded-full bg-[#f5f5f7] flex items-center justify-center">
+              <div className="flex items-center gap-2">
+                <div className="h-6 w-6 rounded-[6px] bg-[#F0F0F0] flex items-center justify-center">
                   <span className="text-[7px] font-bold" style={{ color: call.isNew && active ? "#6B7FFF" : "#666" }}>{call.name[0]}</span>
                 </div>
-                <div className="text-[9px] font-medium" style={{ color: call.isNew && active ? "#6B7FFF" : "#111" }}>{call.name}</div>
+                <div>
+                  <div className="text-[10px] font-medium" style={{ color: call.isNew && active ? "#6B7FFF" : "#111" }}>{call.name}</div>
+                  <div className="text-[8px] text-[#999]">{call.isNew && active ? "Just now" : call.time}</div>
+                </div>
               </div>
-              <div className="text-[8px] font-medium px-1.5 py-0.5 rounded" style={{
-                backgroundColor: call.status === "Booked" ? "#6B7FFF" : "#f5f5f7",
+              <div className="text-[8px] font-medium px-2 py-0.5 rounded-[4px]" style={{
+                backgroundColor: call.status === "Booked" ? "#6B7FFF" : "#F0F0F0",
                 color: call.status === "Booked" ? "white" : "#999",
               }}>
                 {call.status}
