@@ -100,7 +100,7 @@ export function HeroStage() {
 // ============================================================
 function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookingsCount: number }) {
   return (
-    <div className="relative w-full h-full bg-white rounded-[12px] border border-[#eee] overflow-hidden">
+    <div className="relative w-full h-full bg-white rounded-[6px] border border-[#eee] overflow-hidden">
       <div className="h-full grid grid-cols-[180px_1fr]">
         <div className="border-r border-[#eee] p-3 bg-white">
           <div className="flex items-center gap-2 px-2 py-2 mb-3">
@@ -146,7 +146,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
               { label: "Resolution", value: "94%", change: "+3%" },
               { label: "Avg. response", value: "0.8s", change: "" },
             ].map((s, i) => (
-              <div key={i} className="border border-[#eee] rounded-[8px] p-2.5">
+              <div key={i} className="border border-[#eee] rounded-[4px] p-2.5">
                 <div className="text-[9.5px] text-[#999] mb-1">{s.label}</div>
                 <div className="text-[18px] font-semibold text-[#111] tracking-tight leading-none">{s.value}</div>
                 {s.change && (
@@ -158,7 +158,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             ))}
           </div>
 
-          <div className="border border-[#eee] rounded-[8px] p-3 mb-3">
+          <div className="border border-[#eee] rounded-[6px] p-3 mb-3">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10.5px] font-medium text-[#111]">Call volume</span>
               <div className="flex items-center gap-2 text-[9px] text-[#999]">
@@ -170,7 +170,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             </div>
           </div>
 
-          <div className="border border-[#eee] rounded-[8px] p-3">
+          <div className="border border-[#eee] rounded-[6px] p-3">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10.5px] font-medium text-[#111]">Recent calls</span>
               <span className="text-[9.5px] text-[#999]">View all →</span>
@@ -239,8 +239,8 @@ function ChartSVG() {
 function PhoneMockup() {
   return (
     <div className="w-full h-full">
-      <div className="relative w-full h-full bg-[#0a0a0a] rounded-[36px] p-[6px] shadow-2xl">
-        <div className="w-full h-full bg-white rounded-[30px] overflow-hidden relative">
+      <div className="relative w-full h-full bg-[#0a0a0a] rounded-[20px] p-[6px] shadow-2xl">
+        <div className="w-full h-full bg-white rounded-[16px] overflow-hidden relative">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[18px] bg-[#0a0a0a] rounded-b-[14px] z-10"></div>
 
           <div className="flex items-center justify-between px-5 pt-2 pb-1 text-[8px] font-semibold text-[#111] relative z-[1]">
@@ -314,7 +314,7 @@ function CallAnimation({ phase, seconds }: { phase: string; seconds: number }) {
   const s = (seconds % 60).toString().padStart(2, "0");
 
   return (
-    <div className="bg-white rounded-[12px] shadow-2xl border border-[#eee] overflow-hidden">
+    <div className="bg-white rounded-[6px] shadow-2xl border border-[#eee] overflow-hidden">
       <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-[#f0f0f0]">
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-semibold text-[#111]">
@@ -415,7 +415,7 @@ function FadeIn({ children }: { children: React.ReactNode }) {
 // ============================================================
 function BookedToast() {
   return (
-    <div className="bg-white rounded-[10px] shadow-2xl border border-[#eee] px-3.5 py-3 flex items-center gap-3 booked-toast-slide">
+    <div className="bg-white rounded-[5px] shadow-2xl border border-[#eee] px-3.5 py-3 flex items-center gap-3 booked-toast-slide">
       <div className="h-8 w-8 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
           <path d="M3 8l3.5 3.5L13 5" stroke="#002FD2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

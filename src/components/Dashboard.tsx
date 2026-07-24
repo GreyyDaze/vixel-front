@@ -14,7 +14,7 @@ export function Dashboard() {
         </div>
 
         <div
-          className="rounded-[12px] overflow-hidden border border-[#1a1a1a]"
+          className="rounded-[8px] overflow-hidden border border-[#1a1a1a]"
           style={{
             boxShadow: "0 1px 2px rgba(0,0,0,0.4), 0 4px 12px -4px rgba(0,0,0,0.5), 0 24px 48px -12px rgba(0,0,0,0.6)",
           }}
@@ -73,7 +73,7 @@ export function Dashboard() {
                   { label: "Resolution rate", value: "94%", change: "+3%" },
                   { label: "Avg. response", value: "0.8s", change: "" },
                 ].map((s, i) => (
-                  <div key={i} className="border border-[#1f1f1f] rounded-[8px] p-3.5 bg-[#161616]">
+                  <div key={i} className="border border-[#1f1f1f] rounded-[6px] p-3.5 bg-[#161616]">
                     <div className="text-[11px] text-[#666] mb-1.5">{s.label}</div>
                     <div className="text-[22px] font-medium text-white tracking-tight leading-none">{s.value}</div>
                     {s.change && <div className="text-[10px] text-[#4F6BFF] font-medium mt-1.5">{s.change} vs last</div>}
@@ -81,7 +81,7 @@ export function Dashboard() {
                 ))}
               </div>
 
-              <div className="border border-[#1f1f1f] rounded-[8px] p-4 mb-3 bg-[#161616]">
+              <div className="border border-[#1f1f1f] rounded-[6px] p-4 mb-3 bg-[#161616]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[12px] font-medium text-white">Call volume</span>
                 <div className="flex items-center gap-4 text-[10px] text-[#666]">
@@ -98,7 +98,7 @@ export function Dashboard() {
                 </div>
               </div>
 
-              <div className="border border-[#1f1f1f] rounded-[8px] p-4 bg-[#161616]">
+              <div className="border border-[#1f1f1f] rounded-[6px] p-4 bg-[#161616]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[12px] font-medium text-white">Recent calls</span>
                   <span className="text-[11px] text-[#666]">View all →</span>

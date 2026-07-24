@@ -39,7 +39,7 @@ export function Security() {
 function RedactionDemo() {
   return (
     <div
-      className="rounded-[12px] overflow-hidden"
+      className="rounded-[8px] overflow-hidden"
       style={{
         boxShadow: "0 1px 3px rgba(0,0,0,0.02), 0 4px 12px -4px rgba(0,0,0,0.04)",
         background: "radial-gradient(ellipse at 50% 30%, #F5F5F7 0%, #FAFAFA 60%, #F5F5F7 100%)",

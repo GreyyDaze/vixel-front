@@ -23,23 +23,28 @@ export function RealSituations() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {situations.map((s, i) => (
-          <div
-            key={i}
-            className={`rounded-[16px] overflow-hidden flex flex-col ${i === 0 ? "md:col-span-2 lg:col-span-2" : ""}`}
-            style={{
-              backgroundColor: "#f5f5f7",
-            }}
-          >
-            <div className="flex-1 min-h-[200px] flex items-center justify-center p-6">
-              {s.visual}
+      <div className="grid grid-cols-3 gap-5" style={{ gridTemplateRows: 'auto auto auto' }}>
+        {situations.map((s, i) => {
+          // Bento layout: wide + narrow, three equal, wide + narrow
+          const gridColumn = i === 0 || i === 5 ? 'span 2' : 'span 1';
+          return (
+            <div
+              key={i}
+              className="overflow-hidden flex flex-col"
+              style={{
+                gridColumn,
+                backgroundColor: '#f5f5f7',
+              }}
+            >
+              <div className="flex-1 min-h-[200px] flex items-center justify-center p-6">
+                {s.visual}
+              </div>
+              <div className="px-5 pb-5 pt-0">
+                <h3 className="text-[14px] font-medium text-[#111] leading-[1.4]">{s.title}</h3>
+              </div>
             </div>
-            <div className="px-5 pb-5 pt-0">
-              <h3 className="text-[14px] font-medium text-[#111] leading-[1.4]">{s.title}</h3>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
@@ -65,7 +70,7 @@ function Transcript({ items }: { items: { speaker: string; time?: string; text: 
 
 function BusyCall() {
   return (
-    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div className="bg-white rounded-[6px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <Transcript items={[
         { speaker: "Caller", time: "0:12", text: "Hi, I'd like to book a dental cleaning." },
         { speaker: "Vox", time: "0:14", text: "Of course. Mornings or afternoons?", isAI: true },
@@ -77,7 +82,7 @@ function BusyCall() {
 
 function AfterHours() {
   return (
-    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div className="bg-white rounded-[6px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <div className="flex items-center gap-2 mb-3">
         <Clock size={12} strokeWidth={1.5} color="#999" />
         <span className="text-[10px] text-[#6B7FFF] font-medium">After hours</span>
@@ -93,23 +98,23 @@ function AfterHours() {
 
 function Booking() {
   return (
-    <div className="w-full max-w-[240px] bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div className="w-full max-w-[240px] bg-white rounded-[6px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <div className="flex items-center gap-1.5 mb-2">
         <Calendar size={13} strokeWidth={1.5} color="#111" />
         <span className="text-[10px] font-medium text-[#111]">Calendar</span>
       </div>
       <div className="space-y-1">
           {["9:00", "10:00", "11:00"].map((t) => (
-            <div key={t} className="h-5 bg-[#F5F5F7] rounded-[6px] flex items-center px-1.5">
+            <div key={t} className="h-5 bg-[#F5F5F7] rounded-[3px] flex items-center px-1.5">
               <span className="text-[8px] text-[#999]">{t}</span>
             </div>
           ))}
-        <div className="h-9 bg-[#6B7FFF] rounded-[6px] text-white flex flex-col justify-center px-2">
+        <div className="h-9 bg-[#6B7FFF] rounded-[3px] text-white flex flex-col justify-center px-2">
           <div className="text-[8px] font-medium">2:30 PM</div>
           <div className="text-[7px] opacity-90">Confirmed</div>
         </div>
           {["3:30", "4:00"].map((t) => (
-            <div key={t} className="h-5 bg-[#F5F5F7] rounded-[6px] flex items-center px-1.5">
+            <div key={t} className="h-5 bg-[#F5F5F7] rounded-[3px] flex items-center px-1.5">
               <span className="text-[8px] text-[#999]">{t}</span>
             </div>
           ))}
@@ -125,13 +130,13 @@ function Reminder() {
         <Clock size={12} strokeWidth={1.5} color="#999" />
         <span className="uppercase tracking-wider">SMS — 24h before</span>
       </div>
-      <div className="bg-white rounded-[10px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+      <div className="bg-white rounded-[6px] p-3" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
         <div className="text-[9px] text-[#6B7FFF] mb-1 font-medium">Vox Front</div>
         <p className="text-[11px] text-[#111] leading-[1.4]">
           Hi Sarah — reminder: dental cleaning tomorrow at 2:30 PM with Dr. Chen. Reply C to confirm.
         </p>
       </div>
-      <div className="bg-[#111] text-white rounded-[10px] p-3 ml-8">
+      <div className="bg-[#111] text-white rounded-[6px] p-3 ml-8">
         <div className="text-[9px] opacity-70 mb-1">You</div>
         <p className="text-[11px]">C</p>
       </div>
@@ -141,7 +146,7 @@ function Reminder() {
 
 function Urgent() {
   return (
-    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div className="bg-white rounded-[6px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <div className="flex items-center gap-2 mb-3">
         <span className="text-[10px] text-[#111] font-medium">Urgent transfer</span>
       </div>
@@ -155,7 +160,7 @@ function Urgent() {
 
 function Questions() {
   return (
-    <div className="bg-white rounded-[10px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div className="bg-white rounded-[6px] p-4 w-full max-w-[320px]" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
       <Transcript items={[
         { speaker: "Caller", time: "0:03", text: "What are your hours and do you take insurance?" },
         { speaker: "Vox", time: "0:04", text: "Mon–Fri 8–6, Sat 9–2. We take Delta, MetLife, Cigna, Aetna.", isAI: true },
@@ -176,7 +181,7 @@ function Multiple() {
         { name: "James T.", status: "Question" },
         { name: "Linda P.", status: "Transfer" },
       ].map((c, i) => (
-        <div key={i} className="bg-white rounded-[8px] p-2.5 flex items-center justify-between" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+        <div key={i} className="bg-white rounded-[4px] p-2.5 flex items-center justify-between" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] font-medium text-[#111]">{c.name}</span>
           </div>

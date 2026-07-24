@@ -36,7 +36,7 @@ export function HowItWorks() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {COPY.howItWorks.steps.map((step, i) => (
           <div key={step.num} className="flex flex-col">
-            <div className="flex-1 rounded-[16px] p-8 mb-5 min-h-[420px] flex items-center justify-center relative" style={{ backgroundColor: "#f2f2f2" }}>
+            <div className="flex-1 rounded-[8px] p-8 mb-5 min-h-[420px] flex items-center justify-center relative" style={{ backgroundColor: "#f2f2f2" }}>
               {i === 0 && <AnswerFlow active={phase === "step1"} />}
               {i === 1 && <BookFlow active={phase === "step2"} />}
               {i === 2 && <ReportFlow active={phase === "step3"} />}
@@ -89,13 +89,13 @@ function AnswerFlow({ active }: { active: boolean }) {
       {/* Phone ringing - top left */}
       <div className="absolute top-[10%] left-[15%]">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: sub === "ringing" ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
           }}
         >
           <div
-            className="h-8 w-8 rounded-[8px] flex items-center justify-center transition-all duration-700"
+            className="h-8 w-8 rounded-[4px] flex items-center justify-center transition-all duration-700"
             style={{
               background: sub === "ringing" ? BLUE_GRADIENT : "#E8E8E8",
               animation: sub === "ringing" ? "ringPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
@@ -124,14 +124,14 @@ function AnswerFlow({ active }: { active: boolean }) {
       {/* Phone picked up - middle right */}
       <div className="absolute top-[42%] right-[15%]">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: isSpeaking ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: sub === "idle" ? 0.3 : 1,
           }}
         >
           <div
-            className="h-8 w-8 rounded-[8px] flex items-center justify-center transition-all duration-700"
+            className="h-8 w-8 rounded-[4px] flex items-center justify-center transition-all duration-700"
             style={{
               background: isSpeaking ? BLUE_GRADIENT : "#E8E8E8",
             }}
@@ -152,7 +152,7 @@ function AnswerFlow({ active }: { active: boolean }) {
       {/* Voice waveform with counter - bottom left */}
       <div className="absolute top-[68%] left-[15%]">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 transition-all duration-700"
           style={{
             boxShadow: isSpeaking ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: isSpeaking ? 1 : 0.3,
@@ -192,14 +192,14 @@ function BookFlow({ active }: { active: boolean }) {
       {/* Calendar icon - top center */}
       <div className="absolute top-[15%] left-1/2 -translate-x-1/2">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: active ? 1 : 0.3,
           }}
         >
           <div
-            className="h-8 w-8 rounded-[8px] flex items-center justify-center transition-all duration-700"
+            className="h-8 w-8 rounded-[4px] flex items-center justify-center transition-all duration-700"
             style={{
               background: active ? BLUE_GRADIENT : "#E8E8E8",
             }}
@@ -220,14 +220,14 @@ function BookFlow({ active }: { active: boolean }) {
       {/* Booking confirmation - middle */}
       <div className="absolute top-[45%] left-1/2 -translate-x-1/2">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: active ? 1 : 0.3,
             transform: active ? "scale(1)" : "scale(0.95)",
           }}
         >
-          <div className="h-8 w-8 rounded-[8px] bg-[#002FD2] flex items-center justify-center">
+          <div className="h-8 w-8 rounded-[4px] bg-[#002FD2] flex items-center justify-center">
             <Check size={16} strokeWidth={2} color="white" />
           </div>
           <span className="text-[11px] font-medium text-[#111]">
@@ -244,13 +244,13 @@ function BookFlow({ active }: { active: boolean }) {
       {/* User info - bottom */}
       <div className="absolute top-[75%] left-1/2 -translate-x-1/2">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: active ? 1 : 0.3,
           }}
         >
-          <div className="h-8 w-8 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
+          <div className="h-8 w-8 rounded-[4px] bg-[#F0F0F0] flex items-center justify-center">
             <User size={16} strokeWidth={2} color="#666" />
           </div>
           <div>
@@ -270,14 +270,14 @@ function ReportFlow({ active }: { active: boolean }) {
       {/* Dashboard icon - top left */}
       <div className="absolute top-[15%] left-[15%]">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: active ? 1 : 0.3,
           }}
         >
           <div
-            className="h-8 w-8 rounded-[8px] flex items-center justify-center transition-all duration-700"
+            className="h-8 w-8 rounded-[4px] flex items-center justify-center transition-all duration-700"
             style={{
               background: active ? BLUE_GRADIENT : "#E8E8E8",
             }}
@@ -298,7 +298,7 @@ function ReportFlow({ active }: { active: boolean }) {
       {/* Call summary - middle right */}
       <div className="absolute top-[45%] right-[15%]">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 transition-all duration-700"
           style={{
             boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: active ? 1 : 0.3,
@@ -319,21 +319,21 @@ function ReportFlow({ active }: { active: boolean }) {
       {/* Recent call - bottom left */}
       <div className="absolute top-[75%] left-[15%]">
         <div
-          className="bg-white rounded-[10px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
+          className="bg-white rounded-[6px] px-4 py-3 flex items-center gap-2.5 transition-all duration-700"
           style={{
             boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.2)" : "0 2px 8px rgba(0,0,0,0.06)",
             opacity: active ? 1 : 0.3,
             transform: active ? "translateY(0)" : "translateY(-4px)",
           }}
         >
-          <div className="h-8 w-8 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
+          <div className="h-8 w-8 rounded-[4px] bg-[#F0F0F0] flex items-center justify-center">
             <span className="text-[8px] font-bold" style={{ color: active ? "#002FD2" : "#666" }}>S</span>
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-[10px] font-medium truncate" style={{ color: active ? "#002FD2" : "#111" }}>Sarah P.</div>
             <div className="text-[8px]" style={{ color: active ? "#002FD2" : "#999" }}>{active ? "Just now" : "2:34 PM"}</div>
           </div>
-          <div className="text-[8px] font-medium px-2 py-0.5 rounded-[4px]" style={{
+          <div className="text-[8px] font-medium px-2 py-0.5 rounded-[3px]" style={{
             backgroundColor: active ? "#002FD2" : "#F0F0F0",
             color: active ? "white" : "#999",
           }}>
