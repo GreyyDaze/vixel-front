@@ -2,13 +2,14 @@
 
 import { COPY } from "@/content/copy";
 import { useEffect, useState } from "react";
-import { Phone, PhoneCall, Calendar, Clock, User } from "lucide-react";
+import { Phone, PhoneCall, Calendar, Clock, User, Check } from "lucide-react";
 
 type Phase = "idle" | "step1" | "step2" | "step3";
-type SubPhase = "idle" | "ringing" | "stop" | "speaking" | "time" | "counting" | "freeze";
 
-const PHASE_DURATION: Record<Phase, number> = { idle: 1500, step1: 12000, step2: 5000, step3: 5000 };
+const PHASE_DURATION: Record<Phase, number> = { idle: 1500, step1: 14000, step2: 5000, step3: 5000 };
 const PHASE_ORDER: Phase[] = ["idle", "step1", "step2", "step3"];
+
+const BLUE_GRADIENT = "radial-gradient(circle at 50% 20%, #4070FF 0%, #002FD2 50%, #001651 100%)";
 
 export function HowItWorks() {
   const [phase, setPhase] = useState<Phase>("idle");
@@ -35,10 +36,10 @@ export function HowItWorks() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {COPY.howItWorks.steps.map((step, i) => (
           <div key={step.num} className="flex flex-col">
-            <div className="flex-1 rounded-[16px] p-8 mb-5 min-h-[360px] flex items-center justify-center" style={{ backgroundColor: "#f5f5f7" }}>
-              {i === 0 && <AnswerCard active={phase === "step1"} />}
-              {i === 1 && <BookCard active={phase === "step2"} />}
-              {i === 2 && <ReportCard active={phase === "step3"} />}
+            <div className="flex-1 rounded-[16px] p-8 mb-5 min-h-[420px] flex items-center justify-center relative" style={{ backgroundColor: "#f2f2f2" }}>
+              {i === 0 && <AnswerFlow active={phase === "step1"} />}
+              {i === 1 && <BookFlow active={phase === "step2"} />}
+              {i === 2 && <ReportFlow active={phase === "step3"} />}
             </div>
             <div className="px-1">
               <h3 className="text-[20px] font-medium text-[#111] mb-2 tracking-[-0.01em]">{step.title}</h3>
@@ -51,9 +52,9 @@ export function HowItWorks() {
   );
 }
 
-/* ─── CARD 1: ANSWER ─── */
-function AnswerCard({ active }: { active: boolean }) {
-  const [sub, setSub] = useState<SubPhase>("idle");
+/* ─── CARD 1: ANSWER FLOW ─── */
+function AnswerFlow({ active }: { active: boolean }) {
+  const [sub, setSub] = useState<"idle" | "ringing" | "stop" | "speaking" | "time" | "counting" | "freeze">("idle");
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
@@ -67,209 +68,224 @@ function AnswerCard({ active }: { active: boolean }) {
     const schedule = (fn: () => void, ms: number) => { timers.push(window.setTimeout(fn, ms)); };
 
     setSub("ringing");
-    schedule(() => setSub("stop"), 2500);
-    schedule(() => setSub("speaking"), 3500);
-    schedule(() => setSub("time"), 6500);
-    schedule(() => { setSub("counting"); setSeconds(0); }, 8500);
+    schedule(() => setSub("stop"), 3000);
+    schedule(() => setSub("speaking"), 4500);
+    schedule(() => setSub("time"), 7500);
+    schedule(() => { setSub("counting"); setSeconds(0); }, 10000);
 
-    // Counter ticks during "counting" phase
-    const counterStart = 8500;
-    for (let s = 1; s <= 3; s++) {
+    const counterStart = 10000;
+    for (let s = 1; s <= 4; s++) {
       schedule(() => setSeconds(s), counterStart + s * 1000);
     }
 
-    schedule(() => setSub("freeze"), 12000);
+    schedule(() => setSub("freeze"), 14000);
 
     return () => { timers.forEach(clearTimeout); };
   }, [active]);
 
   const isSpeaking = sub === "speaking" || sub === "time" || sub === "counting" || sub === "freeze";
   const isCounting = sub === "counting" || sub === "freeze";
-  const showTime = sub === "time" || isCounting;
 
   return (
-    <div className="w-full max-w-[240px]">
-      {/* Main card */}
-      <div className="bg-white rounded-[12px] p-5" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
+    <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
+      {/* Phone ringing element - top */}
+      <div
+        className="h-11 w-11 rounded-[10px] flex items-center justify-center transition-all duration-700"
+        style={{
+          background: sub === "ringing" ? BLUE_GRADIENT : "#E8E8E8",
+          boxShadow: sub === "ringing" ? "0 4px 12px rgba(0, 47, 210, 0.35)" : "none",
+          animation: sub === "ringing" ? "ringPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
+        }}
+      >
+        <Phone size={20} strokeWidth={2} color={sub === "ringing" ? "white" : "#999"} />
+      </div>
 
-        {/* Phone status row */}
-        <div className="flex items-center gap-3 mb-5">
-          <div className="relative">
-            <div
-              className="h-10 w-10 rounded-[10px] flex items-center justify-center shrink-0 transition-all duration-700"
-              style={{
-                backgroundColor: sub === "ringing" ? "#EEF0FF" : isSpeaking ? "#6B7FFF" : "#F0F0F0",
-                animation: sub === "ringing" ? "ringPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite" : "none",
-              }}
-            >
-              {sub === "ringing" ? (
-                <Phone size={18} strokeWidth={1.5} color="#111" />
-              ) : isSpeaking ? (
-                <PhoneCall size={18} strokeWidth={1.5} color="white" />
-              ) : (
-                <Phone size={18} strokeWidth={1.5} color="#999" />
-              )}
-            </div>
-          </div>
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: sub === "idle" ? 0.2 : 0.4 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
 
-          <div className="min-w-0">
-            <div className="text-[11px] font-medium transition-all duration-700" style={{
-              color: isSpeaking ? "#6B7FFF" : sub === "ringing" ? "#111" : "#999",
-            }}>
-              {sub === "ringing" && "Ring ring…"}
-              {sub === "stop" && "Call connected"}
-              {sub === "speaking" && "Speaking…"}
-              {sub === "time" && "Appointment set"}
-              {isCounting && "Call in progress"}
-              {sub === "idle" && "Waiting for call"}
-            </div>
-            <div className="text-[10px] font-mono transition-all duration-700" style={{ color: isCounting ? "#6B7FFF" : "#999" }}>
-              {isCounting ? `0:${String(seconds).padStart(2, "0")}` : sub === "idle" ? "—" : "0:00"}
-            </div>
-          </div>
-        </div>
+      {/* Phone picked up element */}
+      <div
+        className="h-11 w-11 rounded-[10px] flex items-center justify-center transition-all duration-700"
+        style={{
+          background: isSpeaking ? BLUE_GRADIENT : "#E8E8E8",
+          boxShadow: isSpeaking ? "0 4px 12px rgba(0, 47, 210, 0.35)" : "none",
+        }}
+      >
+        <PhoneCall size={20} strokeWidth={2} color={isSpeaking ? "white" : "#999"} />
+      </div>
 
-        {/* Voice waveform bars */}
-        <div className="flex items-end justify-center gap-[3px] h-12 mb-5 transition-opacity duration-700" style={{ opacity: isSpeaking ? 1 : 0.12 }}>
-          {[...Array(18)].map((_, i) => (
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: sub === "idle" ? 0.2 : 0.4 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
+
+      {/* Voice waveform element */}
+      <div className="bg-white rounded-[10px] px-4 py-3 transition-all duration-700" style={{
+        boxShadow: isSpeaking ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+        opacity: isSpeaking ? 1 : 0.3,
+      }}>
+        <div className="flex items-end justify-center gap-[3px] h-8">
+          {[...Array(14)].map((_, i) => (
             <div
               key={i}
-              className="w-[2.5px] rounded-full transition-all duration-500"
+              className="w-[2px] rounded-full transition-all duration-500"
               style={{
-                backgroundColor: isSpeaking ? "#6B7FFF" : "#E0E0E0",
-                height: isSpeaking ? `${12 + Math.sin(i * 0.85) * 10}px` : "4px",
-                animation: isSpeaking ? `voiceBar 0.8s ease-in-out ${i * 0.035}s infinite alternate` : "none",
+                backgroundColor: isSpeaking ? "#002FD2" : "#E0E0E0",
+                height: isSpeaking ? `${8 + Math.sin(i * 0.9) * 6}px` : "3px",
+                animation: isSpeaking ? `voiceBar 0.8s ease-in-out ${i * 0.04}s infinite alternate` : "none",
               }}
             />
           ))}
         </div>
+      </div>
 
-        {/* Time mentioned */}
-        <div className="bg-[#F5F5F7] rounded-[8px] p-3 mb-4 transition-all duration-700" style={{
-          opacity: showTime ? 1 : 0.2,
-          transform: showTime ? "translateY(0)" : "translateY(4px)",
-        }}>
-          <div className="flex items-center gap-2">
-            <Calendar size={13} strokeWidth={1.5} color={showTime ? "#6B7FFF" : "#CCC"} />
-            <span className="text-[11px] font-medium transition-colors duration-700" style={{ color: showTime ? "#111" : "#CCC" }}>
-              Tuesday, March 18
-            </span>
-          </div>
-          <div className="flex items-center gap-2 mt-1.5">
-            <Clock size={13} strokeWidth={1.5} color={showTime ? "#6B7FFF" : "#CCC"} />
-            <span className="text-[11px] font-medium transition-colors duration-700" style={{ color: showTime ? "#111" : "#CCC" }}>
-              2:30 PM — Dental cleaning
-            </span>
-          </div>
-        </div>
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: sub === "idle" ? 0.2 : 0.4 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
 
-        {/* Caller info */}
-        <div className="flex items-center gap-2.5 transition-all duration-700" style={{ opacity: sub === "idle" ? 0.3 : 1 }}>
-          <div className="h-7 w-7 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
-            <User size={13} strokeWidth={1.5} color="#666" />
-          </div>
-          <div>
-            <div className="text-[11px] font-medium text-[#111]">Sarah Patel</div>
-            <div className="text-[9px] text-[#999]">+1 (415) 555-0142</div>
-          </div>
+      {/* Time mentioned element */}
+      <div className="bg-white rounded-[10px] px-4 py-2.5 flex items-center gap-2 transition-all duration-700" style={{
+        boxShadow: sub === "time" || isCounting ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+        opacity: sub === "time" || isCounting ? 1 : 0.3,
+        transform: sub === "time" || isCounting ? "scale(1)" : "scale(0.95)",
+      }}>
+        <Calendar size={14} strokeWidth={2} color={sub === "time" || isCounting ? "#002FD2" : "#999"} />
+        <span className="text-[11px] font-medium" style={{ color: sub === "time" || isCounting ? "#111" : "#999" }}>
+          Tuesday 2:30 PM
+        </span>
+      </div>
+
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: sub === "idle" ? 0.2 : 0.4 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
+
+      {/* Counter element */}
+      <div className="bg-white rounded-[10px] px-5 py-2.5 transition-all duration-700" style={{
+        boxShadow: isCounting ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+        opacity: isCounting ? 1 : 0.3,
+      }}>
+        <div className="flex items-center gap-2">
+          <Clock size={14} strokeWidth={2} color={isCounting ? "#002FD2" : "#999"} />
+          <span className="text-[12px] font-mono font-medium" style={{ color: isCounting ? "#002FD2" : "#999" }}>
+            {isCounting ? `0:${String(seconds).padStart(2, "0")}` : "0:00"}
+          </span>
         </div>
       </div>
     </div>
   );
 }
 
-/* ─── CARD 2: BOOK ─── */
-function BookCard({ active }: { active: boolean }) {
+/* ─── CARD 2: BOOK FLOW ─── */
+function BookFlow({ active }: { active: boolean }) {
   return (
-    <div className="w-full max-w-[220px]">
-      <div className="bg-white rounded-[12px] p-5" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="h-8 w-8 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
-            <Calendar size={16} strokeWidth={1.5} color={active ? "#6B7FFF" : "#999"} />
-          </div>
-          <div>
-            <div className="text-[11px] font-medium text-[#111]">Google Calendar</div>
-            <div className="text-[9px] text-[#999]">Tue, Mar 18</div>
-          </div>
-        </div>
+    <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
+      {/* Calendar icon element */}
+      <div
+        className="h-11 w-11 rounded-[10px] flex items-center justify-center transition-all duration-700"
+        style={{
+          background: active ? BLUE_GRADIENT : "#E8E8E8",
+          boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.35)" : "none",
+        }}
+      >
+        <Calendar size={20} strokeWidth={2} color={active ? "white" : "#999"} />
+      </div>
 
-        <div className="space-y-1.5">
-          {["9:00 AM", "10:00 AM", "11:00 AM"].map((t) => (
-            <div key={t} className="h-6 bg-[#F5F5F7] rounded-[6px] flex items-center px-2.5">
-              <span className="text-[8px] text-[#999]">{t}</span>
-            </div>
-          ))}
-          <div className="h-8 rounded-[6px] flex items-center px-2.5 transition-all duration-700" style={{
-            backgroundColor: active ? "#6B7FFF" : "#E8E8E8",
-          }}>
-            <span className="text-[9px] font-medium" style={{ color: active ? "white" : "#999" }}>2:30 PM — Cleaning</span>
-          </div>
-          {["3:30 PM", "4:00 PM", "5:00 PM"].map((t) => (
-            <div key={t} className="h-6 bg-[#F5F5F7] rounded-[6px] flex items-center px-2.5">
-              <span className="text-[8px] text-[#999]">{t}</span>
-            </div>
-          ))}
-        </div>
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: active ? 0.4 : 0.2 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
 
-        <div className="mt-4 flex items-center gap-2 transition-all duration-700" style={{
-          opacity: active ? 1 : 0,
-          transform: active ? "translateY(0)" : "translateY(4px)",
-        }}>
-          <Clock size={12} strokeWidth={1.5} color="#6B7FFF" />
-          <span className="text-[10px] font-medium text-[#6B7FFF]">Booked automatically</span>
+      {/* Booking confirmation element */}
+      <div className="bg-white rounded-[10px] px-4 py-2.5 transition-all duration-700" style={{
+        boxShadow: active ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+        opacity: active ? 1 : 0.3,
+        transform: active ? "scale(1)" : "scale(0.95)",
+      }}>
+        <div className="flex items-center gap-2">
+          <Check size={14} strokeWidth={2} color={active ? "#002FD2" : "#999"} />
+          <span className="text-[11px] font-medium" style={{ color: active ? "#111" : "#999" }}>
+            2:30 PM booked
+          </span>
+        </div>
+      </div>
+
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: active ? 0.4 : 0.2 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
+
+      {/* User element */}
+      <div className="bg-white rounded-[10px] px-4 py-2.5 flex items-center gap-2 transition-all duration-700" style={{
+        boxShadow: active ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+        opacity: active ? 1 : 0.3,
+      }}>
+        <User size={14} strokeWidth={2} color={active ? "#002FD2" : "#999"} />
+        <div>
+          <div className="text-[11px] font-medium" style={{ color: active ? "#111" : "#999" }}>Sarah Patel</div>
+          <div className="text-[9px]" style={{ color: active ? "#002FD2" : "#999" }}>Confirmation sent</div>
         </div>
       </div>
     </div>
   );
 }
 
-/* ─── CARD 3: REPORT ── */
-function ReportCard({ active }: { active: boolean }) {
+/* ─── CARD 3: REPORT FLOW ─── */
+function ReportFlow({ active }: { active: boolean }) {
   return (
-    <div className="w-full max-w-[220px]">
-      <div className="bg-white rounded-[12px] p-5" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="h-8 w-8 rounded-[8px] bg-[#F0F0F0] flex items-center justify-center">
-            <User size={16} strokeWidth={1.5} color={active ? "#6B7FFF" : "#999"} />
-          </div>
-          <div>
-            <div className="text-[11px] font-medium text-[#111]">Recent calls</div>
-            <div className="text-[9px] text-[#999]">Today</div>
-          </div>
-        </div>
+    <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
+      {/* Dashboard icon element */}
+      <div
+        className="h-11 w-11 rounded-[10px] flex items-center justify-center transition-all duration-700"
+        style={{
+          background: active ? BLUE_GRADIENT : "#E8E8E8",
+          boxShadow: active ? "0 4px 12px rgba(0, 47, 210, 0.35)" : "none",
+        }}
+      >
+        <User size={20} strokeWidth={2} color={active ? "white" : "#999"} />
+      </div>
 
-        <div className="space-y-1.5">
-          {[
-            { name: "Maria S.", status: "Booked", time: "10:24 AM" },
-            { name: "James T.", status: "Booked", time: "11:08 AM" },
-            { name: "Linda P.", status: "Question", time: "1:45 PM" },
-            { name: "Sarah P.", status: "Booked", time: "2:34 PM", isNew: true },
-          ].map((call, i) => (
-            <div key={i} className="flex items-center justify-between py-2 border-b border-[#F0F0F0] last:border-0 transition-all duration-700" style={{
-              opacity: call.isNew ? (active ? 1 : 0.25) : 1,
-              transform: call.isNew ? (active ? "translateY(0)" : "translateY(-4px)") : "translateY(0)",
-              backgroundColor: call.isNew && active ? "#F8F7FB" : "transparent",
-              borderRadius: "6px",
-              paddingLeft: "6px",
-              paddingRight: "6px",
-            }}>
-              <div className="flex items-center gap-2">
-                <div className="h-6 w-6 rounded-[6px] bg-[#F0F0F0] flex items-center justify-center">
-                  <span className="text-[7px] font-bold" style={{ color: call.isNew && active ? "#6B7FFF" : "#666" }}>{call.name[0]}</span>
-                </div>
-                <div>
-                  <div className="text-[10px] font-medium" style={{ color: call.isNew && active ? "#6B7FFF" : "#111" }}>{call.name}</div>
-                  <div className="text-[8px] text-[#999]">{call.isNew && active ? "Just now" : call.time}</div>
-                </div>
-              </div>
-              <div className="text-[8px] font-medium px-2 py-0.5 rounded-[4px]" style={{
-                backgroundColor: call.status === "Booked" ? "#6B7FFF" : "#F0F0F0",
-                color: call.status === "Booked" ? "white" : "#999",
-              }}>
-                {call.status}
-              </div>
-            </div>
-          ))}
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: active ? 0.4 : 0.2 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
+
+      {/* Call log element */}
+      <div className="bg-white rounded-[10px] px-4 py-2.5 w-full max-w-[180px] transition-all duration-700" style={{
+        boxShadow: active ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+      }}>
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-medium" style={{ color: active ? "#111" : "#999" }}>Today's calls</span>
+          <span className="text-[9px] font-medium" style={{ color: active ? "#002FD2" : "#999" }}>12 answered</span>
+        </div>
+      </div>
+
+      {/* Dotted line down */}
+      <svg width="2" height="20" className="transition-opacity duration-500" style={{ opacity: active ? 0.4 : 0.2 }}>
+        <line x1="1" y1="0" x2="1" y2="20" stroke="#999" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
+
+      {/* Recent call element */}
+      <div className="bg-white rounded-[10px] px-4 py-2.5 flex items-center gap-2 w-full max-w-[180px] transition-all duration-700" style={{
+        boxShadow: active ? "0 2px 8px rgba(0, 47, 210, 0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
+        opacity: active ? 1 : 0.3,
+        transform: active ? "translateY(0)" : "translateY(-4px)",
+      }}>
+        <div className="h-6 w-6 rounded-[6px] bg-[#F0F0F0] flex items-center justify-center">
+          <span className="text-[7px] font-bold" style={{ color: active ? "#002FD2" : "#666" }}>S</span>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] font-medium truncate" style={{ color: active ? "#002FD2" : "#111" }}>Sarah P.</div>
+          <div className="text-[8px]" style={{ color: active ? "#002FD2" : "#999" }}>{active ? "Just now" : "2:34 PM"}</div>
+        </div>
+        <div className="text-[8px] font-medium px-1.5 py-0.5 rounded-[4px]" style={{
+          backgroundColor: active ? "#002FD2" : "#F0F0F0",
+          color: active ? "white" : "#999",
+        }}>
+          Booked
         </div>
       </div>
     </div>
