@@ -35,7 +35,7 @@ export function HowItWorks() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {COPY.howItWorks.steps.map((step, i) => (
           <div key={step.num} className="flex flex-col">
-            <div className={`flex-1 rounded-[8px] mb-0 min-h-[360px] relative overflow-hidden transition-all duration-700`} style={{
+            <div className={`flex-1 rounded-[8px] mb-0 min-h-[280px] relative overflow-hidden transition-all duration-700`} style={{
               backgroundColor: "#FFFFFF",
               border: "1px solid #E8E8E8",
               boxShadow: (i === 0 && phase === "step1") || (i === 1 && phase === "step2") || (i === 2 && phase === "step3")
@@ -55,15 +55,13 @@ export function HowItWorks() {
               </div>
             </div>
             
-            {/* Text container - moved up with negative margin */}
-            <div className="relative -mt-4 mx-4 mb-2 bg-white rounded-[6px] px-4 py-3" style={{
-              boxShadow: "0 -2px 8px rgba(255,255,255,0.8)",
-            }}>
+            {/* Text container — no side padding/margin, bg matches section */}
+            <div className="relative -mt-4">
               <div className="absolute top-0 left-0 right-0 h-4 pointer-events-none" style={{
                 background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%)",
                 backdropFilter: "blur(2px)",
               }} />
-              <div className="relative z-10">
+              <div className="relative z-10 px-1 py-3">
                 <h3 className="text-[20px] font-medium text-[#111] mb-2 tracking-[-0.01em]">{step.title}</h3>
                 <p className="text-[14px] text-[#666] leading-[1.6]">{step.desc}</p>
               </div>
