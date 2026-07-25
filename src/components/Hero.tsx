@@ -42,7 +42,7 @@ export function Hero() {
          }}
        >
          <div className="max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-16">
-            <div className="relative w-full aspect-[3/4] sm:aspect-[16/11] lg:aspect-[16/8.5] overflow-hidden rounded-lg">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[16/11] lg:aspect-[16/8.5] rounded-lg">
              <HeroStage />
            </div>
          </div>

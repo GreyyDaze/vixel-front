@@ -73,7 +73,7 @@ export function HeroStage() {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      <div className="relative w-full h-[88%] flex items-center justify-center bg-gradient-to-b from-brand-blue/10 to-transparent overflow-hidden">
+      <div className="relative w-full h-[88%] flex items-center justify-center bg-gradient-to-b from-brand-blue/10 to-transparent">
         {/* Desktop: dashboard + overlays (lg and up) */}
         <div className="hidden lg:block w-full h-full">
           <DesktopDashboard newCall={newCallInDashboard} bookingsCount={bookingsCount} />
