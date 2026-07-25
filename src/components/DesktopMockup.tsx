@@ -22,7 +22,7 @@ export function DesktopMockup({ phase, callSeconds, newCallInDashboard, bookings
   const showBookedToast = phase === "updating" || phase === "done";
 
   return (
-    <div className="relative w-full h-full bg-white rounded-md border">
+    <div className="relative w-full h-full bg-white">
       <div className="h-full grid grid-cols-[180px_1fr]">
         <div className="border-r p-3 bg-sidebar-bg">
           <div className="flex items-center gap-2 px-3 py-2 mb-3">
