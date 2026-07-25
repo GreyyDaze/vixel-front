@@ -8,17 +8,17 @@ export function Hero() {
   return (
     <section className="w-full">
       {/* White section: headline, subhead, CTAs — matches Agentwork's clean top */}
-      <div className="max-w-[1320px] mx-auto px-8 lg:px-16 pt-8 lg:pt-14 pb-10">
+      <div className="max-w-[1320px] mx-auto px-8 lg:px-16 pt-8 lg:pt-12 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 items-start">
-          <div>
-            <h1 className="text-[44px] lg:text-[56px] leading-[1.04] tracking-[-0.025em] font-medium text-[#111] mb-5">
-              {COPY.hero.headline}
+          <div className="pt-20 pb-4">
+            <h1 className="text-[42px] lg:text-[52px] leading-[1.04] tracking-[-0.025em] font-medium text-[#111] mb-5">
+              Every call answered.<br />Every appointment booked.
             </h1>
-            <p className="text-[15px] leading-[1.65] text-[#555] max-w-[520px]">
+            <p className="text-[17px] leading-[1.65] text-[#555] max-w-[560px]">
               {COPY.hero.subhead}
             </p>
           </div>
-          <div className="flex flex-col gap-2.5 lg:items-end lg:pt-3">
+          <div className="flex flex-col gap-2.5 lg:items-end lg:pt-3 self-end">
             <Button size="lg" className="w-full lg:w-[200px]" render={<a href="#cta" />}>
               {COPY.hero.ctaPrimary}
             </Button>

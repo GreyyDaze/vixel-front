@@ -34,7 +34,7 @@ export function RealSituations() {
               className="overflow-hidden flex flex-col"
               style={{
                 gridColumn,
-                backgroundColor: '#F2F2F2',
+                backgroundColor: '#F6F4F0',
               }}
             >
               <div className="flex-1 min-h-[240px] flex items-center justify-center p-6 lg:p-8">
