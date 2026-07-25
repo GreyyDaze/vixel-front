@@ -2,6 +2,7 @@
 
 import { PhoneMockup } from "./PhoneMockup";
 import { CallAnimation } from "./CallAnimation";
+import { MobileAppointmentTable } from "./MobileAppointmentTable";
 import { BookedToast } from "./BookedToast";
 import type { Phase } from "./HeroStage";
 
@@ -12,8 +13,8 @@ interface MobileMockupProps {
 
 export function MobileMockup({ phase, callSeconds }: MobileMockupProps) {
   const showPhone = phase === "ringing" || phase === "accepted";
-  const showCallCard = phase !== "ringing" && phase !== "done" && phase !== "accepted";
-  const showBookedToast = phase === "updating" || phase === "done";
+  const showCallCard = phase !== "ringing" && phase !== "done" && phase !== "accepted" && phase !== "updating";
+  const showAppointment = phase === "updating" || phase === "done";
 
   return (
     <div className="relative w-full h-full max-w-sm mx-auto sm:max-w-md md:max-w-lg">
@@ -34,12 +35,15 @@ export function MobileMockup({ phase, callSeconds }: MobileMockupProps) {
           <CallAnimation phase={phase} seconds={callSeconds} />
         </div>
 
-        {/* Step 3 — Booking toast */}
+        {/* Step 3 — Appointment table with overlapping toast */}
         <div
           className="absolute inset-3 z-30 transition-opacity duration-500"
-          style={{ opacity: showBookedToast ? 1 : 0, pointerEvents: showBookedToast ? "auto" : "none" }}
+          style={{ opacity: showAppointment ? 1 : 0, pointerEvents: showAppointment ? "auto" : "none" }}
         >
-          <BookedToast />
+          <MobileAppointmentTable />
+          <div className="absolute -left-20 top-24 z-40">
+            <BookedToast />
+          </div>
         </div>
       </div>
     </div>
