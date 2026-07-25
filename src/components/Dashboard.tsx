@@ -3,9 +3,9 @@ import { COPY } from "@/content/copy";
 export function Dashboard() {
   return (
     <section id="dashboard" className="w-full" style={{ background: "#0a0a0a" }}>
-      <div className="max-w-[1320px] mx-auto px-8 lg:px-16 py-24">
+      <div className="max-w-[1320px] mx-auto px-5 lg:px-16 py-16 sm:py-20 lg:py-24">
         <div className="mb-12 max-w-[640px]">
-          <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-white mb-4">
+          <h2 className="text-[26px] sm:text-[32px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-white mb-4">
             {COPY.dashboard.headline}
           </h2>
           <p className="text-[14px] text-[#888] leading-[1.65]">

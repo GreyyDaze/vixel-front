@@ -9,7 +9,7 @@ import { SectionHeading } from "./SectionHeading";
 
 export function FAQ() {
   return (
-    <section id="faq" className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 pt-24 mb-11">
+    <section id="faq" className="w-full max-w-[1320px] mx-auto px-5 lg:px-16 pt-12 sm:pt-16 lg:pt-24 mb-11">
       <div className="mb-14">
         <SectionHeading className="max-w-[420px]">{COPY.faq.headline}</SectionHeading>
       </div>

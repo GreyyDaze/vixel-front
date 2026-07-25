@@ -34,10 +34,10 @@ export function HowItWorks() {
   return (
     <section
       id="how"
-      className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 pt-20 mb-11"
+      className="w-full max-w-[1320px] mx-auto px-5 lg:px-16 pt-12 sm:pt-16 lg:pt-20 mb-11"
     >
       <div className="mb-12 max-w-[640px]">
-        <h2 className="text-3xl lg:text-[33px] leading-[1.1] tracking-[-0.02em] font-medium text-text-primary">{COPY.howItWorks.headline}</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-[33px] leading-[1.1] tracking-[-0.02em] font-medium text-text-primary">{COPY.howItWorks.headline}</h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

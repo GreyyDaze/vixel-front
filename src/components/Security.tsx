@@ -12,7 +12,7 @@ function CheckIcon() {
 
 export function Security() {
   return (
-    <section className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 pt-24 mb-11">
+    <section className="w-full max-w-[1320px] mx-auto px-5 lg:px-16 pt-12 sm:pt-16 lg:pt-24 mb-11">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div>
           <SectionHeading className="mb-4">{COPY.security.headline}</SectionHeading>

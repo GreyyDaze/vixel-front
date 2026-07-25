@@ -8,13 +8,13 @@ export function Hero() {
   return (
     <section className="w-full">
       {/* White section: headline, subhead, CTAs — matches Agentwork's clean top */}
-      <div className="max-w-[1320px] mx-auto px-8 lg:px-16 pt-8 lg:pt-12 pb-10">
+      <div className="max-w-[1320px] mx-auto px-5 lg:px-16 pt-4 sm:pt-6 lg:pt-12 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 items-start">
-          <div className="pt-20 pb-4">
-            <h1 className="text-[42px] lg:text-[52px] leading-[1.04] tracking-[-0.025em] font-medium text-text-primary mb-5">
+          <div className="pt-8 sm:pt-12 lg:pt-20 pb-4">
+            <h1 className="text-[30px] sm:text-[38px] lg:text-[52px] leading-[1.15] sm:leading-[1.1] lg:leading-[1.04] tracking-[-0.025em] font-medium text-text-primary mb-5">
               Every call answered.<br />Every appointment booked.
             </h1>
-            <p className="text-[17px] leading-[1.65] text-text-secondary max-w-[560px]">
+            <p className="text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.65] text-text-secondary max-w-[560px]">
               {COPY.hero.subhead}
             </p>
           </div>

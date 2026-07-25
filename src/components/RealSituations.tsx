@@ -32,7 +32,7 @@ export function RealSituations() {
   return (
     <section
       id="situations"
-      className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 pt-24 pb-16 mb-11"
+      className="w-full max-w-[1320px] mx-auto px-5 lg:px-16 pt-12 sm:pt-16 lg:pt-24 pb-10 sm:pb-12 lg:pb-16 mb-11"
     >
       <div className="mb-16 max-w-[640px]">
         <SectionHeading className="mb-4">
@@ -43,22 +43,21 @@ export function RealSituations() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {situations.map((s, i) => {
-          let gridColumn = "span 1";
-          if (i === 0) gridColumn = "span 2";
-          else if (i === 5) gridColumn = "span 3";
+          let colSpan = "";
+          if (i === 0) colSpan = "sm:col-span-2 lg:col-span-2";
+          else if (i === 5) colSpan = "sm:col-span-2 lg:col-span-3";
 
           return (
             <div
               key={i}
-              className="overflow-hidden flex flex-col rounded-lg border border-border-light"
+              className={`overflow-hidden flex flex-col rounded-lg border border-border-light ${colSpan}`}
               style={{
-                gridColumn,
                 backgroundColor: "var(--color-card-warm)",
               }}
             >
-              <div className="flex-1 min-h-[240px] flex items-center justify-center p-6 lg:p-8">
+              <div className="flex-1 min-h-[200px] sm:min-h-[240px] flex items-center justify-center p-6 lg:p-8">
                 {s.visual}
               </div>
               <div className="px-5 pb-6 pt-0">
@@ -762,7 +761,7 @@ function QuestionsPanel() {
 function MultiplePanel() {
   return (
     <div className="w-full max-w-[520px]">
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         {/* Active column */}
         <div className="flex-1 bg-white rounded-lg p-3 shadow-card">
           <div className="text-[10px] font-semibold text-text-primary uppercase tracking-wider mb-2.5">
