@@ -155,7 +155,7 @@ function BusyCallPanel() {
     <div className="w-full max-w-[380px]">
       {/* Queue badge */}
       <div className="flex justify-end mb-1 -mr-2">
-        <div className="inline-flex items-center gap-1 bg-element-bg text-white text-[9px] font-medium px-2 py-0.5 rounded-full">
+        <div className="inline-flex items-center gap-1 bg-element-bg text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
           <Phone size={9} strokeWidth={2} color="white" />2 in queue
         </div>
       </div>
@@ -187,7 +187,7 @@ function BusyCallPanel() {
                 {/* Caller row */}
                 <div className="flex items-center gap-2.5">
                   <div
-                    className="h-7 w-7 bg-element-bg text-white flex items-center justify-center text-[10px] font-bold shrink-0"
+                    className="h-7 w-7 bg-element-bg text-white flex items-center justify-center text-[11px] font-bold shrink-0"
                     style={{ borderRadius: 100 }}
                   >
                     {scenario.initials}
@@ -196,12 +196,12 @@ function BusyCallPanel() {
                     <div className="text-xs font-medium text-text-primary">
                       {scenario.name}
                     </div>
-                    <div className="text-[10px] text-text-tertiary">
+                    <div className="text-[11px] text-text-tertiary">
                       {scenario.detail}
                     </div>
                   </div>
                   <div className="flex items-center gap-2.5">
-                    <span className="text-[9px] text-text-dim font-mono">
+                    <span className="text-[10px] text-text-dim font-mono">
                       0:42
                     </span>
                     <StatusChip>Handling</StatusChip>
@@ -213,7 +213,7 @@ function BusyCallPanel() {
                   className={`bg-white ${INNER_RADIUS} p-3 shadow-card space-y-2`}
                 >
                   <div className="flex items-start gap-1.5">
-                    <span className="text-[10px] font-semibold text-text-tertiary w-5 shrink-0 mt-0.5">
+                    <span className="text-[11px] font-semibold text-text-tertiary w-5 shrink-0 mt-0.5">
                       {scenario.initials}
                     </span>
                     <p className="text-[11px] text-text-conversation leading-[1.45]">
@@ -221,7 +221,7 @@ function BusyCallPanel() {
                     </p>
                   </div>
                   <div className="flex items-start gap-1.5">
-                    <span className="text-[10px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">
+                    <span className="text-[11px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">
                       V
                     </span>
                     <p className="text-[11px] text-text-conversation leading-[1.45]">
@@ -232,7 +232,7 @@ function BusyCallPanel() {
 
                 {/* Voice indicator */}
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[9px] text-brand-blue font-semibold">
+                  <span className="text-[10px] text-brand-blue font-semibold">
                     Vox
                   </span>
                   <div className="flex items-center gap-[2px] h-4">
@@ -258,14 +258,14 @@ function BusyCallPanel() {
       {/* Next in queue */}
       <div className="flex items-center gap-2 mt-3 -mb-1">
         <div
-          className="h-6 w-6 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[9px] font-bold shrink-0"
+          className="h-6 w-6 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[10px] font-bold shrink-0"
           style={{ borderRadius: 100 }}
         >
           {c.queueName[0]}
         </div>
         <div className="flex-1 min-w-0">
           <div className="text-[11px] text-text-tertiary">{c.queueName}</div>
-          <div className="text-[9px] text-text-dim">{c.queueDetail}</div>
+          <div className="text-[10px] text-text-dim">{c.queueDetail}</div>
         </div>
       </div>
 
@@ -302,8 +302,8 @@ function AfterHoursPanel() {
       <div className="bg-element-bg rounded-lg overflow-hidden shadow-card">
         {/* Status bar */}
         <div className="flex items-center justify-between px-3.5 pt-3 pb-1.5">
-          <span className="text-[10px] font-medium text-white/80">9:42</span>
-          <span className="text-[9px] text-white/40">PM</span>
+          <span className="text-[11px] font-medium text-white/80">9:42</span>
+          <span className="text-[10px] text-white/40">PM</span>
         </div>
 
         {/* Notification card */}
@@ -312,9 +312,9 @@ function AfterHoursPanel() {
             <div className="h-8 w-8 bg-white/15 text-white flex items-center justify-center text-[11px] font-bold shrink-0" style={{ borderRadius: 100 }}>J</div>
             <div className="flex-1 min-w-0">
               <div className="text-xs font-medium text-white">James Turner</div>
-              <div className="text-[9px] text-white/50">Incoming call</div>
+              <div className="text-[10px] text-white/50">Incoming call</div>
             </div>
-            <div className="flex items-center gap-1 text-green text-[9px] font-medium bg-green/15 rounded-full px-2 py-0.5 border border-green/20">
+            <div className="flex items-center gap-1 text-green text-[10px] font-medium bg-green/15 rounded-full px-2 py-0.5 border border-green/20">
               <Phone size={8} strokeWidth={2} color="var(--color-green)" />
               Answered
             </div>
@@ -325,9 +325,9 @@ function AfterHoursPanel() {
         <div className="px-3.5 pb-3 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Calendar size={10} strokeWidth={2} color="white/40" />
-            <span className="text-[9px] text-white/60">Sat 10:00 AM</span>
+            <span className="text-[10px] text-white/60">Sat 10:00 AM</span>
           </div>
-          <span className="text-[9px] text-green font-medium">After hours</span>
+          <span className="text-[10px] text-green font-medium">After hours</span>
         </div>
       </div>
     </div>
@@ -345,7 +345,7 @@ function BookingPanel() {
       {/* Step 1 — Call */}
       <div className="flex items-center gap-3 mb-3">
         <div
-          className="h-7 w-7 bg-brand-blue text-white flex items-center justify-center text-[10px] font-bold shrink-0"
+          className="h-7 w-7 bg-brand-blue text-white flex items-center justify-center text-[11px] font-bold shrink-0"
           style={{ borderRadius: 100 }}
         >
           S
@@ -354,7 +354,7 @@ function BookingPanel() {
           <div className="text-[11px] font-medium text-text-primary">
             &ldquo;Need a cleaning Tuesday&rdquo;
           </div>
-          <div className="text-[9px] text-text-tertiary">
+          <div className="text-[10px] text-text-tertiary">
             Nancy Reeves · Incoming
           </div>
         </div>
@@ -377,7 +377,7 @@ function BookingPanel() {
           <div className="text-[11px] font-medium text-text-primary">
             2:30 PM Tue
           </div>
-          <div className="text-[9px] text-text-tertiary">
+          <div className="text-[10px] text-text-tertiary">
             Slot open · 60 min
           </div>
         </div>
@@ -391,7 +391,7 @@ function BookingPanel() {
       {/* Step 3 — Confirmed */}
       <div className="flex items-center gap-3 mt-3 bg-white rounded-md p-2.5 shadow-card">
         <div
-          className="h-7 w-7 bg-green text-white flex items-center justify-center text-[10px] font-bold shrink-0"
+          className="h-7 w-7 bg-green text-white flex items-center justify-center text-[11px] font-bold shrink-0"
           style={{ borderRadius: 100 }}
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -408,7 +408,7 @@ function BookingPanel() {
           <div className="text-[11px] font-medium text-text-primary">
             Cleaning — Nancy Reeves
           </div>
-          <div className="text-[9px] text-green font-medium">
+          <div className="text-[10px] text-green font-medium">
             Booked automatically
           </div>
         </div>
@@ -638,10 +638,10 @@ function UrgentCard({ c, dim = false }: { c: UrgentCase; dim?: boolean }) {
   return (
     <>
       <div className="mb-3 flex items-center justify-between">
-        <div className="text-[9px] font-semibold uppercase tracking-[0.24em] text-red-500">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-500">
           Emergency
         </div>
-        <span className="font-mono text-[9px] font-medium text-red-500">
+        <span className="font-mono text-[10px] font-medium text-red-500">
           0:05
         </span>
       </div>
@@ -654,7 +654,7 @@ function UrgentCard({ c, dim = false }: { c: UrgentCase; dim?: boolean }) {
           <div className={`truncate text-xs font-medium ${nameColor}`}>
             {c.name}
           </div>
-          <div className={`truncate text-[9px] ${subtleColor}`}>
+          <div className={`truncate text-[10px] ${subtleColor}`}>
             {c.biz} • {c.phone}
           </div>
         </div>
@@ -675,7 +675,7 @@ function UrgentCard({ c, dim = false }: { c: UrgentCase; dim?: boolean }) {
           <div className={`truncate text-[11px] font-medium ${nameColor}`}>
             {c.action}
           </div>
-          <div className={`truncate text-[9px] ${subtleColor}`}>{c.line}</div>
+          <div className={`truncate text-[10px] ${subtleColor}`}>{c.line}</div>
         </div>
 
         <div
@@ -700,9 +700,9 @@ function QuestionsPanel() {
         {/* Search bar */}
         <div className="flex items-center gap-2 px-3 py-2.5 border-b border-white/10">
           <Search size={11} strokeWidth={2} color="white/40" />
-          <span className="text-[10px] text-white/40">
-            Search knowledge base...
-          </span>
+            <span className="text-[11px] text-white/40">
+              Search knowledge base...
+            </span>
         </div>
 
         {/* Answer area */}
@@ -715,7 +715,7 @@ function QuestionsPanel() {
             >
               C
             </div>
-            <p className="text-[10px] text-white/60 leading-[1.5]">
+            <p className="text-[11px] text-white/60 leading-[1.5]">
               &ldquo;What are your hours and do you take insurance?&rdquo;
             </p>
           </div>
@@ -729,14 +729,14 @@ function QuestionsPanel() {
               >
                 <LogoMark size={10} />
               </div>
-              <span className="text-[9px] text-white/80 font-medium">
+              <span className="text-[10px] text-white/80 font-medium">
                 Answering the call
               </span>
             </div>
-            <p className="text-[10px] text-white/80 leading-[1.5]">
+            <p className="text-[11px] text-white/80 leading-[1.5]">
               Mon–Fri 8 AM–6 PM, Saturday 9–2.
             </p>
-            <p className="text-[10px] text-white/60 leading-[1.5]">
+            <p className="text-[11px] text-white/60 leading-[1.5]">
               Accepts Delta, MetLife, Cigna, Aetna.
             </p>
           </div>
@@ -744,9 +744,9 @@ function QuestionsPanel() {
 
         {/* Footer */}
         <div className="px-3.5 py-2 border-t border-white/10 flex items-center gap-1.5">
-          <span className="text-[8px] text-white/40">
-            3 sources · Updated 2 days ago
-          </span>
+          <span className="text-[10px] text-white/40">
+              3 sources · Updated 2 days ago
+            </span>
         </div>
       </div>
     </div>
@@ -764,27 +764,27 @@ function MultiplePanel() {
       <div className="flex flex-col sm:flex-row gap-3">
         {/* Active column */}
         <div className="flex-1 bg-white rounded-lg p-3 shadow-card">
-          <div className="text-[10px] font-semibold text-text-primary uppercase tracking-wider mb-2.5">
+          <div className="text-[11px] font-semibold text-text-primary uppercase tracking-wider mb-2.5">
             Active
           </div>
           <div className="space-y-2">
             <div className="bg-brand-light rounded-md p-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <div
-                  className="h-5 w-5 bg-element-bg text-white flex items-center justify-center text-[8px] font-bold shrink-0"
+                  className="h-5 w-5 bg-element-bg text-white flex items-center justify-center text-[9px] font-bold shrink-0"
                   style={{ borderRadius: 100 }}
                 >
                   M
                 </div>
-                <span className="text-[10px] font-medium text-text-primary">
+                <span className="text-[11px] font-medium text-text-primary">
                   Maria Santos
                 </span>
-                <span className="text-[8px] text-text-dim font-mono ml-auto">
+                <span className="text-[9px] text-text-dim font-mono ml-auto">
                   1:24
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[8px] text-text-tertiary">Booking</span>
+                <span className="text-[9px] text-text-tertiary">Booking</span>
                 <StatusChip size="sm">Answering</StatusChip>
               </div>
             </div>
@@ -793,43 +793,43 @@ function MultiplePanel() {
 
         {/* Queue column */}
         <div className="flex-1 bg-white rounded-lg p-3 shadow-card">
-          <div className="text-[10px] font-semibold text-text-primary uppercase tracking-wider mb-2.5">
+          <div className="text-[11px] font-semibold text-text-primary uppercase tracking-wider mb-2.5">
             Queue
           </div>
           <div className="space-y-2">
             <div className="rounded-md p-2.5 border border-border-light">
               <div className="flex items-center gap-2 mb-1">
                 <div
-                  className="h-5 w-5 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[8px] font-bold shrink-0"
+                  className="h-5 w-5 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[9px] font-bold shrink-0"
                   style={{ borderRadius: 100 }}
                 >
                   J
                 </div>
-                <span className="text-[10px] text-text-tertiary">
+                <span className="text-[11px] text-text-tertiary">
                   James Turner
                 </span>
-                <span className="text-[8px] text-text-dim font-mono ml-auto">
+                <span className="text-[9px] text-text-dim font-mono ml-auto">
                   0:42
                 </span>
               </div>
-              <span className="text-[8px] text-text-dim">Question</span>
+              <span className="text-[9px] text-text-dim">Question</span>
             </div>
             <div className="rounded-md p-2.5 border border-border-light">
               <div className="flex items-center gap-2 mb-1">
                 <div
-                  className="h-5 w-5 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[8px] font-bold shrink-0"
+                  className="h-5 w-5 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[9px] font-bold shrink-0"
                   style={{ borderRadius: 100 }}
                 >
                   L
                 </div>
-                <span className="text-[10px] text-text-tertiary">
+                <span className="text-[11px] text-text-tertiary">
                   Linda Park
                 </span>
-                <span className="text-[8px] text-text-dim font-mono ml-auto">
+                <span className="text-[9px] text-text-dim font-mono ml-auto">
                   0:15
                 </span>
               </div>
-              <span className="text-[8px] text-[#F59E0B] font-medium">
+              <span className="text-[9px] text-[#F59E0B] font-medium">
                 Transfer · Routing
               </span>
             </div>
@@ -839,8 +839,8 @@ function MultiplePanel() {
 
       {/* Footer */}
       <div className="flex items-center justify-between mt-2">
-        <span className="text-[8px] text-text-dim">12 answered today</span>
-        <span className="text-[8px] font-medium text-brand-blue">0 missed</span>
+        <span className="text-[9px] text-text-dim">12 answered today</span>
+        <span className="text-[9px] font-medium text-brand-blue">0 missed</span>
       </div>
     </div>
   );
