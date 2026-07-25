@@ -66,6 +66,10 @@ export function HeroStage() {
   const showPhone = phase === "ringing" || phase === "accepted";
   const showCallCard = phase !== "ringing" && phase !== "done" && phase !== "accepted";
   const showBookedToast = phase === "updating" || phase === "done";
+  const showVox1 = phase === "vox1" || phase === "caller2" || phase === "vox2" || phase === "updating" || phase === "done";
+  const showCaller2 = phase === "caller2" || phase === "vox2" || phase === "updating" || phase === "done";
+  const showVox2 = phase === "vox2" || phase === "updating" || phase === "done";
+  const showConfirmed = phase === "updating" || phase === "done";
 
   return (
     <div className="relative w-full max-w-[1200px] px-12 h-full flex items-center justify-center">
@@ -89,31 +93,48 @@ export function HeroStage() {
 
         {/* Step 2 — Live call (shown when call is active, after phone picks up) */}
         <div
-          className="absolute inset-x-4 bottom-0 z-20 lg:hidden transition-opacity duration-500"
-          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none" }}
+          className="absolute inset-x-2 bottom-0 z-20 lg:hidden transition-opacity duration-500"
+          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none", maxHeight: "60%", overflowY: "auto" }}
         >
           <div className="bg-white rounded-lg shadow-card border border-border-light overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2.5 border-b">
-              <span className="text-[11px] font-semibold text-text-primary">Live call</span>
+            <div className="flex items-center justify-between px-3 py-2 border-b">
+              <span className="text-[11px] font-semibold text-text-primary">{phase === "accepted" ? "Call connected" : "Live call"}</span>
               <span className="text-[9px] font-mono text-text-tertiary">{String(Math.floor(callSeconds / 60)).padStart(2, '0')}:{String(callSeconds % 60).padStart(2, '0')}</span>
             </div>
-            <div className="p-4 space-y-3">
-              {phase !== "accepted" && (
+            <div className="p-3 space-y-2.5">
+              {showVox1 && (
                 <div className="flex items-start gap-2">
                   <span className="text-[10px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">V</span>
-                  <p className="text-[11px] text-text-conversation leading-[1.45]">
-                    {callSeconds < 10 ? "Tuesday at 2:30 or 4:00 — which works?" : "Booking it now."}
-                  </p>
+                  <p className="text-[11px] text-text-conversation leading-[1.45]">Tuesday at 2:30 or 4:00 — which works?</p>
                 </div>
               )}
-              <div className="flex items-center gap-1.5">
-                <span className="text-[9px] text-brand-blue font-semibold">Vox</span>
-                <div className="flex items-center gap-[2px] h-4 flex-1">
-                  {[4, 7, 5, 9, 6, 8, 3].map((h, j) => (
-                    <div key={j} className="w-[2px] bg-brand-blue rounded-full" style={{ height: `${h * 0.7}px`, animationDelay: `${j * 0.12}s`, opacity: 0.7, minHeight: 3 }} />
+              {showCaller2 && (
+                <div className="flex items-start gap-2">
+                  <span className="text-[10px] font-semibold text-text-tertiary w-5 shrink-0 mt-0.5">S</span>
+                  <p className="text-[11px] text-text-conversation leading-[1.45]">2:30 works.</p>
+                </div>
+              )}
+              {showVox2 && !showConfirmed && (
+                <div className="flex items-start gap-2">
+                  <span className="text-[10px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">V</span>
+                  <p className="text-[11px] text-text-conversation leading-[1.45]">Booking it now. I'll send a reminder the day before.</p>
+                </div>
+              )}
+              {showConfirmed && (
+                <div className="flex items-center gap-1.5 p-2 bg-brand-light rounded-md">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8l3.5 3.5L13 5" stroke="var(--color-brand-blue)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="text-[10px] text-brand-blue font-medium">Booked in Google Calendar</span>
+                </div>
+              )}
+              {!showConfirmed && (
+                <div className="flex items-center justify-center gap-[2px] h-5">
+                  {[6, 10, 14, 8, 12, 16, 10, 6, 12, 14, 8, 10, 16, 12, 8, 14, 10, 6, 12, 10].map((h, j) => (
+                    <div key={j} className="w-[2px] bg-brand-blue rounded-full" style={{ height: `${h * 0.4}px`, animationDelay: `${j * 0.05}s`, opacity: 0.6 }} />
                   ))}
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
