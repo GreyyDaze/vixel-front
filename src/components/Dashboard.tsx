@@ -50,7 +50,7 @@ export function Dashboard() {
                 { label: "Knowledge" },
                 { label: "Analytics" },
               ].map((item, i) => (
-                <div key={i} className={`px-3 py-1.5 rounded-md text-[12px] mb-0.5 ${item.active ? "bg-white text-[#111] font-medium" : "text-[#888] hover:bg-[#1a1a1a] hover:text-white"}`}>
+                <div key={i} className={`px-3 py-1.5 rounded-md text-[12px] mb-0.5 ${item.active ? "bg-white text-text-primary font-medium" : "text-[#888] hover:bg-[#1a1a1a] hover:text-white"}`}>
                   {item.label}
                 </div>
               ))}

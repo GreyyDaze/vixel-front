@@ -62,6 +62,27 @@ body {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --color-brand-blue: #002FD2;
+  --color-brand-light: #F4F7FF;
+  --color-brand-tint: #E0E7FF;
+  --color-ring-blue: #4B6FE8;
+  --color-green: #50A45A;
+  --color-page-bg: #FDFDFC;
+  --color-card-active: #faf8f4;
+  --color-card-warm: #F6F4F0;
+  --color-sidebar-bg: #FBFBFA;
+  --color-text-primary: #111;
+  --color-text-secondary: #666;
+  --color-text-tertiary: #7C7C7C;
+  --color-text-muted: #8A8A8A;
+  --color-text-dim: #9C9C9C;
+  --color-text-faint: #B0B0B0;
+  --color-text-conversation: #333;
+  --color-avatar-bg: #F0F0F0;
+  --color-element-bg: #111;
+  --color-card-border: #D0D0D0;
+  --color-inset-border: #E2E1DD;
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.04);
 }
 
 :root {

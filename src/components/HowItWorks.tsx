@@ -34,22 +34,20 @@ export function HowItWorks() {
   return (
     <section
       id="how"
-      className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 py-24"
+      className="w-full max-w-[1320px] mx-auto px-8 lg:px-16 pt-20 mb-11"
     >
-      <div className="mb-16 max-w-[640px]">
-        <h2 className="text-[36px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] font-medium text-[#111]">
-          {COPY.howItWorks.headline}
-        </h2>
+      <div className="mb-12 max-w-[640px]">
+        <h2 className="text-3xl lg:text-[33px] leading-[1.1] tracking-[-0.02em] font-medium text-text-primary">{COPY.howItWorks.headline}</h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {COPY.howItWorks.steps.map((step, i) => (
           <div key={step.num} className="flex flex-col">
             <div
-              className={`flex-1 rounded-[8px] mb-0 min-h-[280px] relative`}
+              className={`flex-1 rounded-lg mb-0 min-h-[280px] relative`}
               style={{
-                backgroundColor: ((i === 0 && phase === "step1") || (i === 1 && phase === "step2") || (i === 2 && phase === "step3")) ? "#faf8f4" : "#FFFFFF",
-                border: "1px solid #edececff",
+                backgroundColor: ((i === 0 && phase === "step1") || (i === 1 && phase === "step2") || (i === 2 && phase === "step3")) ? "var(--color-card-active)" : "#FFFFFF",
+                border: "1px solid var(--color-card-border)",
               }}
             >
               {/* Inset border — fades in on active */}
@@ -57,7 +55,7 @@ export function HowItWorks() {
                 className="absolute rounded-[5px] pointer-events-none transition-all duration-500"
                 style={{
                   inset: "3px",
-                  border: "1px solid #E2E1DD",
+                  border: "1px solid var(--color-inset-border)",
                   opacity: ((i === 0 && phase === "step1") || (i === 1 && phase === "step2") || (i === 2 && phase === "step3")) ? 1 : 0,
                 }}
               />
@@ -65,7 +63,7 @@ export function HowItWorks() {
                 className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(to bottom, transparent, #fdfdfc)",
+                    "linear-gradient(to bottom, transparent, var(--color-page-bg))",
                 }}
               />
 
@@ -93,15 +91,15 @@ export function HowItWorks() {
                 className="absolute top-0 left-0 right-0 h-8 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(180deg, rgba(253, 253, 252, 1) 0%, rgba(253,253,252,1) 100%)",
+                    "linear-gradient(180deg, var(--color-page-bg) 0%, var(--color-page-bg) 100%)",
                   backdropFilter: "blur(100px)",
                 }}
               />
               <div className="relative z-10 px-1 pt-8">
-                <h3 className="text-[20px] font-medium text-[#111] mb-2 tracking-[-0.01em]">
+                <h3 className="text-xl font-medium text-text-primary mb-2 tracking-[-0.01em]">
                   {step.title}
                 </h3>
-                <p className="text-[14px] text-[#666] leading-[1.6]">
+                <p className="text-sm text-text-secondary leading-[1.6]">
                   {step.desc}
                 </p>
               </div>
@@ -155,10 +153,10 @@ function AnswerVisual({
       <div className="relative w-full">
         {/* Ringing card — sits behind */}
         <div
-          className="w-[88%] bg-white rounded-[8px] p-4 transition-all duration-500"
+          className="w-[88%] bg-white rounded-lg p-4 transition-all duration-500"
           style={{
-            border: "1px solid #D0D0D0",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+            border: "1px solid var(--color-card-border)",
+            boxShadow: "var(--shadow-card)",
             zIndex: isAnswered ? 1 : 3,
             transform: isAnswered ? "scale(0.96)" : "scale(1)",
             opacity: isAnswered ? 0.35 : 1,
@@ -167,7 +165,7 @@ function AnswerVisual({
           <div className="flex items-center gap-3">
             <div className="relative shrink-0">
               <div className={!isAnswered ? "phone-buzz" : ""}>
-                <Phone size={22} strokeWidth={1.8} color="#4B6FE8" />
+                <Phone size={22} strokeWidth={1.8} color="var(--color-ring-blue)" />
               </div>
               {!isAnswered && (
                 <svg
@@ -178,7 +176,7 @@ function AnswerVisual({
                 >
                   <path
                     d="M1 12A5 5 0 0 1 1 2"
-                    stroke="#4B6FE8"
+                    stroke="var(--color-ring-blue)"
                     strokeWidth="1.5"
                     fill="none"
                     strokeLinecap="round"
@@ -186,7 +184,7 @@ function AnswerVisual({
                   />
                   <path
                     d="M4 13A2.5 2.5 0 0 1 4 1"
-                    stroke="#4B6FE8"
+                    stroke="var(--color-ring-blue)"
                     strokeWidth="1.5"
                     fill="none"
                     strokeLinecap="round"
@@ -196,10 +194,10 @@ function AnswerVisual({
               )}
             </div>
             <div className="min-w-0 pl-2.5">
-              <div className="text-[13px] font-semibold text-[#111]">
+              <div className="text-[13px] font-semibold text-text-primary">
                 Incoming call
               </div>
-              <div className="text-[11px] text-[#888] truncate">
+              <div className="text-[11px] text-text-tertiary truncate">
                 Sarah Patel · Ringing
               </div>
             </div>
@@ -208,10 +206,10 @@ function AnswerVisual({
 
         {/* Answered card — overlaps from below-right */}
         <div
-          className="w-[88%] ml-auto -mt-14 bg-white rounded-[8px] p-4 transition-all duration-500"
+          className="w-[88%] ml-auto -mt-14 bg-white rounded-lg p-4 transition-all duration-500"
           style={{
-            border: "1px solid #D0D0D0",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+            border: "1px solid var(--color-card-border)",
+            boxShadow: "var(--shadow-card)",
             zIndex: isAnswered ? 3 : 2,
             transform: isAnswered ? "scale(1)" : "scale(0.92)",
             opacity: isAnswered ? 1 : 0,
@@ -220,12 +218,12 @@ function AnswerVisual({
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <PhoneCall size={22} strokeWidth={1.8} color="#50a45aff" />
+              <PhoneCall size={22} strokeWidth={1.8} color="var(--color-green)" />
               <div>
-                <div className="text-[13px] font-semibold text-[#111]">
+                <div className="text-[13px] font-semibold text-text-primary">
                   Answered
                 </div>
-                <div className="text-[11px] text-[#888]">
+                <div className="text-[11px] text-text-tertiary">
                   Vox Front · {m}:{s}
                 </div>
               </div>
@@ -235,7 +233,7 @@ function AnswerVisual({
                 [...Array(12)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-[2px] bg-[#002FD2] rounded-full"
+                    className="w-[2px] bg-brand-blue rounded-full"
                     style={{
                       height: `${6 + Math.sin(i * 0.9) * 4}px`,
                       animation: `voiceBar 0.7s ease-in-out ${i * 0.04}s infinite alternate`,
@@ -243,7 +241,7 @@ function AnswerVisual({
                   />
                 ))
               ) : (
-                <span className="text-[10px] font-mono text-[#999]">
+                <span className="text-[10px] font-mono text-text-tertiary">
                   {m}:{s}
                 </span>
               )}
@@ -271,28 +269,28 @@ function BookVisual({ active }: { active: boolean }) {
   return (
     <div className="w-full max-w-[280px]">
       <div
-        className="bg-white rounded-[8px] p-5 relative transition-all duration-700"
+        className="bg-white rounded-lg p-5 relative transition-all duration-700"
         style={{
-          border: "1px solid #D0D0D0",
-          boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+          border: "1px solid var(--color-card-border)",
+          boxShadow: "var(--shadow-card)",
         }}
       >
         <div className="flex items-center gap-2.5 mb-4">
           <Calendar
             size={14}
             strokeWidth={2}
-            color={active ? "#002FD2" : "#111"}
+            color={active ? "var(--color-brand-blue)" : "var(--color-text-primary)"}
           />
-          <span className="text-[13px] font-semibold text-[#111]">
+          <span className="text-[13px] font-semibold text-text-primary">
             Google Calendar
           </span>
-          <span className="text-[10px] text-[#B0B0B0] ml-auto">
+          <span className="text-[10px] text-text-dim ml-auto">
             Tue, Mar 18
           </span>
         </div>
 
         <div className="relative pl-6">
-          <div className="absolute left-[9px] top-1 bottom-1 w-px bg-[#D0D0D0]" />
+          <div className="absolute left-[9px] top-1 bottom-1 w-px bg-card-border" />
 
           <div
             className="relative pb-4 transition-all duration-500"
@@ -300,8 +298,8 @@ function BookVisual({ active }: { active: boolean }) {
               opacity: active ? 0.3 : 1,
             }}
           >
-            <div className="absolute left-[-17px] top-1 h-2 w-2 rounded-full border-2 border-[#D0D0D0] bg-white" />
-            <div className="text-[10px] text-[#C0C0C0] font-mono">1:00 PM</div>
+            <div className="absolute left-[-17px] top-1 h-2 w-2 rounded-full border-2 border-card-border bg-white" />
+            <div className="text-[10px] text-text-faint font-mono">1:00 PM</div>
           </div>
 
           {/* 2:30 — same circle/height as others, details overlay when revealed */}
@@ -309,14 +307,14 @@ function BookVisual({ active }: { active: boolean }) {
             <div
               className="absolute left-[-17px] top-1 h-2 w-2 rounded-full transition-all duration-500 bg-white"
               style={{
-                border: revealed ? "2px solid #002FD2" : "2px solid #D0D0D0",
+                border: revealed ? "2px solid var(--color-brand-blue)" : "2px solid var(--color-card-border)",
                 boxShadow: revealed ? "0 0 0 4px #D0DDFF" : "none",
               }}
             />
             <div
               className="text-[10px] font-mono transition-all duration-500"
               style={{
-                color: revealed ? "#002FD2" : "#C0C0C0",
+                color: revealed ? "var(--color-brand-blue)" : "var(--color-text-faint)",
                 fontWeight: revealed ? 500 : 400,
               }}
             >
@@ -331,10 +329,10 @@ function BookVisual({ active }: { active: boolean }) {
                 pointerEvents: revealed ? "auto" : "none",
               }}
             >
-              <div className="text-[12px] font-medium text-[#111] whitespace-nowrap">
+              <div className="text-xs font-medium text-text-primary whitespace-nowrap">
                 Cleaning — Sarah Patel
               </div>
-              <div className="text-[10px] text-[#888]">60 min</div>
+              <div className="text-[10px] text-text-tertiary">60 min</div>
             </div>
           </div>
 
@@ -345,21 +343,21 @@ function BookVisual({ active }: { active: boolean }) {
               pointerEvents: revealed ? "none" : "auto",
             }}
           >
-            <div className="absolute left-[-17px] top-1 h-2 w-2 rounded-full border-2 border-[#D0D0D0] bg-white" />
-            <div className="text-[10px] text-[#C0C0C0] font-mono">3:00 PM</div>
+            <div className="absolute left-[-17px] top-1 h-2 w-2 rounded-full border-2 border-card-border bg-white" />
+            <div className="text-[10px] text-text-faint font-mono">3:00 PM</div>
           </div>
         </div>
 
         {/* Confirmation — top right */}
         <div
-          className="absolute top-15 -right-4 bg-white rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-md border border-[#D0D0D0] transition-all duration-500"
+          className="absolute top-15 -right-4 bg-white rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-md border border-card-border transition-all duration-500"
           style={{
             opacity: revealed ? 1 : 0,
             transform: revealed ? "scale(1)" : "scale(0.9)",
           }}
         >
-          <Check size={11} strokeWidth={2} color="#50a45aff" />
-          <span className="text-[10.5px] font-medium text-[#111] whitespace-nowrap">
+          <Check size={11} strokeWidth={2} color="var(--color-green)" />
+          <span className="text-[10.5px] font-medium text-text-primary whitespace-nowrap">
             Booked automatically
           </span>
         </div>
@@ -375,52 +373,52 @@ function ReportVisual({ active }: { active: boolean }) {
   return (
     <div className="w-full max-w-[280px]">
       <div
-        className="bg-white rounded-[8px] p-4 transition-all duration-700"
+        className="bg-white rounded-lg p-4 transition-all duration-700"
         style={{
-          border: "1px solid #D0D0D0",
-          boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+          border: "1px solid var(--color-card-border)",
+          boxShadow: "var(--shadow-card)",
         }}
       >
         <div className="flex items-center gap-2.5 mb-3">
           <Users
             size={13}
             strokeWidth={2}
-            color={active ? "#002FD2" : "#111"}
+            color={active ? "var(--color-brand-blue)" : "var(--color-text-primary)"}
           />
-          <span className="text-[12px] font-semibold text-[#111]">
+          <span className="text-xs font-semibold text-text-primary">
             Recent calls
           </span>
-          <span className="text-[9px] text-[#B0B0B0] ml-auto">Today</span>
+          <span className="text-[9px] text-text-dim ml-auto">Today</span>
         </div>
 
         {/* Previous entry — fades back when new comes in */}
         <div
-          className="flex items-center gap-2.5 py-2 px-2.5 rounded-[6px] transition-all duration-500"
+          className="flex items-center gap-2.5 py-2 px-2.5 rounded-md transition-all duration-500"
           style={{
             background: active ? "transparent" : "#F9F9F9",
             opacity: active ? 0.3 : 1,
           }}
         >
-          <div className="h-6 w-6 rounded-full bg-[#F0F0F0] flex items-center justify-center text-[9px] font-medium text-[#888] shrink-0">
+          <div className="h-6 w-6 rounded-full bg-avatar-bg flex items-center justify-center text-[9px] font-medium text-text-tertiary shrink-0">
             J
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline justify-between gap-2">
-              <span className="text-[11px] text-[#888]">James Turner</span>
-              <span className="text-[9px] text-[#B0B0B0] font-mono">
+              <span className="text-[11px] text-text-tertiary">James Turner</span>
+              <span className="text-[9px] text-text-dim font-mono">
                 11:08 AM
               </span>
             </div>
-            <div className="text-[10px] text-[#888]">Checkup · Booked</div>
+            <div className="text-[10px] text-text-tertiary">Checkup · Booked</div>
           </div>
         </div>
 
         {/* New entry — slides in on top */}
         <div className="relative">
           <div
-            className="flex items-center gap-2.5 py-2 px-2.5 rounded-[6px] transition-all duration-500"
+            className="flex items-center gap-2.5 py-2 px-2.5 rounded-md transition-all duration-500"
             style={{
-              background: active ? "#F4F7FF" : "transparent",
+              background: active ? "var(--color-brand-light)" : "transparent",
               opacity: active ? 1 : 0,
               transform: active ? "translateY(0)" : "translateY(-100%)",
               position: active ? "relative" : "absolute",
@@ -429,19 +427,19 @@ function ReportVisual({ active }: { active: boolean }) {
               pointerEvents: active ? "auto" : "none",
             }}
           >
-            <div className="h-6 w-6 rounded-full bg-[#111] flex items-center justify-center text-[9px] font-bold text-white shrink-0">
+            <div className="h-6 w-6 rounded-full bg-element-bg flex items-center justify-center text-[9px] font-bold text-white shrink-0">
               S
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline justify-between gap-2">
-                <span className="text-[11px] font-medium text-[#111]">
+                <span className="text-[11px] font-medium text-text-primary">
                   Sarah Patel
                 </span>
-                <span className="text-[9px] text-[#002FD2] font-mono">
+                <span className="text-[9px] text-brand-blue font-mono">
                   Just now
                 </span>
               </div>
-              <div className="text-[10px] text-[#002FD2]">
+              <div className="text-[10px] text-brand-blue">
                 Cleaning · Booked
               </div>
             </div>
@@ -451,8 +449,8 @@ function ReportVisual({ active }: { active: boolean }) {
 
       {/* Summary — inline below card */}
       <div className="mt-2 flex items-center justify-between px-1">
-        <span className="text-[9px] transition-colors duration-500" style={{ color: active ? "#888" : "#C0C0C0" }}>12 calls · 0 missed</span>
-        <span className="text-[9px] font-medium transition-colors duration-500" style={{ color: active ? "#002FD2" : "#B0B0B0" }}>
+        <span className="text-[9px] transition-colors duration-500" style={{ color: active ? "var(--color-text-tertiary)" : "var(--color-text-faint)" }}>12 calls · 0 missed</span>
+        <span className="text-[9px] font-medium transition-colors duration-500" style={{ color: active ? "var(--color-brand-blue)" : "var(--color-text-dim)" }}>
           All answered
         </span>
       </div>

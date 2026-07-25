@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Phone, User, LayoutDashboard, Calendar, BookOpen, BarChart3 } from "lucide-react";
 import { LogoMark } from "./LogoMark";
+import { StatusChip } from "./StatusChip";
 
 // ============================================================
 // STAGE — drives the entire sequence with state
@@ -101,14 +102,14 @@ export function HeroStage() {
 // ============================================================
 function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookingsCount: number }) {
   return (
-    <div className="relative w-full h-full bg-white rounded-[6px] border border-[#eee] overflow-hidden">
+    <div className="relative w-full h-full bg-white rounded-md border overflow-hidden">
       <div className="h-full grid grid-cols-[180px_1fr]">
-        <div className="border-r border-[#E5E5E5] p-3 bg-[#FBFBFA]">
+        <div className="border-r p-3 bg-sidebar-bg">
           <div className="flex items-center gap-2 px-3 py-2 mb-3">
-            <div className="h-6 w-6 rounded-[5px] bg-[#002FD2] flex items-center justify-center">
+            <div className="h-6 w-6 rounded-[5px] bg-brand-blue flex items-center justify-center">
               <LogoMark size={14} color="white" />
             </div>
-            <span className="text-[12px] font-semibold text-[#111]">Vox Front</span>
+            <span className="text-xs font-semibold text-text-primary">Vox Front</span>
           </div>
           {[
             { label: "Overview", icon: LayoutDashboard, active: true },
@@ -120,17 +121,17 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <div key={i} className={`flex items-center gap-2 px-3 py-2.5 rounded-md text-[11.5px] mb-0.5 ${item.active ? "bg-[#111] text-white font-medium" : "text-[#7C7C7C]"}`}>
+              <div key={i} className={`flex items-center gap-2 px-3 py-2.5 rounded-md text-[11.5px] mb-0.5 ${item.active ? "bg-element-bg text-white font-medium" : "text-text-secondary"}`}>
                 <Icon size={14} strokeWidth={1.8} />
                 {item.label}
               </div>
             );
           })}
-          <div className="absolute bottom-4 left-3 right-[calc(100%-180px)] flex items-center gap-2 px-2 py-2 border-t border-[#E5E5E5] pt-3">
-            <div className="h-6 w-6 rounded-full bg-[#F0F0F0] flex items-center justify-center shrink-0"><User size={12} strokeWidth={2} color="#888" /></div>
+          <div className="absolute bottom-4 left-3 right-[calc(100%-180px)] flex items-center gap-2 px-2 py-2 border-t pt-3">
+            <div className="h-6 w-6 rounded-full bg-avatar-bg flex items-center justify-center shrink-0"><User size={12} strokeWidth={2} color="var(--color-text-tertiary)" /></div>
             <div className="leading-tight min-w-0">
-              <div className="text-[10.5px] font-medium text-[#111] truncate">Dr. Chen</div>
-              <div className="text-[9px] text-[#999] truncate">Clearview Dental</div>
+              <div className="text-[10.5px] font-medium text-text-primary truncate">Dr. Chen</div>
+              <div className="text-[9px] text-text-tertiary truncate">Clearview Dental</div>
             </div>
           </div>
         </div>
@@ -138,10 +139,10 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
         <div className="p-5 overflow-hidden">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-[15px] font-semibold text-[#111]">Overview</h3>
-              <p className="text-[10.5px] text-[#999]">Last 30 days</p>
+              <h3 className="text-[15px] font-semibold text-text-primary">Overview</h3>
+              <p className="text-[10.5px] text-text-tertiary">Last 30 days</p>
             </div>
-            <div className="border border-[#eee] rounded-md px-2.5 py-1 text-[10.5px] text-[#666]">Last 30 days</div>
+            <div className="border rounded-md px-2.5 py-1 text-[10.5px] text-text-secondary">Last 30 days</div>
           </div>
 
           <div className="grid grid-cols-4 gap-2.5 mb-4">
@@ -151,11 +152,11 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
               { label: "Resolution", value: "94%", change: "+3%" },
               { label: "Avg. response", value: "0.8s", change: "" },
             ].map((s, i) => (
-              <div key={i} className="border border-[#eee] rounded-[6px] p-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-                <div className="text-[9.5px] text-[#999] mb-1">{s.label}</div>
-                <div className="text-[18px] font-semibold text-[#111] tracking-tight leading-none">{s.value}</div>
+              <div key={i} className="border rounded-md p-2.5 shadow-card">
+                <div className="text-[9.5px] text-text-secondary mb-1">{s.label}</div>
+                <div className="text-lg font-semibold text-text-primary tracking-tight leading-none">{s.value}</div>
                 {s.change && (
-                  <div className={`text-[9px] font-medium mt-1 ${s.change === "Live" ? "text-[#002FD2]" : "text-[#002FD2]"}`}>
+                  <div className={`text-[9px] font-medium mt-1 ${s.change === "Live" ? "text-brand-blue" : "text-brand-blue"}`}>
                     {s.change === "Live" ? "● Live" : s.change}
                   </div>
                 )}
@@ -163,16 +164,16 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             ))}
           </div>
 
-          <div className="border border-[#eee] rounded-[6px] p-3 mb-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+          <div className="border rounded-md p-3 mb-3 shadow-card">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10.5px] font-medium text-[#111]">Call volume</span>
-              <div className="flex items-center gap-2 text-[9px] text-[#999]">
-                <div className="flex items-center gap-2 text-[10px] text-[#666]">
+              <span className="text-[10.5px] font-medium text-text-primary">Call volume</span>
+              <div className="flex items-center gap-2 text-[9px] text-text-tertiary">
+                <div className="flex items-center gap-2 text-[10px] text-text-secondary">
                   <div className="flex items-center gap-1.5">
                     <span className="inline-block w-3 h-[2px] bg-white rounded-full"></span>Answered
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="inline-block w-3 h-[2px] bg-[#333] rounded-full"></span>Booked
+                    <span className="inline-block w-3 h-[2px] bg-text-conversation rounded-full"></span>Booked
                   </div>
                 </div>
               </div>
@@ -182,44 +183,40 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             </div>
           </div>
 
-          <div className="border border-[#eee] rounded-[6px] p-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+          <div className="border rounded-md p-3 shadow-card">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10.5px] font-medium text-[#111]">Recent calls</span>
-              <span className="text-[9.5px] text-[#999]">View all →</span>
+              <span className="text-[10.5px] font-medium text-text-primary">Recent calls</span>
+              <span className="text-[9.5px] text-text-tertiary">View all →</span>
             </div>
             <div>
               {newCall && (
-                <div className="flex items-center justify-between py-1.5 border-b border-[#f5f5f5] bg-[#EEF2FF] -mx-1 px-1 rounded transition-all duration-700" style={{ animation: "slideIn 0.6s ease-out" }}>
+                <div className="flex items-center justify-between py-1.5 border-b bg-brand-light -mx-1 px-1 rounded transition-all duration-700" style={{ animation: "slideIn 0.6s ease-out" }}>
                   <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 rounded-full bg-[#111] flex items-center justify-center text-[11px] font-medium text-white">S</div>
+                    <div className="h-7 w-7 rounded-full bg-element-bg flex items-center justify-center text-[11px] font-medium text-white">S</div>
                     <div>
-                      <div className="text-[10.5px] font-medium text-[#111]">Sarah Patel</div>
-                      <div className="text-[9px] text-[#999]">Just now</div>
+                      <div className="text-[10.5px] font-medium text-text-primary">Sarah Patel</div>
+                      <div className="text-[9px] text-text-tertiary">Just now</div>
                     </div>
                   </div>
-                  <div className="text-[9px] font-medium px-1.5 py-0.5 rounded text-[#002FD2] bg-[#EEF2FF]">
-                    Booked
-                  </div>
+                  <StatusChip size="sm">Booked</StatusChip>
                 </div>
               )}
               {[
-                { name: "Maria Santos", time: "2:14 PM", status: "Booked", color: "#002FD2" },
-                { name: "James Turner", time: "11:08 AM", status: "Booked", color: "#002FD2" },
-                { name: "Linda Park", time: "9:42 AM", status: "Transferred", color: "#94a3b8" },
+                { name: "Maria Santos", time: "2:14 PM", status: "Booked" },
+                { name: "James Turner", time: "11:08 AM", status: "Booked" },
+                { name: "Linda Park", time: "9:42 AM", status: "Transferred" },
               ].map((c, i) => (
-                <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#f5f5f5] last:border-0">
+                <div key={i} className="flex items-center justify-between py-1.5 border-b last:border-0">
                   <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 rounded-full bg-[#F0F0F0] flex items-center justify-center text-[11px] font-medium text-[#888]">
+                    <div className="h-7 w-7 rounded-full bg-avatar-bg flex items-center justify-center text-[11px] font-medium text-text-tertiary">
                       {c.name[0]}
                     </div>
                     <div>
-                      <div className="text-[10.5px] font-medium text-[#111]">{c.name}</div>
-                      <div className="text-[9px] text-[#999]">{c.time}</div>
+                      <div className="text-[10.5px] font-medium text-text-primary">{c.name}</div>
+                      <div className="text-[9px] text-text-tertiary">{c.time}</div>
                     </div>
                   </div>
-                  <div className="text-[9px] font-medium px-1.5 py-0.5 rounded" style={{ color: c.color, backgroundColor: `${c.color}15` }}>
-                    {c.status}
-                  </div>
+                  <StatusChip size="sm" variant={c.status === "Booked" ? "active" : "inactive"}>{c.status}</StatusChip>
                 </div>
               ))}
             </div>
@@ -235,12 +232,12 @@ function ChartSVG() {
     <svg viewBox="0 0 400 80" className="w-full h-full" preserveAspectRatio="none">
       <defs>
         <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#111" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="#111" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--color-text-primary)" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="var(--color-text-primary)" stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d="M 0 60 L 25 50 L 50 55 L 75 35 L 100 40 L 125 25 L 150 35 L 175 20 L 200 30 L 225 15 L 250 25 L 275 10 L 300 20 L 325 25 L 350 15 L 375 25 L 400 20 L 400 80 L 0 80 Z" fill="url(#chartGrad)" />
-      <path d="M 0 60 L 25 50 L 50 55 L 75 35 L 100 40 L 125 25 L 150 35 L 175 20 L 200 30 L 225 15 L 250 25 L 275 10 L 300 20 L 325 25 L 350 15 L 375 25 L 400 20" stroke="#111" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M 0 60 L 25 50 L 50 55 L 75 35 L 100 40 L 125 25 L 150 35 L 175 20 L 200 30 L 225 15 L 250 25 L 275 10 L 300 20 L 325 25 L 350 15 L 375 25 L 400 20" stroke="var(--color-text-primary)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -255,14 +252,14 @@ function PhoneMockup() {
         <div className="w-full h-full bg-white rounded-[16px] overflow-hidden relative">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[18px] bg-[#1C1C1C] rounded-b-[14px] z-10"></div>
 
-          <div className="flex items-center justify-between px-5 pt-2 pb-1 text-[8px] font-semibold text-[#111] relative z-[1]">
+          <div className="flex items-center justify-between px-5 pt-2 pb-1 text-[8px] font-semibold text-text-primary relative z-[1]">
             <span>9:41</span>
             <div className="flex items-center gap-1">
               <div className="flex gap-[1px] items-end">
-                <div className="w-[2px] h-[3px] bg-[#111]"></div>
-                <div className="w-[2px] h-[4px] bg-[#111]"></div>
-                <div className="w-[2px] h-[5px] bg-[#111]"></div>
-                <div className="w-[2px] h-[6px] bg-[#111]"></div>
+                <div className="w-[2px] h-[3px] bg-element-bg"></div>
+                <div className="w-[2px] h-[4px] bg-element-bg"></div>
+                <div className="w-[2px] h-[5px] bg-element-bg"></div>
+                <div className="w-[2px] h-[6px] bg-element-bg"></div>
               </div>
               <svg width="14" height="8" viewBox="0 0 14 8" fill="none" className="ml-1">
                 <rect x="0" y="1" width="11" height="6" rx="1" stroke="#111" strokeWidth="0.8" />
@@ -273,14 +270,14 @@ function PhoneMockup() {
 
           <div className="px-4 pt-6 pb-4 h-[calc(100%-22px)] flex flex-col">
             <div className="text-center mb-4">
-              <div className="text-[8px] text-[#999] uppercase tracking-wider mb-1">Vox Front</div>
-              <div className="text-[10px] text-[#666]">Incoming call</div>
+              <div className="text-[8px] text-text-secondary uppercase tracking-wider mb-1">Vox Front</div>
+              <div className="text-[10px] text-text-secondary">Incoming call</div>
             </div>
 
             <div className="flex flex-col items-center mb-4">
-              <div className="h-14 w-14 rounded-full bg-[#F0F0F0] flex items-center justify-center mb-2 phone-ringing"><Phone size={24} strokeWidth={1.8} color="#888" /></div>
-              <div className="text-[12px] font-semibold text-[#111]">Sarah Patel</div>
-              <div className="text-[9px] text-[#999]">+1 (415) 555-0142</div>
+              <div className="h-14 w-14 rounded-full bg-avatar-bg flex items-center justify-center mb-2 phone-ringing"><Phone size={24} strokeWidth={1.8} color="var(--color-text-tertiary)" /></div>
+              <div className="text-xs font-semibold text-text-primary">Sarah Patel</div>
+              <div className="text-[9px] text-text-secondary">+1 (415) 555-0142</div>
             </div>
 
             <div className="mt-auto flex items-center justify-around pb-2">
@@ -288,18 +285,18 @@ function PhoneMockup() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="1.5">
                   <path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" transform="rotate(135 12 12)" />
                 </svg>
-                <span className="text-[11px] text-[#999]">Decline</span>
+                <span className="text-[11px] text-text-tertiary">Decline</span>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#002FD2" strokeWidth="1.5">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-blue)" strokeWidth="1.5">
                   <path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" />
                 </svg>
-                <span className="text-[11px] text-[#999]">Accept</span>
+                <span className="text-[11px] text-text-tertiary">Accept</span>
               </div>
             </div>
 
             <div className="flex justify-center pt-1">
-              <div className="h-[3px] w-20 bg-[#111] rounded-full opacity-30"></div>
+              <div className="h-[3px] w-20 bg-element-bg rounded-full opacity-30"></div>
             </div>
           </div>
         </div>
@@ -322,14 +319,14 @@ function CallAnimation({ phase, seconds }: { phase: string; seconds: number }) {
   const s = (seconds % 60).toString().padStart(2, "0");
 
   return (
-    <div className="bg-white rounded-[6px] shadow-2xl border border-[#eee] overflow-hidden">
-      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-[#f0f0f0]">
+    <div className="bg-white rounded-md shadow-2xl border overflow-hidden">
+      <div className="flex items-center justify-between px-3.5 py-2.5 border-b">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-semibold text-[#111]">
+          <span className="text-[11px] font-semibold text-text-primary">
             {showConfirmed ? "Call completed" : "Live call"}
           </span>
         </div>
-        <div className="text-[10px] text-[#999] font-mono">{m}:{s}</div>
+        <div className="text-[10px] text-text-tertiary font-mono">{m}:{s}</div>
       </div>
 
       <div className="p-3.5 space-y-2.5 min-h-[140px]">
@@ -367,11 +364,11 @@ function CallAnimation({ phase, seconds }: { phase: string; seconds: number }) {
 
         {showConfirmed && (
           <FadeIn>
-            <div className="flex items-center gap-1.5 p-2 bg-[#EEF2FF] border border-[#C7D2FE] rounded-md">
+            <div className="flex items-center gap-1.5 p-2 bg-brand-light border rounded-md">
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8l3.5 3.5L13 5" stroke="#002FD2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3 8l3.5 3.5L13 5" stroke="var(--color-brand-blue)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="text-[10px] text-[#002FD2] font-medium">Booked in Google Calendar</span>
+              <span className="text-[10px] text-brand-blue font-medium">Booked in Google Calendar</span>
             </div>
           </FadeIn>
         )}
@@ -394,17 +391,17 @@ function Message({ speaker, name, v, children }: { speaker: string; name?: strin
     <div>
       <div className="flex items-center gap-2 mb-1">
         {v ? (
-          <div className="h-5 w-5 rounded-full bg-[#002FD2] flex items-center justify-center">
+          <div className="h-5 w-5 rounded-full bg-brand-blue flex items-center justify-center">
             <LogoMark size={11} color="white" />
           </div>
         ) : (
-          <div className="h-5 w-5 rounded-full bg-[#F0F0F0] flex items-center justify-center text-[8px] font-bold text-[#888]">
+          <div className="h-5 w-5 rounded-full bg-avatar-bg flex items-center justify-center text-[8px] font-bold text-text-tertiary">
             {name || "C"}
           </div>
         )}
-        <span className={`text-[10px] font-medium ${v ? "text-[#111]" : "text-[#999]"}`}>{speaker}</span>
+        <span className={`text-[10px] font-medium ${v ? "text-text-primary" : "text-text-tertiary"}`}>{speaker}</span>
       </div>
-      <p className="text-[12px] text-[#333] leading-[1.4] ml-7">{children}</p>
+      <p className="text-xs text-text-conversation leading-[1.4] ml-7">{children}</p>
     </div>
   );
 }
@@ -423,17 +420,17 @@ function FadeIn({ children }: { children: React.ReactNode }) {
 // ============================================================
 function BookedToast() {
   return (
-    <div className="bg-white rounded-[5px] shadow-2xl border border-[#eee] px-3.5 py-3 flex items-center gap-3 booked-toast-slide w-[280px]">
-      <div className="h-8 w-8 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
+    <div className="bg-white rounded-[5px] shadow-2xl border px-3.5 py-3 flex items-center gap-3 booked-toast-slide w-[280px]">
+      <div className="h-8 w-8 rounded-full bg-brand-tint flex items-center justify-center shrink-0">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8l3.5 3.5L13 5" stroke="#002FD2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M3 8l3.5 3.5L13 5" stroke="var(--color-brand-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-[11.5px] font-semibold text-[#111]">Appointment Booked</div>
-        <div className="text-[10px] text-[#666]">Tue, Mar 18 at 2:30 PM</div>
+        <div className="text-[11.5px] font-semibold text-text-primary">Appointment Booked</div>
+        <div className="text-[10px] text-text-secondary">Tue, Mar 18 at 2:30 PM</div>
       </div>
-      <div className="text-[9.5px] text-[#999]">now</div>
+      <div className="text-[9.5px] text-text-tertiary">now</div>
       </div>
   );
 }

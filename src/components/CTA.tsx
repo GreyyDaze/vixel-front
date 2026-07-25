@@ -3,7 +3,7 @@ import { COPY } from "@/content/copy";
 
 export function CTA() {
   return (
-    <section id="cta" className="w-full px-8 lg:px-16 py-24">
+    <section id="cta" className="w-full px-8 lg:px-16 pt-24 mb-11">
       <div className="max-w-[1100px] mx-auto">
         {/* One contained container — no split, night atmosphere as full background */}
         <div
@@ -23,7 +23,7 @@ export function CTA() {
             <p className="text-[15px] text-white/70 leading-[1.6] mb-8">
               {COPY.cta.subhead}
             </p>
-            <Button size="lg" className="bg-white text-[#111] hover:bg-white/95" render={<a href="#" />}>
+            <Button size="lg" className="bg-white text-text-primary hover:bg-white/95" render={<a href="#" />}>
               {COPY.cta.ctaPrimary}
             </Button>
           </div>

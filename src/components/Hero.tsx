@@ -11,10 +11,10 @@ export function Hero() {
       <div className="max-w-[1320px] mx-auto px-8 lg:px-16 pt-8 lg:pt-12 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 items-start">
           <div className="pt-20 pb-4">
-            <h1 className="text-[42px] lg:text-[52px] leading-[1.04] tracking-[-0.025em] font-medium text-[#111] mb-5">
+            <h1 className="text-[42px] lg:text-[52px] leading-[1.04] tracking-[-0.025em] font-medium text-text-primary mb-5">
               Every call answered.<br />Every appointment booked.
             </h1>
-            <p className="text-[17px] leading-[1.65] text-[#555] max-w-[560px]">
+            <p className="text-[17px] leading-[1.65] text-text-secondary max-w-[560px]">
               {COPY.hero.subhead}
             </p>
           </div>
@@ -42,7 +42,7 @@ export function Hero() {
         }}
       >
         <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
-          <div className="relative w-full aspect-[16/8.5] overflow-hidden rounded-[8px]">
+          <div className="relative w-full aspect-[16/8.5] overflow-hidden rounded-lg">
             <HeroStage />
           </div>
         </div>

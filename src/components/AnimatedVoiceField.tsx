@@ -74,13 +74,13 @@ export function AnimatedVoiceField() {
         </linearGradient>
         {/* Front bars — soft but visible */}
         <linearGradient id="barFront" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#002FD2" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="#002FD2" stopOpacity="0.10" />
+          <stop offset="0%" stopColor="var(--color-brand-blue)" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="var(--color-brand-blue)" stopOpacity="0.10" />
         </linearGradient>
         {/* Back bars — barely there for depth */}
         <linearGradient id="barBack" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#002FD2" stopOpacity="0.10" />
-          <stop offset="100%" stopColor="#002FD2" stopOpacity="0.04" />
+          <stop offset="0%" stopColor="var(--color-brand-blue)" stopOpacity="0.10" />
+          <stop offset="100%" stopColor="var(--color-brand-blue)" stopOpacity="0.04" />
         </linearGradient>
       </defs>
 

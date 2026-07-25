@@ -12,7 +12,7 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full" style={{ backgroundColor: "#FDFDFC" }}>
+    <div className="min-h-screen w-full bg-page-bg">
       {/* Split nav: Header on white, separate from atmosphere */}
       <Header />
       <Hero />
