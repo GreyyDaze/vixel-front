@@ -72,7 +72,7 @@ export function HeroStage() {
   const showConfirmed = phase === "updating" || phase === "done";
 
   return (
-    <div className="relative w-full max-w-[1200px] px-12 h-full flex items-center justify-center">
+    <div className="relative w-full h-full flex items-center justify-center">
       <div className="relative w-full h-[88%] flex items-center justify-center bg-gradient-to-b from-brand-blue/10 to-transparent overflow-hidden">
         {/* Desktop: dashboard + overlays (lg and up) */}
         <div className="hidden lg:block w-full h-full">
@@ -86,15 +86,17 @@ export function HeroStage() {
           className="absolute inset-0 z-10 lg:hidden transition-opacity duration-500"
           style={{ opacity: showPhone ? 1 : 0, pointerEvents: showPhone ? "auto" : "none" }}
         >
-          <div className="w-full h-full flex items-center justify-center">
-            <PhoneMockup />
+          <div className="w-full h-full flex items-center justify-center px-4">
+            <div className="w-full max-w-[200px] h-full">
+              <PhoneMockup />
+            </div>
           </div>
         </div>
 
         {/* Step 2 — Live call (shown when call is active, after phone picks up) */}
         <div
-          className="absolute inset-x-2 bottom-0 z-20 lg:hidden transition-opacity duration-500"
-          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none", maxHeight: "60%", overflowY: "auto" }}
+          className="absolute inset-x-3 bottom-2 z-20 lg:hidden transition-opacity duration-500"
+          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none", maxHeight: "55%", overflowY: "auto" }}
         >
           <div className="bg-white rounded-lg shadow-card border border-border-light overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 border-b">
