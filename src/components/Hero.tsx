@@ -29,24 +29,24 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Atmosphere section: product demo on image */}
-      <div
-        className="w-full py-12 lg:py-16"
-        style={{
-          backgroundColor: "#c8d4e0",
-          backgroundImage: "url('/hero-atmosphere.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundBlendMode: "multiply",
-          opacity: 0.75,
-        }}
-      >
-        <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
-          <div className="relative w-full aspect-[16/8.5] overflow-hidden rounded-lg">
-            <HeroStage />
-          </div>
-        </div>
-      </div>
+       {/* Atmosphere section: product demo on image */}
+       <div
+         className="w-full py-8 sm:py-10 lg:py-16"
+         style={{
+           backgroundColor: "#c8d4e0",
+           backgroundImage: "url('/hero-atmosphere.jpg')",
+           backgroundSize: "cover",
+           backgroundPosition: "center top",
+           backgroundBlendMode: "multiply",
+           opacity: 0.75,
+         }}
+       >
+         <div className="max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-16">
+           <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/8.5] overflow-hidden rounded-lg">
+             <HeroStage />
+           </div>
+         </div>
+       </div>
     </section>
   );
 }

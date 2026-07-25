@@ -64,31 +64,56 @@ export function HeroStage() {
   }, [phase]);
 
   const showPhone = phase === "ringing" || phase === "accepted";
-  const showCallCard = phase !== "ringing" && phase !== "done";
+  const showCallCard = phase !== "ringing" && phase !== "done" && phase !== "accepted";
   const showBookedToast = phase === "updating" || phase === "done";
 
   return (
     <div className="relative w-full max-w-[1200px] px-12 h-full flex items-center justify-center">
-      <div className="relative w-full h-[88%] flex items-center justify-center">
-        <DesktopDashboard newCall={newCallInDashboard} bookingsCount={bookingsCount} />
+      <div className="relative w-full h-[88%] flex items-center justify-center bg-gradient-to-b from-brand-blue/10 to-transparent overflow-hidden">
+        {/* Desktop: dashboard + overlays (md and up) */}
+        <div className="hidden md:block w-full h-full">
+          <DesktopDashboard newCall={newCallInDashboard} bookingsCount={bookingsCount} />
+        </div>
+
+        {/* Mobile: sequential flow — phone mockup first */}
+        <div
+          className="absolute inset-0 z-10 md:hidden transition-opacity duration-500"
+          style={{ opacity: showPhone ? 1 : 0, pointerEvents: showPhone ? "auto" : "none" }}
+        >
+          <PhoneMockup />
+        </div>
+
+        {/* Mobile: live call box */}
+        <div
+          className="absolute inset-x-4 bottom-0 md:hidden transition-opacity duration-500 z-20"
+          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none", maxHeight: "55%" }}
+        >
+          <CallAnimation phase={phase} seconds={callSeconds} />
+        </div>
+
+        {/* Mobile: booking / appointments table */}
+        <div
+          className="absolute inset-4 md:hidden transition-opacity duration-500 z-30 bg-white rounded-lg overflow-hidden"
+          style={{ opacity: showBookedToast ? 1 : 0, pointerEvents: showBookedToast ? "auto" : "none" }}
+        >
+          <MobileAppointmentTable />
+        </div>
+
+        {/* Desktop overlays: phone */}
         {showPhone && (
-          <div
-            className="absolute right-[-2%] top-[8%] z-10 w-[200px] lg:w-[220px] aspect-[9/19] transition-opacity duration-500"
-            style={{ opacity: phase === "ringing" ? 1 : 0 }}
-          >
+          <div className="absolute right-[-2%] top-[8%] z-10 w-[200px] lg:w-[220px] aspect-[9/19] transition-opacity duration-500 hidden md:block" style={{ opacity: phase === "ringing" ? 1 : 0 }}>
             <PhoneMockup />
           </div>
         )}
+        {/* Desktop overlays: call animation */}
         {showCallCard && (
-          <div className="absolute right-[14%] top-[2%] z-20 w-[260px] transition-opacity duration-500">
-            <CallAnimation
-              phase={phase}
-              seconds={callSeconds}
-            />
+          <div className="absolute right-[14%] top-[2%] z-20 w-[260px] transition-opacity duration-500 hidden md:block">
+            <CallAnimation phase={phase} seconds={callSeconds} />
           </div>
         )}
+        {/* Desktop overlays: booked toast */}
         {showBookedToast && (
-          <div className="absolute right-[16%] bottom-[6%] z-20 transition-opacity duration-500" style={{ opacity: 1 }}>
+          <div className="absolute right-[16%] bottom-[6%] z-20 transition-opacity duration-500 hidden md:block" style={{ opacity: 1 }}>
             <BookedToast />
           </div>
         )}
@@ -432,5 +457,47 @@ function BookedToast() {
       </div>
       <div className="text-[9.5px] text-text-tertiary">now</div>
       </div>
+  );
+}
+
+// ============================================================
+// MOBILE APPOINTMENT TABLE — shows recent calls/bookings on mobile
+// ============================================================
+function MobileAppointmentTable() {
+  return (
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="flex items-center justify-between px-3 py-2 border-b">
+        <span className="text-[11px] font-semibold text-text-primary">Recent</span>
+        <StatusChip size="sm">Live</StatusChip>
+      </div>
+
+      {/* New booking item */}
+      <div className="flex items-center gap-2.5 px-3 py-2.5 border-b bg-brand-light animate-fade-in">
+        <div className="h-6 w-6 bg-element-bg text-white flex items-center justify-center text-[8px] font-bold shrink-0 rounded-full">S</div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[11px] font-medium text-text-primary truncate">Sarah Patel</div>
+          <div className="text-[9px] text-text-tertiary">Cleaning · Booked</div>
+        </div>
+        <span className="text-[9px] text-green font-medium shrink-0">Now</span>
+      </div>
+
+      {/* Existing items */}
+      <div className="flex-1 overflow-auto">
+        {[
+          { name: "Maria Santos", time: "2:14 PM", detail: "Booking", color: "text-brand-blue" },
+          { name: "James Turner", time: "11:08 AM", detail: "Question", color: "text-text-tertiary" },
+          { name: "Linda Park", time: "9:42 AM", detail: "Transferred", color: "text-[#F59E0B]" },
+        ].map((c, i) => (
+          <div key={i} className="flex items-center gap-2.5 px-3 py-2 border-b last:border-0">
+            <div className="h-6 w-6 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[8px] font-bold shrink-0 rounded-full">{c.name[0]}</div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[11px] font-medium text-text-primary truncate">{c.name}</div>
+              <div className="text-[9px] text-text-tertiary">{c.detail} · {c.time}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
