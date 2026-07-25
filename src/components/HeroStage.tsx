@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Phone, User, LayoutDashboard, Calendar, BookOpen, BarChart3 } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { StatusChip } from "./StatusChip";
@@ -73,7 +74,7 @@ export function HeroStage() {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      <div className="relative w-full h-[88%] flex items-center justify-center bg-gradient-to-b from-brand-blue/10 to-transparent">
+      <div className="relative w-full h-[88%] flex items-center justify-center bg-white">
         {/* Desktop: dashboard + overlays (lg and up) */}
         <div className="hidden lg:block w-full h-full">
           <DesktopDashboard newCall={newCallInDashboard} bookingsCount={bookingsCount} />
@@ -93,60 +94,85 @@ export function HeroStage() {
           </div>
         </div>
 
-        {/* Step 2 — Live call (shown when call is active, after phone picks up) */}
+        {/* Step 2 — Live call (matches desktop CallAnimation look) */}
         <div
-          className="absolute inset-x-3 bottom-2 z-20 lg:hidden transition-opacity duration-500"
-          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none", maxHeight: "55%", overflowY: "auto" }}
+          className="absolute inset-x-3 bottom-4 z-20 lg:hidden transition-opacity duration-500"
+          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none" }}
         >
           <div className="bg-white rounded-lg shadow-card border border-border-light overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 border-b">
-              <span className="text-[11px] font-semibold text-text-primary">{phase === "accepted" ? "Call connected" : "Live call"}</span>
+              <div className="flex items-center gap-1.5">
+                <div className="h-1.5 w-1.5 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-[10px] font-semibold text-text-primary">Live call</span>
+              </div>
               <span className="text-[9px] font-mono text-text-tertiary">{String(Math.floor(callSeconds / 60)).padStart(2, '0')}:{String(callSeconds % 60).padStart(2, '0')}</span>
             </div>
-            <div className="p-3 space-y-2.5">
+            <div className="p-3 space-y-2 bg-[#fafafa]">
               {showVox1 && (
-                <div className="flex items-start gap-2">
-                  <span className="text-[10px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">V</span>
-                  <p className="text-[11px] text-text-conversation leading-[1.45]">Tuesday at 2:30 or 4:00 — which works?</p>
+                <div className="flex items-start gap-1.5">
+                  <div className="h-4 w-4 bg-brand-blue text-white flex items-center justify-center text-[5px] font-bold shrink-0" style={{ borderRadius: 4 }}>
+                    <svg width="8" height="8" viewBox="0 0 32 32" fill="none"><path d="M5 6L11.5 24C11.9 25.1 13.4 25.1 13.8 24L18 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M16 9.5C17 9.5 17.8 8.8 18 7.8L18.3 6.2C18.4 5.6 18.9 5.2 19.5 5.2H20C20.7 5.2 21.3 5.8 21.2 6.5L20.8 9C20.6 10.4 21.6 11.6 23 11.6H23.4C24.8 11.6 25.8 12.8 25.6 14.2L25.2 16.7C25.1 17.4 25.7 18 26.4 18H26.7C27.4 18 27.9 17.5 28 16.8L28.3 15.2C28.5 14.2 29.3 13.5 30.3 13.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-[10px] text-text-conversation leading-[1.45] bg-white rounded-md p-2 shadow-sm">Tuesday at 2:30 or 4:00 — which works?</p>
+                  </div>
                 </div>
               )}
               {showCaller2 && (
-                <div className="flex items-start gap-2">
-                  <span className="text-[10px] font-semibold text-text-tertiary w-5 shrink-0 mt-0.5">S</span>
-                  <p className="text-[11px] text-text-conversation leading-[1.45]">2:30 works.</p>
+                <div className="flex items-start gap-1.5">
+                  <div className="h-4 w-4 bg-avatar-bg text-text-tertiary flex items-center justify-center text-[5px] font-bold shrink-0" style={{ borderRadius: 4 }}>S</div>
+                  <div className="flex-1">
+                    <p className="text-[10px] text-text-conversation leading-[1.45] bg-white rounded-md p-2 shadow-sm">2:30 works.</p>
+                  </div>
                 </div>
               )}
               {showVox2 && !showConfirmed && (
-                <div className="flex items-start gap-2">
-                  <span className="text-[10px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">V</span>
-                  <p className="text-[11px] text-text-conversation leading-[1.45]">Booking it now. I'll send a reminder the day before.</p>
-                </div>
-              )}
-              {showConfirmed && (
-                <div className="flex items-center gap-1.5 p-2 bg-brand-light rounded-md">
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8l3.5 3.5L13 5" stroke="var(--color-brand-blue)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <span className="text-[10px] text-brand-blue font-medium">Booked in Google Calendar</span>
+                <div className="flex items-start gap-1.5">
+                  <div className="h-4 w-4 bg-brand-blue text-white flex items-center justify-center text-[5px] font-bold shrink-0" style={{ borderRadius: 4 }}>
+                    <svg width="8" height="8" viewBox="0 0 32 32" fill="none"><path d="M5 6L11.5 24C11.9 25.1 13.4 25.1 13.8 24L18 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M16 9.5C17 9.5 17.8 8.8 18 7.8L18.3 6.2C18.4 5.6 18.9 5.2 19.5 5.2H20C20.7 5.2 21.3 5.8 21.2 6.5L20.8 9C20.6 10.4 21.6 11.6 23 11.6H23.4C24.8 11.6 25.8 12.8 25.6 14.2L25.2 16.7C25.1 17.4 25.7 18 26.4 18H26.7C27.4 18 27.9 17.5 28 16.8L28.3 15.2C28.5 14.2 29.3 13.5 30.3 13.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-[10px] text-text-conversation leading-[1.45] bg-white rounded-md p-2 shadow-sm">Booking it now.</p>
+                  </div>
                 </div>
               )}
               {!showConfirmed && (
-                <div className="flex items-center justify-center gap-[2px] h-5">
-                  {[6, 10, 14, 8, 12, 16, 10, 6, 12, 14, 8, 10, 16, 12, 8, 14, 10, 6, 12, 10].map((h, j) => (
-                    <div key={j} className="w-[2px] bg-brand-blue rounded-full" style={{ height: `${h * 0.4}px`, animationDelay: `${j * 0.05}s`, opacity: 0.6 }} />
+                <div className="flex items-center justify-center gap-[2px] h-4">
+                  {[4, 7, 5, 9, 6, 8, 3].map((h, j) => (
+                    <div key={j} className="w-[2px] bg-brand-blue rounded-full" style={{ height: `${h * 0.5}px`, animationDelay: `${j * 0.12}s`, opacity: 0.7 }} />
                   ))}
                 </div>
               )}
+            </div>
+            <div className="flex items-center justify-around py-2.5 border-t bg-white">
+              <div className="flex flex-col items-center gap-0.5">
+                <div className="h-7 w-7 rounded-full bg-red-50 flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="1.5"><path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" transform="rotate(135 12 12)" /></svg>
+                </div>
+                <span className="text-[9px] text-text-tertiary">Decline</span>
+              </div>
+              <div className="flex flex-col items-center gap-0.5">
+                <div className="h-7 w-7 rounded-full bg-brand-blue flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" /></svg>
+                </div>
+                <span className="text-[9px] text-brand-blue font-medium">Accept</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Step 3 — Booking confirmed / appointments table */}
         <div
-          className="absolute inset-4 z-30 lg:hidden transition-opacity duration-500 bg-white rounded-lg overflow-hidden shadow-card"
-          style={{ opacity: showBookedToast ? 1 : 0, pointerEvents: showBookedToast ? "auto" : "none" }}
+          className="absolute left-3 right-3 z-30 lg:hidden transition-opacity duration-500 bg-white rounded-lg overflow-hidden shadow-card"
+          style={{ opacity: showBookedToast ? 1 : 0, pointerEvents: showBookedToast ? "auto" : "none", bottom: "4px" }}
         >
           <MobileAppointmentTable />
+          {/* Overlapping Book automatically CTA */}
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10">
+            <Button size="sm" className="px-5 py-2 bg-brand-blue text-white hover:bg-brand-blue/90 shadow-lg" render={<a href="#cta" />}>
+              Book automatically
+            </Button>
+          </div>
         </div>
 
         {/* Desktop overlays: phone (md and up) */}
