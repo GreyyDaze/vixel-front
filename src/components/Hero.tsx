@@ -30,8 +30,8 @@ export function Hero() {
       </div>
 
        {/* Atmosphere section: product demo on image */}
-       <div
-         className="w-full py-8 sm:py-10 lg:py-16"
+        <div
+          className="w-full py-10 sm:py-12 lg:py-16"
          style={{
            backgroundColor: "#c8d4e0",
            backgroundImage: "url('/hero-atmosphere.jpg')",
@@ -42,7 +42,7 @@ export function Hero() {
          }}
        >
          <div className="max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-16">
-           <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/8.5] overflow-hidden rounded-lg">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[16/11] lg:aspect-[16/8.5] overflow-hidden rounded-lg">
              <HeroStage />
            </div>
          </div>

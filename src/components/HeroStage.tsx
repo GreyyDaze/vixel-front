@@ -70,50 +70,77 @@ export function HeroStage() {
   return (
     <div className="relative w-full max-w-[1200px] px-12 h-full flex items-center justify-center">
       <div className="relative w-full h-[88%] flex items-center justify-center bg-gradient-to-b from-brand-blue/10 to-transparent overflow-hidden">
-        {/* Desktop: dashboard + overlays (md and up) */}
-        <div className="hidden md:block w-full h-full">
+        {/* Desktop: dashboard + overlays (lg and up) */}
+        <div className="hidden lg:block w-full h-full">
           <DesktopDashboard newCall={newCallInDashboard} bookingsCount={bookingsCount} />
         </div>
 
-        {/* Mobile: sequential flow — phone mockup first */}
+        {/* Mobile/tablet (< lg): sequential flow */}
+
+        {/* Step 1 — Phone mockup (full height) */}
         <div
-          className="absolute inset-0 z-10 md:hidden transition-opacity duration-500"
+          className="absolute inset-0 z-10 lg:hidden transition-opacity duration-500"
           style={{ opacity: showPhone ? 1 : 0, pointerEvents: showPhone ? "auto" : "none" }}
         >
-          <PhoneMockup />
+          <div className="w-full h-full flex items-center justify-center">
+            <PhoneMockup />
+          </div>
         </div>
 
-        {/* Mobile: live call box */}
+        {/* Step 2 — Live call (shown when call is active, after phone picks up) */}
         <div
-          className="absolute inset-x-4 bottom-0 md:hidden transition-opacity duration-500 z-20"
-          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none", maxHeight: "55%" }}
+          className="absolute inset-x-4 bottom-0 z-20 lg:hidden transition-opacity duration-500"
+          style={{ opacity: showCallCard ? 1 : 0, pointerEvents: showCallCard ? "auto" : "none" }}
         >
-          <CallAnimation phase={phase} seconds={callSeconds} />
+          <div className="bg-white rounded-lg shadow-card border border-border-light overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-2.5 border-b">
+              <span className="text-[11px] font-semibold text-text-primary">Live call</span>
+              <span className="text-[9px] font-mono text-text-tertiary">{String(Math.floor(callSeconds / 60)).padStart(2, '0')}:{String(callSeconds % 60).padStart(2, '0')}</span>
+            </div>
+            <div className="p-4 space-y-3">
+              {phase !== "accepted" && (
+                <div className="flex items-start gap-2">
+                  <span className="text-[10px] font-semibold text-brand-blue w-5 shrink-0 mt-0.5">V</span>
+                  <p className="text-[11px] text-text-conversation leading-[1.45]">
+                    {callSeconds < 10 ? "Tuesday at 2:30 or 4:00 — which works?" : "Booking it now."}
+                  </p>
+                </div>
+              )}
+              <div className="flex items-center gap-1.5">
+                <span className="text-[9px] text-brand-blue font-semibold">Vox</span>
+                <div className="flex items-center gap-[2px] h-4 flex-1">
+                  {[4, 7, 5, 9, 6, 8, 3].map((h, j) => (
+                    <div key={j} className="w-[2px] bg-brand-blue rounded-full" style={{ height: `${h * 0.7}px`, animationDelay: `${j * 0.12}s`, opacity: 0.7, minHeight: 3 }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Mobile: booking / appointments table */}
+        {/* Step 3 — Booking confirmed / appointments table */}
         <div
-          className="absolute inset-4 md:hidden transition-opacity duration-500 z-30 bg-white rounded-lg overflow-hidden"
+          className="absolute inset-4 z-30 lg:hidden transition-opacity duration-500 bg-white rounded-lg overflow-hidden shadow-card"
           style={{ opacity: showBookedToast ? 1 : 0, pointerEvents: showBookedToast ? "auto" : "none" }}
         >
           <MobileAppointmentTable />
         </div>
 
-        {/* Desktop overlays: phone */}
+        {/* Desktop overlays: phone (md and up) */}
         {showPhone && (
-          <div className="absolute right-[-2%] top-[8%] z-10 w-[200px] lg:w-[220px] aspect-[9/19] transition-opacity duration-500 hidden md:block" style={{ opacity: phase === "ringing" ? 1 : 0 }}>
+          <div className="absolute right-[-2%] top-[8%] z-10 w-[200px] lg:w-[220px] aspect-[9/19] transition-opacity duration-500 hidden lg:block" style={{ opacity: phase === "ringing" ? 1 : 0 }}>
             <PhoneMockup />
           </div>
         )}
-        {/* Desktop overlays: call animation */}
+        {/* Desktop overlays: call animation (md and up) */}
         {showCallCard && (
-          <div className="absolute right-[14%] top-[2%] z-20 w-[260px] transition-opacity duration-500 hidden md:block">
+          <div className="absolute right-[14%] top-[2%] z-20 w-[260px] transition-opacity duration-500 hidden lg:block">
             <CallAnimation phase={phase} seconds={callSeconds} />
           </div>
         )}
-        {/* Desktop overlays: booked toast */}
+        {/* Desktop overlays: booked toast (md and up) */}
         {showBookedToast && (
-          <div className="absolute right-[16%] bottom-[6%] z-20 transition-opacity duration-500 hidden md:block" style={{ opacity: 1 }}>
+          <div className="absolute right-[16%] bottom-[6%] z-20 transition-opacity duration-500 hidden lg:block" style={{ opacity: 1 }}>
             <BookedToast />
           </div>
         )}
