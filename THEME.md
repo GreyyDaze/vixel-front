@@ -36,7 +36,8 @@ CSS variables in `src/app/globals.css` under `@theme inline`.
 | Class | Value | Usage |
 |---|---|---|
 | `border` | `oklch(0.922 0 0)` | All standard borders |
-| `border-card-border` | `#D0D0D0` | Card outer container borders |
+| `border-card-border` | `#D0D0D0` | Card outer container borders (three-step cards) |
+| `border-border-light` | `#E5E5E5` | Light card borders (use case cards) |
 | `border-inset-border` | `#E2E1DD` | Card inner dividers |
 | `shadow-card` | `0 1px 2px rgba(0,0,0,0.04)` | All card shadows |
 

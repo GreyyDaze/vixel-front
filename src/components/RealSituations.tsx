@@ -31,7 +31,7 @@ export function RealSituations() {
           return (
             <div
               key={i}
-              className="overflow-hidden flex flex-col"
+              className="overflow-hidden flex flex-col rounded-lg border border-border-light"
               style={{
                 gridColumn,
                 backgroundColor: 'var(--color-card-warm)',

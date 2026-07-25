@@ -69,7 +69,7 @@ body {
   --color-green: #50A45A;
   --color-page-bg: #FDFDFC;
   --color-card-active: #faf8f4;
-  --color-card-warm: #F6F4F0;
+  --color-card-warm: #F9F9F8;
   --color-sidebar-bg: #FBFBFA;
   --color-text-primary: #111;
   --color-text-secondary: #666;
@@ -81,6 +81,7 @@ body {
   --color-avatar-bg: #F0F0F0;
   --color-element-bg: #111;
   --color-card-border: #D0D0D0;
+  --color-border-light: #E5E5E5;
   --color-inset-border: #E2E1DD;
   --shadow-card: 0 1px 2px rgba(0,0,0,0.04);
 }
