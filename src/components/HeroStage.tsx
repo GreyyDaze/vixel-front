@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Phone, User, LayoutDashboard, Calendar, BookOpen, BarChart3 } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 
 // ============================================================
@@ -102,27 +103,31 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
   return (
     <div className="relative w-full h-full bg-white rounded-[6px] border border-[#eee] overflow-hidden">
       <div className="h-full grid grid-cols-[180px_1fr]">
-        <div className="border-r border-[#eee] p-3 bg-white">
-          <div className="flex items-center gap-2 px-2 py-2 mb-3">
-            <div className="h-6 w-6 rounded-md bg-[#002FD2] flex items-center justify-center">
+        <div className="border-r border-[#E5E5E5] p-3 bg-[#FBFBFA]">
+          <div className="flex items-center gap-2 px-3 py-2 mb-3">
+            <div className="h-6 w-6 rounded-[5px] bg-[#002FD2] flex items-center justify-center">
               <LogoMark size={14} color="white" />
             </div>
             <span className="text-[12px] font-semibold text-[#111]">Vox Front</span>
           </div>
           {[
-            { label: "Overview", active: true },
-            { label: "Calls" },
-            { label: "Appointments" },
-            { label: "Profile" },
-            { label: "Knowledge" },
-            { label: "Analytics" },
-          ].map((item, i) => (
-            <div key={i} className={`px-3 py-1.5 rounded-md text-[11.5px] mb-0.5 ${item.active ? "bg-[#111] text-white font-medium" : "text-[#666]"}`}>
-              {item.label}
-            </div>
-          ))}
-          <div className="absolute bottom-4 left-3 right-[calc(100%-180px)] flex items-center gap-2 px-2 py-2 border-t border-[#eee] pt-3">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-br from-[#FDFDFC] to-[#D8D3CC] shrink-0"></div>
+            { label: "Overview", icon: LayoutDashboard, active: true },
+            { label: "Calls", icon: Phone },
+            { label: "Appointments", icon: Calendar },
+            { label: "Profile", icon: User },
+            { label: "Knowledge", icon: BookOpen },
+            { label: "Analytics", icon: BarChart3 },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div key={i} className={`flex items-center gap-2 px-3 py-2.5 rounded-md text-[11.5px] mb-0.5 ${item.active ? "bg-[#111] text-white font-medium" : "text-[#7C7C7C]"}`}>
+                <Icon size={14} strokeWidth={1.8} />
+                {item.label}
+              </div>
+            );
+          })}
+          <div className="absolute bottom-4 left-3 right-[calc(100%-180px)] flex items-center gap-2 px-2 py-2 border-t border-[#E5E5E5] pt-3">
+            <div className="h-6 w-6 rounded-full bg-[#F0F0F0] flex items-center justify-center shrink-0"><User size={12} strokeWidth={2} color="#888" /></div>
             <div className="leading-tight min-w-0">
               <div className="text-[10.5px] font-medium text-[#111] truncate">Dr. Chen</div>
               <div className="text-[9px] text-[#999] truncate">Clearview Dental</div>
@@ -146,7 +151,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
               { label: "Resolution", value: "94%", change: "+3%" },
               { label: "Avg. response", value: "0.8s", change: "" },
             ].map((s, i) => (
-              <div key={i} className="border border-[#eee] rounded-[4px] p-2.5">
+              <div key={i} className="border border-[#eee] rounded-[6px] p-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                 <div className="text-[9.5px] text-[#999] mb-1">{s.label}</div>
                 <div className="text-[18px] font-semibold text-[#111] tracking-tight leading-none">{s.value}</div>
                 {s.change && (
@@ -158,7 +163,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             ))}
           </div>
 
-          <div className="border border-[#eee] rounded-[6px] p-3 mb-3">
+          <div className="border border-[#eee] rounded-[6px] p-3 mb-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10.5px] font-medium text-[#111]">Call volume</span>
               <div className="flex items-center gap-2 text-[9px] text-[#999]">
@@ -177,7 +182,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
             </div>
           </div>
 
-          <div className="border border-[#eee] rounded-[6px] p-3">
+          <div className="border border-[#eee] rounded-[6px] p-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10.5px] font-medium text-[#111]">Recent calls</span>
               <span className="text-[9.5px] text-[#999]">View all →</span>
@@ -186,7 +191,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
               {newCall && (
                 <div className="flex items-center justify-between py-1.5 border-b border-[#f5f5f5] bg-[#EEF2FF] -mx-1 px-1 rounded transition-all duration-700" style={{ animation: "slideIn 0.6s ease-out" }}>
                   <div className="flex items-center gap-2">
-                    <div className="h-5 w-5 rounded-full bg-gradient-to-br from-[#FDFDFC] to-[#D8D3CC] flex items-center justify-center text-[9px] font-medium text-[#555]">S</div>
+                    <div className="h-7 w-7 rounded-full bg-[#111] flex items-center justify-center text-[11px] font-medium text-white">S</div>
                     <div>
                       <div className="text-[10.5px] font-medium text-[#111]">Sarah Patel</div>
                       <div className="text-[9px] text-[#999]">Just now</div>
@@ -204,7 +209,7 @@ function DesktopDashboard({ newCall, bookingsCount }: { newCall: boolean; bookin
               ].map((c, i) => (
                 <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#f5f5f5] last:border-0">
                   <div className="flex items-center gap-2">
-                    <div className="h-5 w-5 rounded-full bg-[#f5f5f5] flex items-center justify-center text-[9px] font-medium text-[#111]">
+                    <div className="h-7 w-7 rounded-full bg-[#F0F0F0] flex items-center justify-center text-[11px] font-medium text-[#888]">
                       {c.name[0]}
                     </div>
                     <div>
@@ -246,9 +251,9 @@ function ChartSVG() {
 function PhoneMockup() {
   return (
     <div className="w-full h-full">
-      <div className="relative w-full h-full bg-[#0a0a0a] rounded-[20px] p-[6px] shadow-2xl">
+      <div className="relative w-full h-full bg-[#1C1C1C] rounded-[20px] p-[6px]">
         <div className="w-full h-full bg-white rounded-[16px] overflow-hidden relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[18px] bg-[#0a0a0a] rounded-b-[14px] z-10"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[18px] bg-[#1C1C1C] rounded-b-[14px] z-10"></div>
 
           <div className="flex items-center justify-between px-5 pt-2 pb-1 text-[8px] font-semibold text-[#111] relative z-[1]">
             <span>9:41</span>
@@ -273,27 +278,23 @@ function PhoneMockup() {
             </div>
 
             <div className="flex flex-col items-center mb-4">
-              <div className="h-14 w-14 rounded-full bg-gradient-to-br from-[#FDFDFC] to-[#D8D3CC] mb-2 phone-ringing"></div>
+              <div className="h-14 w-14 rounded-full bg-[#F0F0F0] flex items-center justify-center mb-2 phone-ringing"><Phone size={24} strokeWidth={1.8} color="#888" /></div>
               <div className="text-[12px] font-semibold text-[#111]">Sarah Patel</div>
               <div className="text-[9px] text-[#999]">+1 (415) 555-0142</div>
             </div>
 
             <div className="mt-auto flex items-center justify-around pb-2">
               <div className="flex flex-col items-center gap-1">
-                <div className="h-10 w-10 rounded-full bg-[#fee2e2] flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="1.5">
-                    <path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" transform="rotate(135 12 12)" />
-                  </svg>
-                </div>
-                <span className="text-[7.5px] text-[#999]">Decline</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="1.5">
+                  <path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" transform="rotate(135 12 12)" />
+                </svg>
+                <span className="text-[11px] text-[#999]">Decline</span>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <div className="h-10 w-10 rounded-full bg-[#002FD2] flex items-center justify-center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                    <path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" />
-                  </svg>
-                </div>
-                <span className="text-[7.5px] text-[#999]">Accept</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#002FD2" strokeWidth="1.5">
+                  <path d="M3 9c0-1 1-2 2-2h2l2 3-2 1c1 2 2 3 4 4l1-2 3 2v2c0 1-1 2-2 2-7 0-10-3-10-10z" />
+                </svg>
+                <span className="text-[11px] text-[#999]">Accept</span>
               </div>
             </div>
 
@@ -391,19 +392,19 @@ function CallAnimation({ phase, seconds }: { phase: string; seconds: number }) {
 function Message({ speaker, name, v, children }: { speaker: string; name?: string; v?: boolean; children: React.ReactNode }) {
   return (
     <div>
-      <div className="flex items-center gap-1.5 mb-0.5">
+      <div className="flex items-center gap-2 mb-1">
         {v ? (
-          <div className="h-3.5 w-3.5 rounded-full bg-[#002FD2] flex items-center justify-center">
-            <LogoMark size={9} color="white" />
+          <div className="h-5 w-5 rounded-full bg-[#002FD2] flex items-center justify-center">
+            <LogoMark size={11} color="white" />
           </div>
         ) : (
-          <div className="h-3.5 w-3.5 rounded-full bg-gradient-to-br from-[#FDFDFC] to-[#D8D3CC] flex items-center justify-center text-[7px] font-bold text-[#555]">
+          <div className="h-5 w-5 rounded-full bg-[#F0F0F0] flex items-center justify-center text-[8px] font-bold text-[#888]">
             {name || "C"}
           </div>
         )}
-        <span className={`text-[9px] font-medium ${v ? "text-[#111]" : "text-[#999]"}`}>{speaker}</span>
+        <span className={`text-[10px] font-medium ${v ? "text-[#111]" : "text-[#999]"}`}>{speaker}</span>
       </div>
-      <p className="text-[11px] text-[#333] leading-[1.4] ml-5">{children}</p>
+      <p className="text-[12px] text-[#333] leading-[1.4] ml-7">{children}</p>
     </div>
   );
 }
@@ -422,7 +423,7 @@ function FadeIn({ children }: { children: React.ReactNode }) {
 // ============================================================
 function BookedToast() {
   return (
-    <div className="bg-white rounded-[5px] shadow-2xl border border-[#eee] px-3.5 py-3 flex items-center gap-3 booked-toast-slide">
+    <div className="bg-white rounded-[5px] shadow-2xl border border-[#eee] px-3.5 py-3 flex items-center gap-3 booked-toast-slide w-[280px]">
       <div className="h-8 w-8 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
           <path d="M3 8l3.5 3.5L13 5" stroke="#002FD2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

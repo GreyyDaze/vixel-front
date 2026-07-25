@@ -17,7 +17,7 @@ export function Header() {
       </nav>
       <div className="flex items-center gap-4">
         <a href="#" className="text-[13px] text-[#111] hover:text-[#000] transition-colors hidden sm:inline">{COPY.header.signIn}</a>
-        <Button size="sm" render={<a href="#cta" />}>
+        <Button size="sm" className="px-4 py-2" render={<a href="#cta" />}>
           {COPY.header.bookDemo}
         </Button>
       </div>
