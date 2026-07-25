@@ -307,17 +307,6 @@ function AfterHoursPanel() {
           <span className="text-[9px] text-white/40">PM</span>
         </div>
 
-        {/* Night sky */}
-        <div className="mx-3 h-20 rounded-md mb-3 flex items-center justify-center relative overflow-hidden"
-          style={{
-            background: "linear-gradient(180deg, #0F172A 0%, #1E293B 100%)",
-          }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ opacity: 0.6 }}>
-            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-
         {/* Notification card */}
         <div className="mx-3 mb-3 bg-white/10 rounded-md p-3">
           <div className="flex items-center gap-2.5">
